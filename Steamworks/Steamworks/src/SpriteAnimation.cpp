@@ -3,9 +3,9 @@
 
 SpriteAnimation::SpriteAnimation(void)
 {
-	_currentFrame = 0;
-	_frameCount = 0;
-	_stepInterval = 0;
+	_currentFrame = 1;
+	_frameCount = 1;
+	_stepInterval = 1;
 }
 
 
@@ -19,6 +19,9 @@ void SpriteAnimation::loadSheet(std::string spriteSheetFile,
 								const int frameSizeY,
 								const int frameCount)
 {
+	_frameCount = frameCount;
+
+	spriteSheet = std::unique_ptr<sf::Image>(new sf::Image);
 	spriteSheet->loadFromFile(spriteSheetFile);
 
 	for (int i = 0; i < frameCount; i++){
@@ -26,4 +29,18 @@ void SpriteAnimation::loadSheet(std::string spriteSheetFile,
 
 		frameTexture[i]->loadFromImage(*spriteSheet, sf::IntRect(i * frameSizeX, 0, frameSizeX, frameSizeY));
 	}
+}
+
+
+void SpriteAnimation::stepForward()
+{
+	_currentFrame += _stepInterval;
+
+	if (_currentFrame > _frameCount) _currentFrame = 1;
+}
+void SpriteAnimation::stepBack()
+{
+	_currentFrame -= _stepInterval;
+
+	if (_currentFrame < _frameCount) _currentFrame = _frameCount;
 }
