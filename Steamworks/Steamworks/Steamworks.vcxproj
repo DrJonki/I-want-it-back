@@ -81,6 +81,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\SpriteAnimation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\SpriteAnimation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
