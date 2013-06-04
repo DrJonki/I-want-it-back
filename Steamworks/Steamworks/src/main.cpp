@@ -1,7 +1,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
-
+#include <Box2D\Box2D.h>
 using namespace sf;
 namespace
 {
