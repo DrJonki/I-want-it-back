@@ -1,6 +1,5 @@
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/System/Clock.hpp>
-#include <SFML/Window/Event.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
 #include <Box2D\Box2D.h>
 
 #include "Globals.h"
@@ -13,12 +12,21 @@ namespace
 	sf::Event e;
 
 	sf::Clock updateClock;
+
+	sf::RectangleShape shape;
 }
 
 void init()
 {
 	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Steamworks", sf::Style::Close);
 	gameWindow.setVerticalSyncEnabled(true);
+
+	shape.setSize(sf::Vector2f(250.f, 250.f));
+	shape.setOrigin(125.f, 125.f);
+	shape.setFillColor(sf::Color::Green);
+	shape.setPosition((float)g_windowWidth / 2, (float)g_windowHeight / 2);
+	shape.setOutlineThickness(3.f);
+	shape.setOutlineColor(sf::Color::Blue);
 	
 	updateClock.restart();
 }
@@ -31,11 +39,21 @@ void deInit()
 void update()
 {
 	updateClock.restart();
+
+	//Update loop here
+	shape.rotate(0.5);
+	//End of update loop
 }
 
 void render()
 {
 	gameWindow.clear();
+
+	//Object rendering here
+	gameWindow.draw(shape);
+
+
+	//End of render loop
 
 	gameWindow.display();
 }

@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Image.hpp>
+#include <SFML/Audio/Sound.hpp>
 #include <string>
 #include <vector>
 #include <memory>
@@ -23,6 +24,8 @@ public:
 
 	void setStepInterval(const int interval) { _stepInterval = interval; };
 	int getStepInterval() { return _stepInterval; };
+
+	void assignSound(sf::Sound &sound, const unsigned int frame);
 
 	sf::Texture getCurrentTexture() { return *frameTexture[_currentFrame - 1]; };
 
