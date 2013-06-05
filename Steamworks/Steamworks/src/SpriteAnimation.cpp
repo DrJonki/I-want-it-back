@@ -17,12 +17,14 @@ SpriteAnimation::~SpriteAnimation(void)
 void SpriteAnimation::loadSheet(std::string spriteSheetFile,
 								const int frameSizeX,
 								const int frameSizeY,
-								const int frameCount)
+								const int frameCount,
+								const bool flipped)
 {
 	_frameCount = frameCount;
 
 	spriteSheet = std::unique_ptr<sf::Image>(new sf::Image);
 	spriteSheet->loadFromFile(spriteSheetFile);
+	if (flipped) spriteSheet->flipHorizontally();
 
 	for (int i = 0; i < frameCount; i++){
 		frameTexture.push_back(std::unique_ptr<sf::Texture>(new sf::Texture));
@@ -43,4 +45,10 @@ void SpriteAnimation::stepBack()
 	_currentFrame -= _stepInterval;
 
 	if (_currentFrame < _frameCount) _currentFrame = _frameCount;
+}
+
+bool SpriteAnimation::lastFrame()
+{
+	if (_currentFrame == _frameCount) return true;
+	return false;
 }

@@ -16,11 +16,14 @@ public:
 	void loadSheet(std::string spriteSheetFile,
 				   const int frameSizeX,
 				   const int frameSizeY,
-				   const int frameCount);
+				   const int frameCount,
+				   const bool flipped = false);
 
 	void stepForward();
 	void stepBack();
 	void setFrame(const unsigned int frame) { _currentFrame = frame; };
+
+	bool lastFrame();
 
 	void setStepInterval(const int interval) { _stepInterval = interval; };
 	int getStepInterval() { return _stepInterval; };
