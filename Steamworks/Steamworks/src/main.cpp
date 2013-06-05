@@ -2,7 +2,12 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
 #include <Box2D\Box2D.h>
+
+#include "Globals.h"
+
+
 using namespace sf;
+
 namespace
 {
 	bool exitState = false;
@@ -15,7 +20,7 @@ namespace
 
 void init()
 {
-	gameWindow.create(VideoMode(600, 600), "Steamworks", Style::Close);
+	gameWindow.create(VideoMode(g_windowWidth, g_windowHeight), "Steamworks", Style::Close);
 	gameWindow.setVerticalSyncEnabled(true);
 	
 	updateClock.restart();

@@ -87,10 +87,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\Randomizer.cpp" />
+    <ClCompile Include="src\RichText.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\SpriteAnimation.cpp" />
+    <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Globals.h" />
+    <ClInclude Include="src\Map.h" />
+    <ClInclude Include="src\Randomizer.h" />
+    <ClInclude Include="src\RichText.hpp" />
+    <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\SpriteAnimation.h" />
+    <ClInclude Include="src\World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
