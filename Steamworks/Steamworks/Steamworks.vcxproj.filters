@@ -31,6 +31,18 @@
     <Filter Include="Source Files\World">
       <UniqueIdentifier>{664c0d75-b352-4f7f-946c-c59a0c1a9258}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{6b3b51e2-3805-4926-8f7a-269d24feb022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{6a0a6fde-c894-45a7-a897-232953295574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Text">
+      <UniqueIdentifier>{5219e51e-160e-4077-a1c6-aeda07f1dfaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Text">
+      <UniqueIdentifier>{d4b7de46-f23f-48a2-808a-9f3be65768ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -45,14 +57,26 @@
     <ClCompile Include="src\Sprite.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\RichText.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Map.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="src\World.cpp">
       <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FileIO.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameButton.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameText.cpp">
+      <Filter>Source Files\Graphics\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RichText.cpp">
+      <Filter>Source Files\Graphics\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,9 +89,6 @@
     <ClInclude Include="src\Sprite.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\RichText.hpp">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -76,6 +97,21 @@
     </ClInclude>
     <ClInclude Include="src\Map.h">
       <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FileIO.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameButton.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameText.h">
+      <Filter>Header Files\Graphics\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RichText.hpp">
+      <Filter>Header Files\Graphics\Text</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

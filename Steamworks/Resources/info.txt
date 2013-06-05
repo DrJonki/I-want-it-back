@@ -1,0 +1,1 @@
+Copy this resource folder to where the executable is.

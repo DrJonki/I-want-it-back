@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 //Window dimensions
 static const int g_windowWidth = 800, g_windowHeight = 600;
 

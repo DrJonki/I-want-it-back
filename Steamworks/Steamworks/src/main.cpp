@@ -5,22 +5,19 @@
 
 #include "Globals.h"
 
-
-using namespace sf;
-
 namespace
 {
 	bool exitState = false;
 
-	RenderWindow gameWindow;
-	Event e;
+	sf::RenderWindow gameWindow;
+	sf::Event e;
 
-	Clock updateClock;
+	sf::Clock updateClock;
 }
 
 void init()
 {
-	gameWindow.create(VideoMode(g_windowWidth, g_windowHeight), "Steamworks", Style::Close);
+	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Steamworks", sf::Style::Close);
 	gameWindow.setVerticalSyncEnabled(true);
 	
 	updateClock.restart();
@@ -46,7 +43,7 @@ void render()
 void pollEvents()
 {
 	while (gameWindow.pollEvent(e)){
-		if (e.type == Event::KeyPressed){
+		if (e.type == sf::Event::KeyPressed){
 			exitState = true;
 		}
 	}
@@ -57,7 +54,7 @@ int main()
 	init();
 
 	while (!exitState){
-		Time updateTime = updateClock.getElapsedTime();
+		sf::Time updateTime = updateClock.getElapsedTime();
 
 		if (updateTime.asMilliseconds() > 15) update();
 		render();
