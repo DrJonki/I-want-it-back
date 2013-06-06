@@ -23,9 +23,9 @@ void World::init()
 }
 
 void World::createGround(const float posX,
-				  const float posY,
-				  const float sizeX,
-				  const float sizeY)
+						 const float posY,
+						 const float sizeX,
+						 const float sizeY)
 {
     b2BodyDef bodyDef;
     bodyDef.position = b2Vec2(posX/P2MScale, posY/P2MScale);

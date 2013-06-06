@@ -5,6 +5,9 @@
 //Window dimensions
 static const int g_windowWidth = 800, g_windowHeight = 600;
 
+//Update timer value in milliseconds
+static const int g_updateTimerValue = 15;
+
 //Gravity
 static const float g_worldGravity = 9.8f;
 

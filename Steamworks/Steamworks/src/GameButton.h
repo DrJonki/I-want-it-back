@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Mouse.hpp>
-#include <SFML/Window/Keyboard.hpp>
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Window\Mouse.hpp>
+#include <SFML\Window\Keyboard.hpp>
 #include <string>
 #include <memory>
 
@@ -31,10 +31,10 @@ public:
 private:
 	bool mouseOnButton();
 
-	std::unique_ptr<sf::Keyboard::Key> _assignedButton; //A keyboard button assigned to the button
-	std::unique_ptr<sf::Texture> _buttonTexture[3]; //0. Button not highlighted or pressed
-													//1. Button highlighted but not pressed
-													//2. Button pressed
+	sf::Keyboard::Key _assignedButton; //A keyboard key assigned to the button
+	sf::Texture _buttonTexture[3];	   //0. Button not highlighted or pressed
+									   //1. Button highlighted but not pressed
+									   //2. Button pressed
 
 	GameText _buttonText;
 	bool _activateable;

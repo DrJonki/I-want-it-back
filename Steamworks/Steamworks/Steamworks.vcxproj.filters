@@ -43,13 +43,16 @@
     <Filter Include="Header Files\Graphics\Text">
       <UniqueIdentifier>{d4b7de46-f23f-48a2-808a-9f3be65768ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Graphics\Animation">
+      <UniqueIdentifier>{2abd4482-aaac-45e7-b590-a3d1c5809e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Animation">
+      <UniqueIdentifier>{85f2722e-d8a7-426c-adf6-8a1f90634153}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SpriteAnimation.cpp">
-      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Randomizer.cpp">
       <Filter>Source Files\Util</Filter>
@@ -78,11 +81,14 @@
     <ClCompile Include="src\RichText.cpp">
       <Filter>Source Files\Graphics\Text</Filter>
     </ClCompile>
+    <ClCompile Include="src\SpriteAnimation.cpp">
+      <Filter>Source Files\Graphics\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AnimationStorage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\SpriteAnimation.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Randomizer.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -112,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="src\RichText.hpp">
       <Filter>Header Files\Graphics\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteAnimation.h">
+      <Filter>Header Files\Graphics\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AnimationStorage.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

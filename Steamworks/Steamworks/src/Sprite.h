@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <vector>
 
@@ -13,8 +12,14 @@ public:
 	Sprite(void);
 	~Sprite(void);
 
-	void draw(sf::RenderWindow &window);
-private:
+	void loadAnimation(sf::Image &sheet,
+					   const int startX,
+					   const int startY,
+				       const int frameSizeX,
+					   const int frameSizeY,
+					   const int frameCount);
+
+protected:
+	std::vector<SpriteAnimation> animations;
 
 };
-
