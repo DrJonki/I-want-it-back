@@ -46,4 +46,23 @@ private:
 	//std::vector<sf::Texture> frameTexture;
 	std::vector<std::shared_ptr<sf::Texture>> frameTexture; //Container for the frame textures
 	//std::vector<> assignedSounds;
+
+protected:
+
+	//Enumeration for the different animation states
+	enum
+	{
+		IDLE, //IDLE2, IDLE3, etc.
+		
+		WALKING_LEFT,
+		WALKING_RIGHT,
+		RUNNING_LEFT,
+		RUNNING_RIGHT,
+
+
+		CROUCHING_LEFT,
+		JUMPING_LEFT,
+		SHOOTING_LEFT,
+
+	};
 };

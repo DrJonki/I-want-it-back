@@ -21,10 +21,6 @@ void init()
 {
 	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Steamworks", sf::Style::Close);
 	gameWindow.setVerticalSyncEnabled(true);
-	sf::Image playerImage;
-	playerImage.loadFromFile("Resources/Graphics/Player/test.png");
-	player.loadAnimation(playerImage, 0, 0, 128, 128, 4);
-	
 	
 	updateClock.restart();
 }

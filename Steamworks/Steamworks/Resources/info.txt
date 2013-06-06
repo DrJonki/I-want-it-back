@@ -1,1 +1,1 @@
-Copy this resource folder to where the executable is.
+This folder needs to remain in this directory.

@@ -12,13 +12,6 @@ public:
 	Sprite(void);
 	~Sprite(void);
 
-	void loadAnimation(sf::Image &sheet,
-					   const int startX,
-					   const int startY,
-				       const int frameSizeX,
-					   const int frameSizeY,
-					   const int frameCount);
-
 protected:
 	std::vector<SpriteAnimation> animations;
 

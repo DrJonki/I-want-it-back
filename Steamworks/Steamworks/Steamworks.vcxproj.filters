@@ -84,9 +84,6 @@
     <ClCompile Include="src\SpriteAnimation.cpp">
       <Filter>Source Files\Graphics\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="src\AnimationStorage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -121,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="src\SpriteAnimation.h">
       <Filter>Header Files\Graphics\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AnimationStorage.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -86,7 +86,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\AnimationStorage.cpp" />
     <ClCompile Include="src\FileIO.cpp" />
     <ClCompile Include="src\GameButton.cpp" />
     <ClCompile Include="src\GameText.cpp" />
@@ -100,7 +99,6 @@
     <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\AnimationStorage.h" />
     <ClInclude Include="src\FileIO.h" />
     <ClInclude Include="src\GameButton.h" />
     <ClInclude Include="src\GameText.h" />
