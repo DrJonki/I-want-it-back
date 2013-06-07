@@ -20,6 +20,7 @@ void World::init()
 	gameWorld = new b2World(gravity);
 	
 	createGround(0.f, 500.f, (float)g_windowWidth, 10.f);
+	
 }
 
 void World::createGround(const float posX,

@@ -84,6 +84,9 @@
     <ClCompile Include="src\SpriteAnimation.cpp">
       <Filter>Source Files\Graphics\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="src\Sound.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="src\SpriteAnimation.h">
       <Filter>Header Files\Graphics\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sound.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

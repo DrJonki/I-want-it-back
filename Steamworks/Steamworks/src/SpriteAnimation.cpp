@@ -20,15 +20,14 @@ void SpriteAnimation::loadSheet(sf::Image &sheet,
 								const int startY,
 								const int frameSizeX,
 								const int frameSizeY,
-								const int frameCount)
+								int _frameCount)
 {
-	_frameCount = frameCount;
+	frameTexture.reserve(_frameCount);
 
-	for (int i = 0; i < frameCount; i++){
-		frameTexture.push_back(std::shared_ptr<sf::Texture>(new sf::Texture));
-		//frameTexture.push_back(sf::Texture());
+	for (int i = 0; i < _frameCount; i++){
+		frameTexture.emplace_back(sf::Texture());
 		
-		frameTexture.back()->loadFromImage(sheet, sf::IntRect((i * frameSizeX) + startX, startY, (i * frameSizeX) + frameSizeX, startY + frameSizeY));
+		frameTexture[i].loadFromImage(sheet, sf::IntRect((i * frameSizeX) + startX, startY, frameSizeX, frameSizeY));
 	}
 }
 
@@ -57,4 +56,13 @@ bool SpriteAnimation::lastFrame()
 {
 	if (_currentFrame == _frameCount) return true;
 	return false;
+}
+
+
+
+sf::Texture SpriteAnimation::getCurrentTexture()
+{
+	const sf::Texture& texRef = frameTexture[_currentFrame - 1];
+
+	return texRef;
 }

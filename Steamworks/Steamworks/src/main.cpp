@@ -21,6 +21,9 @@ void init()
 {
 	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Steamworks", sf::Style::Close);
 	gameWindow.setVerticalSyncEnabled(true);
+
+	//player.setOrigin(player.getLocalBounds().width / 2, player.getLocalBounds().height / 2);
+	player.setPosition(400, 300);
 	
 	updateClock.restart();
 }
