@@ -9,7 +9,7 @@ Player::Player(void)
 	playerImage.loadFromFile("Resources/Graphics/Player/test.png");
 
 	animations[IDLE].loadSheet(playerImage, 0, 0, 128, 128, 4);
-
+	animations[IDLE].setStepInterval(60);
 	//setTexture(animations[IDLE].getCurrentTexture());
 }
 
@@ -24,8 +24,5 @@ void Player::update()
 	rotate(1);
 	setTexture(animations[IDLE].getCurrentTexture());
 
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-		animations[IDLE].stepForward();
-	//}
-	//while (sf::Keyboard::isKeyPressed(sf::Keyboard::Space));
+	animations[IDLE].stepForward();
 }

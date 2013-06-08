@@ -29,13 +29,13 @@ void World::createGround(const float posX,
 						 const float sizeY)
 {
     b2BodyDef bodyDef;
-    bodyDef.position = b2Vec2(posX/P2MScale, posY/P2MScale);
+    bodyDef.position = b2Vec2(posX/g_P2MScale, posY/g_P2MScale);
     bodyDef.type = b2_staticBody;
 
     b2Body* body = gameWorld->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-    shape.SetAsBox((800.f/2)/P2MScale, (16.f/2)/P2MScale);
+    shape.SetAsBox((800.f/2)/g_P2MScale, (16.f/2)/g_P2MScale);
 
     b2FixtureDef fixtureDef;
     fixtureDef.density = 0.f;
