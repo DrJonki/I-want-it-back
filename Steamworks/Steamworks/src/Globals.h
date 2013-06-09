@@ -12,7 +12,7 @@ static const bool g_useVSync = true;
 static const float g_updateTimerValue = 1.f / 60.f;
 
 //Gravity
-static const float g_worldGravity = 9.8f;
+static const float g_worldGravity = 25.f;
 
 //Pixels2Metric & vice-versa. Needed to make B2D and SFML work together.
 //When converting from SFML units(pixels) to B2D meters, divide by this value.

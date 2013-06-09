@@ -6,7 +6,7 @@ World::World(void)
 	b2Vec2 gravity(0.f, g_worldGravity);
 	gameWorld = new b2World(gravity);
 	
-	createGround(0.f, 500.f, (float)g_windowWidth / 2, 10.f);
+	createGround(400.f, 500.f, (float)g_windowWidth / 2, 10.f);
 }
 World::~World(void)
 {
@@ -33,11 +33,15 @@ void World::createGround(const float posX,
     b2Body* body = gameWorld->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-    shape.SetAsBox((800.f/2)/g_P2MScale, (16.f/2)/g_P2MScale);
+    shape.SetAsBox((sizeX / 2) / g_P2MScale, (sizeY / 2) / g_P2MScale);
 
     b2FixtureDef fixtureDef;
     fixtureDef.density = 0.f;
     fixtureDef.shape = &shape;
 
     body->CreateFixture(&fixtureDef);
+
+	s.setSize(sf::Vector2f(sizeX, sizeY));
+	s.setOrigin(sizeX / 2, sizeY / 2);
+	s.setPosition(posX, posY);
 }

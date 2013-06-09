@@ -14,6 +14,7 @@ public:
 	~World(void);
 
 	void physStep();
+	void draw(sf::RenderWindow& window) { window.draw(s); };
 
 	b2World* getWorldPtr() { return gameWorld; };
 
@@ -22,6 +23,8 @@ private:
 					  const float sizeY,
 					  const float posX = 0,
 					  const float posY = 0);
+
+	sf::RectangleShape s;
 
 protected:
 	b2World *gameWorld;

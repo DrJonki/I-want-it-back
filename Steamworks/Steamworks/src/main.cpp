@@ -50,7 +50,7 @@ void render()
 
 	//Object rendering here
 	gameWindow.draw(player);
-
+	world.draw(gameWindow);
 	
 	//End of render loop
 

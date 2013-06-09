@@ -18,11 +18,12 @@ void Sprite::createPhysBody(b2World *gameWorld)
     body = gameWorld->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-	shape.SetAsBox((getLocalBounds().width * 0.8f) / g_P2MScale, (getLocalBounds().height * 0.8f) / g_P2MScale);
+	shape.SetAsBox(((getLocalBounds().width) / 2) / g_P2MScale, ((getLocalBounds().height) / 2) / g_P2MScale);
 
     b2FixtureDef fixtureDef;
     fixtureDef.density = 1.f;
 	fixtureDef.friction = 0.5f;
+	fixtureDef.restitution = 0.5f;
     fixtureDef.shape = &shape;
 
     body->CreateFixture(&fixtureDef);
