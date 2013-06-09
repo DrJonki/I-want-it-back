@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Sprite.h"
 #include "Player.h"
+#include "World.h"
 
 namespace
 {
@@ -13,17 +14,16 @@ namespace
 	sf::RenderWindow gameWindow;
 	sf::Event e;
 	sf::Clock updateClock;
+	sf::Time updateTime;
 
-	Player player;
+	World world;
+	Player player(world.getWorldPtr());
 }
 
 void init()
 {
 	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Steamworks", sf::Style::Close);
 	gameWindow.setVerticalSyncEnabled(0);
-
-	//player.setOrigin(player.getLocalBounds().width / 2, player.getLocalBounds().height / 2);
-	player.setPosition(400, 300);
 	
 	updateClock.restart();
 }
@@ -40,6 +40,7 @@ void update()
 	//Update loop here
 	player.update();
 
+	world.physStep();
 	//End of update loop
 }
 
@@ -49,6 +50,8 @@ void render()
 
 	//Object rendering here
 	gameWindow.draw(player);
+
+	
 	//End of render loop
 
 	gameWindow.display();
@@ -68,11 +71,22 @@ int main()
 	init();
 
 	while (!exitState){
-		sf::Time updateTime = updateClock.getElapsedTime();
+		updateTime = updateClock.getElapsedTime();
 
-		if (updateTime.asMilliseconds() > g_updateTimerValue) update();
+		if (g_useVSync){
+			if (updateTime.asSeconds() > g_updateTimerValue){
+				update();
+				render();
+				pollEvents();
+			}
+		}
+		else {
+			if (updateTime.asSeconds() > g_updateTimerValue){
+				update();
+				pollEvents();
+			}
 		render();
-		pollEvents();
+		}
 
 	}
 

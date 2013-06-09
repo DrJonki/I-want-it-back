@@ -34,24 +34,39 @@ void SpriteAnimation::loadSheet(sf::Image &sheet,
 }
 
 
-void SpriteAnimation::stepForward()
+void SpriteAnimation::stepForward(const bool force)
 {
-	if (_stepInterval == _tempSteps) _currentFrame++;
+	if (force){
+		_currentFrame++;
+		if (_currentFrame > _frameCount) _currentFrame = 1;
+		_tempSteps = 1;
+	}
 
-	if (_currentFrame > _frameCount) _currentFrame = 1;
+	else {
+		if (_stepInterval == _tempSteps) _currentFrame++;
 
-	_tempSteps++;
-	if (_tempSteps > _stepInterval) _tempSteps = 1;
+		if (_currentFrame > _frameCount) _currentFrame = 1;
 
+		_tempSteps++;
+		if (_tempSteps > _stepInterval) _tempSteps = 1;
+	}
 }
-void SpriteAnimation::stepBack()
+void SpriteAnimation::stepBack(const bool force)
 {
-	if (_tempSteps == 1) _currentFrame--;
+	if (force){
+		_currentFrame--;
+		if (_currentFrame < 1) _currentFrame = _frameCount;
+		_tempSteps = 1;
+	}
 
-	if (_currentFrame < 1) _currentFrame = _frameCount;
+	else {
+		if (_tempSteps == 1) _currentFrame--;
 
-	_tempSteps--;
-	if (_tempSteps < 1) _tempSteps = _stepInterval;
+		if (_currentFrame < 1) _currentFrame = _frameCount;
+
+		_tempSteps--;
+		if (_tempSteps < 1) _tempSteps = _stepInterval;
+	}
 }
 
 bool SpriteAnimation::lastFrame()

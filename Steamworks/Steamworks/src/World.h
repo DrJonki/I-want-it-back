@@ -1,4 +1,6 @@
 #pragma once
+
+#include <SFML\Graphics.hpp>
 #include <Box2D\Box2D.h>
 #include <memory>
 
@@ -11,11 +13,11 @@ public:
 	World(void);
 	~World(void);
 
+	void physStep();
 
-	friend class Sprite;
+	b2World* getWorldPtr() { return gameWorld; };
 
 private:
-	void init();
 	void createGround(const float sizeX,
 					  const float sizeY,
 					  const float posX = 0,

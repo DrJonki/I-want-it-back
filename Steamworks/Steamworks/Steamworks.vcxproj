@@ -113,6 +113,9 @@
     <ClInclude Include="src\SpriteAnimation.h" />
     <ClInclude Include="src\World.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

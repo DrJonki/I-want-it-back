@@ -3,7 +3,10 @@
 
 World::World(void)
 {
-	init();
+	b2Vec2 gravity(0.f, g_worldGravity);
+	gameWorld = new b2World(gravity);
+	
+	createGround(0.f, 500.f, (float)g_windowWidth / 2, 10.f);
 }
 World::~World(void)
 {
@@ -11,17 +14,12 @@ World::~World(void)
 }
 
 //Public
-
+void World::physStep()
+{
+	gameWorld->Step(1.f / 60.f, 8, 3);
+}
 
 //Private
-void World::init()
-{
-	b2Vec2 gravity(0.f, g_worldGravity);
-	gameWorld = new b2World(gravity);
-	
-	createGround(0.f, 500.f, (float)g_windowWidth, 10.f);
-	
-}
 
 void World::createGround(const float posX,
 						 const float posY,

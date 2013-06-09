@@ -5,8 +5,11 @@
 //Window dimensions
 static const int g_windowWidth = 800, g_windowHeight = 600;
 
+//Vertical sync setting
+static const bool g_useVSync = true;
+
 //Update timer value in seconds
-static const float g_updateTimerValue = 1.f / 60.f * 1000.f;
+static const float g_updateTimerValue = 1.f / 60.f;
 
 //Gravity
 static const float g_worldGravity = 9.8f;
