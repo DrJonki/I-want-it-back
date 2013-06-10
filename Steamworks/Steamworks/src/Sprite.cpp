@@ -8,23 +8,32 @@ Sprite::Sprite(void)
 
 Sprite::~Sprite(void){}
 
+//Public
+
+//Private
+
 //Protected
-void Sprite::createPhysBody(b2World *gameWorld)
+void Sprite::createPhysBody(b2World *gameWorld,
+							const float density,
+							const float friction,
+							const float restitution,
+							const bool fixedAngle)
 {
-	b2BodyDef bodyDef;
-	bodyDef.position = b2Vec2(getPosition().x / g_P2MScale, getPosition().y / g_P2MScale);
-    bodyDef.type = b2_dynamicBody;
+	bodyDef = new b2BodyDef;
+	bodyDef->position = b2Vec2(getPosition().x / g_P2MScale, getPosition().y / g_P2MScale);
+    bodyDef->type = b2_dynamicBody;
 
-    body = gameWorld->CreateBody(&bodyDef);
+    body = gameWorld->CreateBody(bodyDef);
 
-    b2PolygonShape shape;
-	shape.SetAsBox(((getLocalBounds().width) / 2) / g_P2MScale, ((getLocalBounds().height) / 2) / g_P2MScale);
+    physShape = new b2PolygonShape;
+	physShape->SetAsBox(((getLocalBounds().width) / 2) / g_P2MScale, ((getLocalBounds().height) / 2) / g_P2MScale);
 
-    b2FixtureDef fixtureDef;
-    fixtureDef.density = 1.f;
-	fixtureDef.friction = 0.5f;
-	fixtureDef.restitution = 0.5f;
-    fixtureDef.shape = &shape;
+    fixtureDef = new b2FixtureDef;
+    fixtureDef->density = density;
+	fixtureDef->friction = friction;
+	fixtureDef->restitution = restitution;
+    fixtureDef->shape = physShape;
 
-    body->CreateFixture(&fixtureDef);
+	body->SetFixedRotation(fixedAngle);
+    body->CreateFixture(fixtureDef);
 }

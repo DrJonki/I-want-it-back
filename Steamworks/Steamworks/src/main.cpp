@@ -2,19 +2,30 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D\Box2D.h>
 
+#include <Windows.h>
+#include <cstdlib>
+#include <iostream>
+
 #include "Globals.h"
 #include "Sprite.h"
 #include "Player.h"
 #include "World.h"
+#include "DebugConsole.h"
 
 namespace
 {
 	bool exitState = false;
 
+	DebugConsole* debug;
+
 	sf::RenderWindow gameWindow;
 	sf::Event e;
 	sf::Clock updateClock;
-	sf::Time updateTime;
+
+	sf::Time monUpdateTime;
+
+	int testInt = 0;
+	float testFloat = 0.f;
 
 	World world;
 	Player player(world.getWorldPtr());
@@ -24,6 +35,13 @@ void init()
 {
 	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Steamworks", sf::Style::Close);
 	gameWindow.setVerticalSyncEnabled(0);
+
+	if (g_debug){
+		debug = new DebugConsole;
+		debug->assignPtr(&monUpdateTime, "Update time (ms): ");
+		debug->assignPtr(&testInt, "Test int: ");
+		debug->assignPtr(&testFloat, "Test float: ");
+	}
 	
 	updateClock.restart();
 }
@@ -31,6 +49,8 @@ void init()
 void deInit()
 {
 	gameWindow.close();
+
+	if (debug != 0) delete debug;
 }
 
 void update()
@@ -42,6 +62,15 @@ void update()
 
 	world.physStep();
 	//End of update loop
+
+	if (g_debug){
+		monUpdateTime = updateClock.getElapsedTime();
+
+		debug->draw();
+	}
+
+	testInt++;
+	testFloat += 0.025f;
 }
 
 void render()
@@ -71,7 +100,7 @@ int main()
 	init();
 
 	while (!exitState){
-		updateTime = updateClock.getElapsedTime();
+		sf::Time updateTime = updateClock.getElapsedTime();
 
 		if (g_useVSync){
 			if (updateTime.asSeconds() > g_updateTimerValue){
@@ -85,7 +114,7 @@ int main()
 				update();
 				pollEvents();
 			}
-		render();
+			render();
 		}
 
 	}

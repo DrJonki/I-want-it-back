@@ -49,6 +49,12 @@
     <Filter Include="Header Files\Graphics\Animation">
       <UniqueIdentifier>{85f2722e-d8a7-426c-adf6-8a1f90634153}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Util\Debug">
+      <UniqueIdentifier>{490efb45-beaa-45fb-8c40-1a3794eae4ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Debug">
+      <UniqueIdentifier>{f093f9ae-a667-441e-ac09-8c18cdcca36c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -87,6 +93,12 @@
     <ClCompile Include="src\Sound.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="src\DebugConsole.cpp">
+      <Filter>Source Files\Util\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugObject.cpp">
+      <Filter>Source Files\Util\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -124,6 +136,12 @@
     </ClInclude>
     <ClInclude Include="src\Sound.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugConsole.h">
+      <Filter>Header Files\Util\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugObject.h">
+      <Filter>Header Files\Util\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

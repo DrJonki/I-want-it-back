@@ -1,1 +1,31 @@
-This folder needs to remain in this directory.
+This folder needs to remain in this directory if run through Visual Studio. Otherwise it needs to be copied to executable location.
+
+
+The folder structure is advised to be maintained according to the following:
+
+
+Resources\
+
+- Audio
+  - Sound
+    - Actor
+      - Player
+      - Monster
+      - etc.
+    - Other
+      - Machinery
+      - etc.
+  - Music
+
+- Fonts
+
+- Graphics
+  - Actor
+    - Player
+    - Monster
+    - etc.
+  - Level
+    - LevelName
+  - Other
+    - Machinery
+    - etc.
