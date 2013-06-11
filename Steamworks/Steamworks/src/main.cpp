@@ -21,10 +21,11 @@ namespace
 	sf::RenderWindow gameWindow;
 	sf::Event e;
 	sf::Clock updateClock;
+	sf::Clock uptimeClock;
 
 	sf::Time monUpdateTime;
 
-	int testInt = 0;
+	int upTime = 0;
 	float testFloat = 0.f;
 
 	World world;
@@ -39,7 +40,7 @@ void init()
 	if (g_debug){
 		debug = new DebugConsole;
 		debug->assignPtr(&monUpdateTime, "Update time (ms): ");
-		debug->assignPtr(&testInt, "Test int: ");
+		debug->assignPtr(&upTime, "Uptime: ");
 		debug->assignPtr(&testFloat, "Test float: ");
 	}
 	
@@ -65,11 +66,12 @@ void update()
 
 	if (g_debug){
 		monUpdateTime = updateClock.getElapsedTime();
+		sf::Time sfUpTime = uptimeClock.getElapsedTime();
+		upTime = sfUpTime.asSeconds();
 
 		debug->draw();
 	}
 
-	testInt++;
 	testFloat += 0.025f;
 }
 
