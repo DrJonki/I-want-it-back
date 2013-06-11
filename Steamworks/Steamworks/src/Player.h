@@ -5,6 +5,7 @@
 #include <Box2D\Box2D.h>
 
 #include "Sprite.h"
+#include "ContactListener.h"
 
 class Player : public Sprite
 {
@@ -33,5 +34,7 @@ private:
 		SHOOTING_RIGHT
 	};
 
+	b2FixtureDef* auxFix;
+	void createSensor();
 };
 

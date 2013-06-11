@@ -99,6 +99,9 @@
     <ClCompile Include="src\DebugObject.cpp">
       <Filter>Source Files\Util\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\ContactListener.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="src\DebugObject.h">
       <Filter>Header Files\Util\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ContactListener.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

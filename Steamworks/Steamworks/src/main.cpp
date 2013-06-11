@@ -35,12 +35,12 @@ namespace
 void init()
 {
 	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Steamworks", sf::Style::Close);
-	gameWindow.setVerticalSyncEnabled(0);
+	gameWindow.setVerticalSyncEnabled(g_useVSync);
 
 	if (g_debug){
 		debug = new DebugConsole;
 		debug->assignPtr(&monUpdateTime, "Update time (ms): ");
-		debug->assignPtr(&upTime, "Uptime: ");
+		debug->assignPtr(&upTime, "Uptime (s): ");
 		debug->assignPtr(&testFloat, "Test float: ");
 	}
 	
@@ -67,7 +67,7 @@ void update()
 	if (g_debug){
 		monUpdateTime = updateClock.getElapsedTime();
 		sf::Time sfUpTime = uptimeClock.getElapsedTime();
-		upTime = sfUpTime.asSeconds();
+		upTime = (int)sfUpTime.asSeconds();
 
 		debug->draw();
 	}

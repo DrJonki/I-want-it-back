@@ -21,7 +21,7 @@ public:
 
 		dObject.back().setFont(defaultFont);
 		dObject.back().setCharacterSize(textProps.charSize);
-		dObject.back().setPosition(textProps.x, textProps.y);
+		dObject.back().setPosition((float)textProps.x, (float)textProps.y);
 
 		textProps.y += (textProps.charSize + 2);
 	}
