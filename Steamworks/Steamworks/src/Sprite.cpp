@@ -3,7 +3,7 @@
 
 Sprite::Sprite(void)
 {
-	world->SetContactListener(&cListener);
+	
 }
 
 Sprite::~Sprite(void)

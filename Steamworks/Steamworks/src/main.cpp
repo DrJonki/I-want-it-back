@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "World.h"
 #include "DebugConsole.h"
+#include "Particle.h"
 
 namespace
 {
@@ -23,6 +24,7 @@ namespace
 	sf::Clock updateClock;
 	sf::Clock uptimeClock;
 
+	sf::Time updateTime;
 	sf::Time monUpdateTime;
 
 	int upTime = 0;
@@ -60,7 +62,6 @@ void update()
 
 	//Update loop here
 	player.update();
-
 	world.physStep();
 	//End of update loop
 
@@ -82,7 +83,6 @@ void render()
 	//Object rendering here
 	gameWindow.draw(player);
 	world.draw(gameWindow);
-	
 	//End of render loop
 
 	gameWindow.display();
@@ -91,7 +91,7 @@ void render()
 void pollEvents()
 {
 	while (gameWindow.pollEvent(e)){
-		if (e.type == sf::Event::Closed){
+		if (e.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
 			exitState = true;
 		}
 	}
@@ -102,7 +102,8 @@ int main()
 	init();
 
 	while (!exitState){
-		sf::Time updateTime = updateClock.getElapsedTime();
+		updateTime = updateClock.getElapsedTime();
+
 
 		if (g_useVSync){
 			if (updateTime.asSeconds() > g_updateTimerValue){

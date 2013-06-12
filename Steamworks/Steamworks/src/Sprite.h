@@ -6,7 +6,6 @@
 
 #include "Globals.h"
 #include "SpriteAnimation.h"
-#include "ContactListener.h"
 
 class Sprite : public sf::Sprite
 {
@@ -28,8 +27,6 @@ protected:
 	b2Body* body;
 
 	b2World* world;
-
-	ContactListener cListener;
 
 	void createPhysBody(b2World *gameWorld,
 						const float density,

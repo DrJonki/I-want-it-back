@@ -22,7 +22,7 @@ static const float g_worldGravity = 25.f;
 //Pixels2Metric & vice-versa. Needed to make B2D and SFML work together.
 //When converting from SFML units(pixels) to B2D meters, divide by this value.
 //When converting from B2D units to SFML, multiply by this value.
-static const float g_P2MScale = 30.f;
+static const float g_P2MScale = 128.f;
 
 //Resource directory strings for quick access
 //Audio
@@ -37,4 +37,5 @@ static const float g_P2MScale = 30.f;
 #define RES_GRAPHICS_ACTOR "Resources/Graphics/Actor/"
 #define RES_GRAPHICS_LEVEL "Resources/Graphics/Level/"
 #define RES_GRAPHICS_OTHER "Resources/Graphics/Other/"
+#define RES_GRAPHICS_PARTICLE "Resources/Graphics/Particles/"
 

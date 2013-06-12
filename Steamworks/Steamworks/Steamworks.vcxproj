@@ -14,6 +14,7 @@
     <ProjectGuid>{4CFFD4D7-53A9-4155-B005-4089A93C9C80}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Steamworks</RootNamespace>
+    <ProjectName>I want it back</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -94,6 +95,7 @@
     <ClCompile Include="src\GameText.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Randomizer.cpp" />
     <ClCompile Include="src\RichText.cpp" />
@@ -111,6 +113,7 @@
     <ClInclude Include="src\GameText.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Map.h" />
+    <ClInclude Include="src\Particle.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Randomizer.h" />
     <ClInclude Include="src\RichText.hpp" />

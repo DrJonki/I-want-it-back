@@ -34,7 +34,9 @@ private:
 		SHOOTING_RIGHT
 	};
 
-	b2FixtureDef* auxFix;
 	void createSensor();
+	void loadAnimations();
+
+	ContactListener cListener;
 };
 

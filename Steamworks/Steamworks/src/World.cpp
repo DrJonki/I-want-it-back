@@ -5,8 +5,10 @@ World::World(void)
 {
 	b2Vec2 gravity(0.f, g_worldGravity);
 	gameWorld = new b2World(gravity);
+	gameWorld->SetAllowSleeping(true);
 	
-	createGround(400.f, 500.f, (float)g_windowWidth / 2, 10.f);
+	
+	createGround(400.f, 500.f, (float)g_windowWidth, 10.f);
 }
 World::~World(void)
 {
@@ -16,7 +18,7 @@ World::~World(void)
 //Public
 void World::physStep()
 {
-	gameWorld->Step(1.f / 60.f, 8, 3);
+	gameWorld->Step(g_updateTimerValue, 8.f, 3.f);
 }
 
 //Private
