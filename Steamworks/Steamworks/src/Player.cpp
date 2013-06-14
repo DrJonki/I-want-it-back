@@ -3,6 +3,8 @@
 
 Player::Player(b2World *gameWorld)
 {
+	cListener.setID(1);
+
 	world = gameWorld;
 
 	animations.emplace_back(SpriteAnimation());
@@ -17,8 +19,8 @@ Player::Player(b2World *gameWorld)
 	setOrigin(getLocalBounds().width / 2, getLocalBounds().height / 2);
 	setPosition(400, 100);
 
-	createPhysBody(world, 1.f, 1.f, 0.f, 1.0f);
-	createSensor();
+	createPhysBody(world, 1.f, 1.f, 0.f, 1.0f, true);
+	createSensor(1);
 
 	world->SetContactListener(&cListener);
 }
@@ -26,7 +28,6 @@ Player::Player(b2World *gameWorld)
 
 Player::~Player(void)
 {
-	
 }
 
 void Player::update()
@@ -39,21 +40,26 @@ void Player::update()
 		body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
 	}
 
-	float accel = 100.f;
-	float maxSpeed = 5.f;
+	float accel = 120.f;
+	float maxSpeed = 3.f;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && cListener.canJump()){
-		if (body->GetLinearVelocity().x > -maxSpeed){
-			b2Vec2 force(-accel, 0);
-			body->ApplyForceToCenter(force);
+		b2Vec2 force(-accel, 0);
+		body->ApplyForceToCenter(force);
+		//body->ApplyLinearImpulse(force, b2Vec2(0, 0));
+
+		if (body->GetLinearVelocity().x < -maxSpeed){
+			body->SetLinearVelocity(b2Vec2(-maxSpeed, 0));
 		}
 	}
 
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && cListener.canJump()){
-		if (body->GetLinearVelocity().x < maxSpeed){
-			b2Vec2 force(accel, 0);
-			body->ApplyForceToCenter(force);
-			
+		b2Vec2 force(accel, 0);
+		body->ApplyForceToCenter(force);
+		//body->ApplyLinearImpulse(force, b2Vec2(0, 0));
+
+		if (body->GetLinearVelocity().x > maxSpeed){
+			body->SetLinearVelocity(b2Vec2(maxSpeed, 0));
 		}
 	}
 
@@ -62,7 +68,7 @@ void Player::update()
 
 
 //Private
-void Player::createSensor()
+void Player::createSensor(const int id)
 {
 	b2FixtureDef auxFix;
 	b2PolygonShape shape;
@@ -70,7 +76,7 @@ void Player::createSensor()
 
 	auxFix.isSensor = true;
 	auxFix.shape = &shape;
-	auxFix.userData = (void*)3;
+	auxFix.userData = (void*)id;
 
 	b2Fixture* footSensorFixture = body->CreateFixture(&auxFix);
 }

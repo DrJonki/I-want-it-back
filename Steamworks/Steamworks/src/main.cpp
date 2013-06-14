@@ -27,11 +27,13 @@ namespace
 	sf::Time updateTime;
 	sf::Time monUpdateTime;
 
+	sf::View view[3];
+
 	int upTime = 0;
-	float testFloat = 0.f;
 
 	World world;
-	Player player(world.getWorldPtr());
+
+	sf::RectangleShape shaper;
 }
 
 void init()
@@ -43,9 +45,28 @@ void init()
 		debug = new DebugConsole;
 		debug->assignPtr(&monUpdateTime, "Update time (ms): ");
 		debug->assignPtr(&upTime, "Uptime (s): ");
-		debug->assignPtr(&testFloat, "Test float: ");
 	}
-	
+
+	//Top view
+	view[0].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.25f));
+	view[0].setSize(sf::Vector2f(g_windowWidth, g_windowHeight / 2));
+	view[0].setViewport(sf::FloatRect(0, 0, 1.f, 0.5f));
+
+	//Bottom view
+	view[1].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.75f));
+	view[1].setSize(sf::Vector2f(g_windowWidth, g_windowHeight / 2));
+	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));
+
+	//Whole view
+	view[2].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight / 2));
+	view[2].setSize(sf::Vector2f(g_windowWidth, g_windowHeight));
+	view[2].setViewport(sf::FloatRect(0, 0, 1.f, 1.f));
+
+	shaper.setSize(sf::Vector2f(g_windowWidth - 100, 20));
+	shaper.setOutlineThickness(2);
+	shaper.setOutlineColor(sf::Color::Green);
+	shaper.setPosition(50, g_windowHeight / 2 - 10);
+
 	updateClock.restart();
 }
 
@@ -61,7 +82,6 @@ void update()
 	updateClock.restart();
 
 	//Update loop here
-	player.update();
 	world.physStep();
 	//End of update loop
 
@@ -72,17 +92,31 @@ void update()
 
 		debug->draw();
 	}
-
-	testFloat += 0.025f;
 }
 
 void render()
 {
 	gameWindow.clear();
 
-	//Object rendering here
-	gameWindow.draw(player);
+	//Rendering for top view
+	gameWindow.setView(view[0]);
+
 	world.draw(gameWindow);
+
+
+	//Rendering for bottomview
+	gameWindow.setView(view[1]);
+
+	world.draw(gameWindow);
+
+
+
+
+	//UI rendering
+	gameWindow.setView(view[2]);
+
+	gameWindow.draw(shaper);
+
 	//End of render loop
 
 	gameWindow.display();

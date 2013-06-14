@@ -9,6 +9,8 @@ public:
 	ContactListener(void);
 	~ContactListener(void);
 
+	void setID(const int id) { _id = id; };
+
 	void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact);
 
@@ -19,5 +21,7 @@ private:
 	sf::Clock jumpTimeout;
 
 	int footContacts;
+
+	int _id;
 };
 

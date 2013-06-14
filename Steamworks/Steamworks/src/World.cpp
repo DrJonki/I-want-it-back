@@ -8,7 +8,7 @@ World::World(void)
 	gameWorld->SetAllowSleeping(true);
 	
 	
-	createGround(400.f, 500.f, (float)g_windowWidth, 10.f);
+	createGround(g_windowWidth / 2, 400.f, (float)g_windowWidth / 2, 10.f);
 }
 World::~World(void)
 {
@@ -19,6 +19,7 @@ World::~World(void)
 void World::physStep()
 {
 	gameWorld->Step(g_updateTimerValue, 8.f, 3.f);
+	gameWorld->ClearForces();
 }
 
 //Private

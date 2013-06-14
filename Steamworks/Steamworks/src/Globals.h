@@ -8,7 +8,7 @@
 #endif
 
 //Window dimensions
-static const int g_windowWidth = 800, g_windowHeight = 600;
+static const int g_windowWidth = 1920, g_windowHeight = 1080;
 
 //Vertical sync setting
 static const bool g_useVSync = true;

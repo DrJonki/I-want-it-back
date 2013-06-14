@@ -34,8 +34,9 @@ private:
 		SHOOTING_RIGHT
 	};
 
-	void createSensor();
+	void createSensor(const int);
 	void loadAnimations();
+
 
 	ContactListener cListener;
 };

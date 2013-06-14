@@ -95,6 +95,7 @@
     <ClCompile Include="src\GameText.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\Misc.cpp" />
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Randomizer.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="src\GameText.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Map.h" />
+    <ClInclude Include="src\Misc.h" />
     <ClInclude Include="src\Particle.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Randomizer.h" />

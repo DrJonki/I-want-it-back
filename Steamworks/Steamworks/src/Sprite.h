@@ -21,11 +21,7 @@ protected:
 	std::vector<SpriteAnimation> animations;
 
 	//Pointers to access sprite's Box2D elements
-	//b2BodyDef* bodyDef;
-	//b2PolygonShape* physShape;
-	//b2FixtureDef* fixtureDef;
 	b2Body* body;
-
 	b2World* world;
 
 	void createPhysBody(b2World *gameWorld,
