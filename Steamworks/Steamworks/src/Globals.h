@@ -39,3 +39,5 @@ static const float g_P2MScale = 128.f;
 #define RES_GRAPHICS_OTHER "Resources/Graphics/Other/"
 #define RES_GRAPHICS_PARTICLE "Resources/Graphics/Particles/"
 
+//Official levels
+#define LEVEL_DATA "Levels/"

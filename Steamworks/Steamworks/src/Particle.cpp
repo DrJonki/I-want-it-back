@@ -31,7 +31,7 @@ void Particle::update()
 		m_count = 0;
 	}
 
-	for (int i = 0; i < particle.size(); i++){
+	for (unsigned int i = 0; i < particle.size(); i++){
 		particle[i].move(particleVector[i]);
 		particle[i].rotate(1);
 		particle[i].setFillColor(sf::Color(particle[i].getFillColor().r,
@@ -48,7 +48,7 @@ void Particle::update()
 
 void Particle::draw(sf::RenderWindow& window)
 {
-	for (int i = 0; i < particle.size(); i++){
+	for (unsigned int i = 0; i < particle.size(); i++){
 		window.draw(particle[i]);
 	}
 }

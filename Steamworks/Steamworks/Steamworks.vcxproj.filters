@@ -75,9 +75,6 @@
     <ClCompile Include="src\FileIO.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameButton.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameText.cpp">
       <Filter>Source Files\Graphics\Text</Filter>
     </ClCompile>
@@ -108,6 +105,12 @@
     <ClCompile Include="src\Misc.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\Gui.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MapObject.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -126,9 +129,6 @@
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="src\FileIO.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameButton.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\GameText.h">
@@ -160,6 +160,12 @@
     </ClInclude>
     <ClInclude Include="src\Misc.h">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gui.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MapObject.h">
+      <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

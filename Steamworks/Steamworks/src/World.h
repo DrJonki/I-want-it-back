@@ -7,27 +7,21 @@
 #include "Map.h"
 #include "Globals.h"
 
-class World : public Map
+class World
 {
 public:
-	World(void);
+	World(sf::RenderWindow* window);
 	~World(void);
 
 	void physStep();
-	void draw(sf::RenderWindow& window) { window.draw(s); };
+	void draw();
 
-	b2World* getWorldPtr() { return gameWorld; };
+	b2World* getWorldPtr() { return _gameWorld; };
 
 private:
-	void createGround(const float sizeX,
-					  const float sizeY,
-					  const float posX = 0,
-					  const float posY = 0);
+	b2World* _gameWorld;
+	sf::RenderWindow* _window;
 
-	sf::RectangleShape s;
-
-protected:
-	b2World *gameWorld;
-	
+	Map _gameMap;
 };
 

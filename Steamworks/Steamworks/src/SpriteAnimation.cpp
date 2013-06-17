@@ -26,7 +26,7 @@ void SpriteAnimation::loadSheet(sf::Image &sheet,
 
 	frameTexture.reserve(_frameCount);
 
-	for (int i = 0; i < _frameCount; i++){
+	for (unsigned int i = 0; i < _frameCount; i++){
 		frameTexture.emplace_back(sf::Texture());
 		
 		frameTexture[i].loadFromImage(sheet, sf::IntRect((i * frameSizeX) + startX, startY, frameSizeX, frameSizeY));

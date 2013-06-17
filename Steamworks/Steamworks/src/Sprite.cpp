@@ -14,7 +14,7 @@ Sprite::~Sprite(void)
 //Public
 void Sprite::resetAnimations(const unsigned int exception)
 {
-	for (int i = 0; i < animations.size(); i++){
+	for (unsigned int i = 0; i < animations.size(); i++){
 		if (i != exception) animations[i].setCurrentFrame(1);
 	}
 }
