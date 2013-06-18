@@ -17,7 +17,6 @@ Dokumentaation sisältäminen projektiin ei ole suositeltavaa. Käytä sen sijaa
 Credits
 =========
 
-- Tommi Helin, pääohjelmoija
 - Joona Tiinanen, ohjelmoija
 - [Lisää itsesi jos siltä tuntuu]
 

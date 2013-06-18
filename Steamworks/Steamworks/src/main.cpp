@@ -1,5 +1,6 @@
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
+#include <SFML\System.hpp>
+#include <SFML\Graphics.hpp>
+#include <SFML\OpenGL.hpp>
 #include <Box2D\Box2D.h>
 
 #include <Windows.h>
@@ -118,7 +119,7 @@ void render()
 	gameWindow.draw(sShape);
 
 	//End of render loop
-
+	glFlush();
 	gameWindow.display();
 }
 
