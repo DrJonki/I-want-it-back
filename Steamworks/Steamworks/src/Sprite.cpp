@@ -8,7 +8,7 @@ Sprite::Sprite(void)
 
 Sprite::~Sprite(void)
 {
-	world->DestroyBody(body);
+	_world->DestroyBody(_body);
 }
 
 //Public
@@ -23,21 +23,21 @@ void Sprite::resetAnimations(const unsigned int exception)
 //Private
 
 //Protected
-void Sprite::createPhysBody(b2World *gameWorld,
-							const float density,
+void Sprite::createPhysBody(const float density,
 							const float friction,
 							const float restitution,
-							const float offset,
+							const float bBoxModX,
+							const float bBoxModY,
 							const bool fixedAngle)
 {
 	b2BodyDef bodyDef;
 	bodyDef.position = b2Vec2(getPosition().x / g_P2MScale, getPosition().y / g_P2MScale);
     bodyDef.type = b2_dynamicBody;
 
-    body = gameWorld->CreateBody(&bodyDef);
+    _body = _world->CreateBody(&bodyDef);
 	
     b2PolygonShape physShape;
-	physShape.SetAsBox((((getLocalBounds().width) / 2) * offset) / g_P2MScale, (((getLocalBounds().height) / 2) * offset) / g_P2MScale);
+	physShape.SetAsBox((((getLocalBounds().width) / 2) * bBoxModX) / g_P2MScale, (((getLocalBounds().height) / 2) * bBoxModY) / g_P2MScale);
 
     b2FixtureDef fixtureDef;
     fixtureDef.density = density;
@@ -45,6 +45,6 @@ void Sprite::createPhysBody(b2World *gameWorld,
 	fixtureDef.restitution = restitution;
     fixtureDef.shape = &physShape;
 
-	body->SetFixedRotation(fixedAngle);
-    body->CreateFixture(&fixtureDef);
+	_body->SetFixedRotation(fixedAngle);
+    _body->CreateFixture(&fixtureDef);
 }

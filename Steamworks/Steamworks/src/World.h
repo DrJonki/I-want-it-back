@@ -16,10 +16,10 @@ public:
 	void physStep();
 	void draw();
 
-	b2World* getWorldPtr() { return _gameWorld; };
+	b2World* getWorldPtr() { return _world; };
 
 private:
-	b2World* _gameWorld;
+	b2World* _world;
 	sf::RenderWindow* _window;
 
 	Map _gameMap;

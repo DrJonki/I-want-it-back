@@ -27,11 +27,13 @@ namespace
 	sf::View view[3];
 
 	World world(&gameWindow);
+
+	sf::RectangleShape sShape;
 }
 
 void init()
 {
-	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Steamworks", sf::Style::Close);
+	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Template title :(", sf::Style::Fullscreen);
 	gameWindow.setVerticalSyncEnabled(g_useVSync);
 
 	if (g_debug){
@@ -42,6 +44,7 @@ void init()
 	view[0].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.25f));
 	view[0].setSize(sf::Vector2f((float)g_windowWidth, (float)g_windowHeight / 2));
 	view[0].setViewport(sf::FloatRect(0, 0, 1.f, 0.5f));
+	//view[0].zoom(0.5f);
 
 	//Bottom view
 	view[1].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.75f));
@@ -52,6 +55,13 @@ void init()
 	view[2].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight / 2));
 	view[2].setSize(sf::Vector2f((float)g_windowWidth, (float)g_windowHeight));
 	view[2].setViewport(sf::FloatRect(0, 0, 1.f, 1.f));
+
+	sShape.setFillColor(sf::Color::Black);
+	sShape.setOutlineThickness(2);
+	sShape.setOutlineColor(sf::Color::Yellow);
+	sShape.setSize(sf::Vector2f(g_windowWidth, 11));
+	sShape.setOrigin(0, 6);
+	sShape.setPosition(0, g_windowHeight / 2);
 
 	updateClock.restart();
 }
@@ -69,6 +79,15 @@ void update()
 
 	//Update loop here
 	world.physStep();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+		view[0].move(5, 0);
+		view[1].move(5, 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+		view[0].move(-5, 0);
+		view[1].move(-5, 0);
+	}
 	//End of update loop
 
 	if (g_debug){
@@ -96,6 +115,7 @@ void render()
 	//UI rendering
 	gameWindow.setView(view[2]);
 
+	gameWindow.draw(sShape);
 
 	//End of render loop
 

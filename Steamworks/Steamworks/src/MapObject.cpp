@@ -1,7 +1,16 @@
 #include "MapObject.h"
 
 
-MapObject::MapObject(const float sizeX,
+MapObject::MapObject(void)
+{}
+
+
+MapObject::~MapObject(void)
+{}
+
+
+void MapObject::load(b2World* world,
+					 const float sizeX,
 					 const float sizeY,
 					 const float posX,
 					 const float posY,
@@ -9,12 +18,14 @@ MapObject::MapObject(const float sizeX,
 					 const float bBoxModX,
 					 const float bBoxModY)
 {
-	_shape.setSize(sf::Vector2f(sizeX, sizeY));
-	_shape.setOrigin(sizeX / 2, sizeY / 2);
-	_shape.setPosition(posX, posY);
+	_world = world;
+
+	setSize(sf::Vector2f(sizeX, sizeY));
+	setOrigin(sizeX / 2, sizeY / 2);
+	setPosition(posX, posY);
 
 	_texture.loadFromFile(textureDir);
-	_shape.setTexture(&_texture);
+	setTexture(&_texture);
 
 	//Phys body
 	b2BodyDef bodyDef;
@@ -31,9 +42,4 @@ MapObject::MapObject(const float sizeX,
     fixtureDef.shape = &shape;
 
 	_body->CreateFixture(&fixtureDef);
-}
-
-
-MapObject::~MapObject(void)
-{
 }

@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BackgroundObject.cpp" />
     <ClCompile Include="src\ContactListener.cpp" />
     <ClCompile Include="src\DebugConsole.cpp" />
     <ClCompile Include="src\DebugObject.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BackgroundObject.h" />
     <ClInclude Include="src\ContactListener.h" />
     <ClInclude Include="src\DebugConsole.h" />
     <ClInclude Include="src\DebugObject.h" />

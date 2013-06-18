@@ -111,6 +111,9 @@
     <ClCompile Include="src\MapObject.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
+    <ClCompile Include="src\BackgroundObject.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\MapObject.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BackgroundObject.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>

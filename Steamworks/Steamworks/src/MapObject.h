@@ -5,10 +5,15 @@
 
 #include "Globals.h"
 
-class MapObject
+class MapObject : public sf::RectangleShape
 {
 public:
-	MapObject(const float sizeX,
+	MapObject(void);
+
+	~MapObject(void);
+
+	void load(b2World* world,
+			  const float sizeX,
 			  const float sizeY,
 			  const float posX,
 			  const float posY,
@@ -16,12 +21,8 @@ public:
 			  const float bBoxModX = 1.0f,
 			  const float bBoxModY = 1.0f);
 
-	~MapObject();
-
-	sf::RectangleShape _shape;
-	
-	b2World* _world;
 private:
+	b2World* _world;
 	b2Body* _body;
 	
 	sf::Texture _texture;

@@ -8,7 +8,7 @@
 #endif
 
 //Window dimensions
-static const int g_windowWidth = 1920, g_windowHeight = 1080;
+static const int g_windowWidth = 1920, g_windowHeight = 1200;
 
 //Vertical sync setting
 static const bool g_useVSync = true;
@@ -25,19 +25,5 @@ static const float g_worldGravity = 25.f;
 static const float g_P2MScale = 128.f;
 
 //Resource directory strings for quick access
-//Audio
-#define RES_AUDIO_SOUND_ACTOR "Resources/Audio/Sound/Actor/"
-#define RES_AUDIO_SOUND_OTHER "Resources/Audio/Sound/Other/"
-#define RES_AUDIO_MUSIC "Resources/Audio/Music/"
-
 //Fonts
-#define RES_FONTS "Resources/Fonts/"
-
-//Graphics
-#define RES_GRAPHICS_ACTOR "Resources/Graphics/Actor/"
-#define RES_GRAPHICS_LEVEL "Resources/Graphics/Level/"
-#define RES_GRAPHICS_OTHER "Resources/Graphics/Other/"
-#define RES_GRAPHICS_PARTICLE "Resources/Graphics/Particles/"
-
-//Official levels
-#define LEVEL_DATA "Levels/"
+#define RES_FONTS "Resources/Common/Fonts/"

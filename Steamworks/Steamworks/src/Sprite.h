@@ -21,13 +21,13 @@ protected:
 	std::vector<SpriteAnimation> animations;
 
 	//Pointers to access sprite's Box2D elements
-	b2Body* body;
-	b2World* world;
+	b2Body* _body;
+	b2World* _world;
 
-	void createPhysBody(b2World *gameWorld,
-						const float density,
+	void createPhysBody(const float density,
 						const float friction,
 						const float restitution,
-						const float offset,
+						const float bBoxModX,
+						const float bBoxModY,
 						const bool fixedAngle = true);
 };
