@@ -7,7 +7,10 @@ Map::Map(void) : _window(nullptr),
 {}
 
 Map::~Map(void)
-{}
+{
+	_backGroundObject.clear();
+	_mapObjects.clear();
+}
 
 void Map::load(b2World* world,
 			   sf::RenderWindow* window,
@@ -20,9 +23,13 @@ void Map::load(b2World* world,
 	_campaign = campaign;
 	_level = level;
 
+
+	_backGroundObject.clear();
+	_mapObjects.clear();
 	_backGroundObject.reserve(100);
-	_mapObjects.reserve(1000);
+	_mapObjects.reserve(100);
 	
+
 	createBackgrounds();
 	createStatics();
 }
@@ -30,11 +37,11 @@ void Map::load(b2World* world,
 
 void Map::draw()
 {
-	for (int i = 0; i < _backGroundObject.size(); i++){
+	for (unsigned int i = 0; i < _backGroundObject.size(); i++){
 		_window->draw(_backGroundObject[i]);
 	}
 
-	for (int i = 0; i < _mapObjects.size(); i++){
+	for (unsigned int i = 0; i < _mapObjects.size(); i++){
 		_window->draw(_mapObjects[i]);
 	}
 }

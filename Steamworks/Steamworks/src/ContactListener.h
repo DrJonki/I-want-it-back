@@ -9,19 +9,28 @@ public:
 	ContactListener(void);
 	~ContactListener(void);
 
-	void setID(const int id) { _id = id; };
-
 	void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact);
 
-	bool canJump();
+	bool touchingTop();
+	bool touchingLeft();
+	bool touchingBottom();
+	bool touchingRight();
 	
 private:
 
-	sf::Clock jumpTimeout;
+	sf::Clock _timeout;
+	sf::Time _timeout_t;
 
-	int footContacts;
+	int _topContacts, _leftContacts, _bottomContacts, _rightContacts;
 
-	int _id;
+	//Enumeration for the different sensors
+	static const enum
+	{
+		SEN_TOP = 0x11,
+		SEN_LEFT = 0x12,
+		SEN_BOTTOM = 0x13,
+		SEN_RIGHT = 0x14
+	};
 };
 

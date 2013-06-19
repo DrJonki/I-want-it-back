@@ -22,7 +22,6 @@ public:
 			  const float bBoxModY = 1.0f);
 
 private:
-	b2World* _world;
 	b2Body* _body;
 	
 	sf::Texture _texture;

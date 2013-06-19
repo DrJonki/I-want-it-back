@@ -29,12 +29,13 @@ namespace
 
 	World world(&gameWindow);
 
+	Player player(world.getWorldPtr());
 	sf::RectangleShape sShape;
 }
 
 void init()
 {
-	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Template title :(", sf::Style::Fullscreen);
+	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Template title :(", sf::Style::Close);
 	gameWindow.setVerticalSyncEnabled(g_useVSync);
 
 	if (g_debug){
@@ -42,14 +43,19 @@ void init()
 	}
 
 	//Top view
-	view[0].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.25f));
+	/*view[0].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.25f));
 	view[0].setSize(sf::Vector2f((float)g_windowWidth, (float)g_windowHeight / 2));
+	view[0].setViewport(sf::FloatRect(0, 0, 1.f, 0.5f));*/
+	view[0].setCenter(sf::Vector2f(g_windowWidth / 2, 300));
+	view[0].setSize(sf::Vector2f((float)g_windowWidth, 600));
 	view[0].setViewport(sf::FloatRect(0, 0, 1.f, 0.5f));
-	//view[0].zoom(0.5f);
 
 	//Bottom view
-	view[1].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.75f));
+	/*view[1].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.75f));
 	view[1].setSize(sf::Vector2f((float)g_windowWidth, (float)g_windowHeight / 2));
+	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));*/
+	view[1].setCenter(sf::Vector2f(g_windowWidth / 2, 900));
+	view[1].setSize(sf::Vector2f((float)g_windowWidth, 600));
 	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));
 
 	//Whole view
@@ -60,7 +66,7 @@ void init()
 	sShape.setFillColor(sf::Color::Black);
 	sShape.setOutlineThickness(2);
 	sShape.setOutlineColor(sf::Color::Yellow);
-	sShape.setSize(sf::Vector2f(g_windowWidth, 11));
+	sShape.setSize(sf::Vector2f((float)g_windowWidth, 11));
 	sShape.setOrigin(0, 6);
 	sShape.setPosition(0, g_windowHeight / 2);
 
@@ -79,6 +85,7 @@ void update()
 	updateClock.restart();
 
 	//Update loop here
+	player.update();
 	world.physStep();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
@@ -105,6 +112,7 @@ void render()
 	gameWindow.setView(view[0]);
 
 	world.draw();
+	gameWindow.draw(player);
 
 
 	//Rendering for bottomview

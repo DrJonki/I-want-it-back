@@ -1,14 +1,14 @@
 #pragma once
 
 //Debug configuration
-#ifdef _DEBUG
-	static const bool g_debug = true;
-#else
+//#ifdef _DEBUG
+//	static const bool g_debug = true;
+//#else
 	static const bool g_debug = false;
-#endif
+//#endif
 
 //Window dimensions
-static const int g_windowWidth = 1920, g_windowHeight = 1200;
+static const int g_windowWidth = 1920, g_windowHeight = 1080;
 
 //Vertical sync setting
 static const bool g_useVSync = true;

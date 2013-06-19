@@ -34,9 +34,17 @@ private:
 		SHOOTING_RIGHT
 	};
 
-	void createSensor(const int);
-	void loadAnimations();
+	//Enumeration for the different sensors
+	static const enum
+	{
+		SEN_TOP = 0x11,
+		SEN_LEFT = 0x12,
+		SEN_BOTTOM = 0x13,
+		SEN_RIGHT = 0x14
+	};
 
+	void createSensors();
+	void loadAnimations();
 
 	ContactListener cListener;
 };

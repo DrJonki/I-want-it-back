@@ -18,8 +18,6 @@ void MapObject::load(b2World* world,
 					 const float bBoxModX,
 					 const float bBoxModY)
 {
-	_world = world;
-
 	setSize(sf::Vector2f(sizeX, sizeY));
 	setOrigin(sizeX / 2, sizeY / 2);
 	setPosition(posX, posY);
@@ -32,7 +30,7 @@ void MapObject::load(b2World* world,
     bodyDef.position = b2Vec2(posX/g_P2MScale, posY/g_P2MScale);
     bodyDef.type = b2_staticBody;
 
-	_body = _world->CreateBody(&bodyDef);
+	_body = world->CreateBody(&bodyDef);
 
 	b2PolygonShape shape;
 	shape.SetAsBox(((sizeX / 2) * bBoxModX) / g_P2MScale, ((sizeY / 2) * bBoxModY) / g_P2MScale);

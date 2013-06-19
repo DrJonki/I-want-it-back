@@ -27,7 +27,7 @@ protected:
 	void createPhysBody(const float density,
 						const float friction,
 						const float restitution,
-						const float bBoxModX,
-						const float bBoxModY,
+						const float bBoxModX = 1.f,
+						const float bBoxModY = 1.f,
 						const bool fixedAngle = true);
 };
