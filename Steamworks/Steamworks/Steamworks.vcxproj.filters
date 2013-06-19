@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Util\Debug">
       <UniqueIdentifier>{f093f9ae-a667-441e-ac09-8c18cdcca36c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System\Menu">
+      <UniqueIdentifier>{27e5baa2-344d-4cfe-94d3-426915041767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Menu">
+      <UniqueIdentifier>{88f4c474-aafd-4247-801d-5f447cf64433}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -114,6 +120,15 @@
     <ClCompile Include="src\BackgroundObject.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mainmenu.cpp">
+      <Filter>Source Files\System\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pausemenu.cpp">
+      <Filter>Source Files\System\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -172,6 +187,15 @@
     </ClInclude>
     <ClInclude Include="src\BackgroundObject.h">
       <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mainmenu.h">
+      <Filter>Header Files\System\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pausemenu.h">
+      <Filter>Header Files\System\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

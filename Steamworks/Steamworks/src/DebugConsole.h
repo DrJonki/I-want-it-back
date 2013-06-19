@@ -13,9 +13,9 @@ public:
 	~DebugConsole(void);
 
 	template<typename T>
-	void assignPtr(T* object, std::string title)
+	void assignPtr(T object, std::string title)
 	{
-		dObject.push_back(DebugObject());
+		dObject.emplace_back(DebugObject<>());
 
 		dObject.back().assignPtr(object, title);
 
@@ -32,7 +32,7 @@ private:
 	sf::RenderWindow debugWindow;
 	sf::Font defaultFont;
 
-	std::vector<DebugObject> dObject;
+	std::vector<DebugObject<void*>> dObject;
 
 	struct {
 		int x;

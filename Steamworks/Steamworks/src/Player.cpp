@@ -74,25 +74,25 @@ void Player::createSensors()
 
 
 	//Top sensor
-	t_shape.SetAsBox((getLocalBounds().width / 2) / g_P2MScale, (getLocalBounds().height / 6) / g_P2MScale, b2Vec2(0, (-getLocalBounds().height / 2) / g_P2MScale), 0);
+	t_shape.SetAsBox(4 / g_P2MScale, (getLocalBounds().height / 6) / g_P2MScale, b2Vec2(0, (-getLocalBounds().height / 2) / g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = (void*)SEN_TOP;
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Left sensor
-	t_shape.SetAsBox((getLocalBounds().width / 6) / g_P2MScale, (getLocalBounds().height / 2) / g_P2MScale, b2Vec2((getLocalBounds().height / 2) / g_P2MScale, 0), 0);
+	t_shape.SetAsBox((getLocalBounds().width / 6) / g_P2MScale, 4 / g_P2MScale, b2Vec2((getLocalBounds().height / 2) / g_P2MScale, 0), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = (void*)SEN_LEFT;
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Bottom sensor
-	t_shape.SetAsBox((getLocalBounds().width / 2) / g_P2MScale, (getLocalBounds().height / 6) / g_P2MScale, b2Vec2(0, (getLocalBounds().height / 2) / g_P2MScale), 0);
+	t_shape.SetAsBox(4 / g_P2MScale, (getLocalBounds().height / 6) / g_P2MScale, b2Vec2(0, (getLocalBounds().height / 2) / g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = (void*)SEN_BOTTOM;
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Right sensor
-	t_shape.SetAsBox((getLocalBounds().width / 6) / g_P2MScale, (getLocalBounds().height / 2) / g_P2MScale, b2Vec2((-getLocalBounds().height / 2) / g_P2MScale, 0), 0);
+	t_shape.SetAsBox((getLocalBounds().width / 6) / g_P2MScale, 4 / g_P2MScale, b2Vec2((-getLocalBounds().height / 2) / g_P2MScale, 0), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = (void*)SEN_LEFT;
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);

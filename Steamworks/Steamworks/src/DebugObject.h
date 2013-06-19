@@ -6,23 +6,34 @@
 
 #include "Globals.h"
 
+
+template<typename T>
 class DebugObject : public sf::Text
 {
 public:
-	DebugObject(void);
-	~DebugObject(void);
+	DebugObject(void) { _dValue = nullptr; };
+	~DebugObject(void) {};
 
-	void assignPtr(sf::Time*, std::string);
-	void assignPtr(int*, std::string);
-	void assignPtr(float*, std::string);
+	void assignPtr(T dValue, std::string dTitle){
+		_dValue = dValue;
+		_dTitle = dTitle;
+	};
 
-	void update();
+	void update(){
+		if (_dValue != 0){
+			std::string string = _dTitle;
+			std::stringstream ss;
+	
+			ss << _dValue;
+
+			string += ss.str();
+
+			setString(string);
+		}	
+	};
 
 private:
-	sf::Time* dTime;
-	int* dInt;
-	float* dFloat;
+	T* _dValue;
 
-	std::string dTitle;
+	std::string _dTitle;
 };
-

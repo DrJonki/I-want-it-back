@@ -31,6 +31,8 @@ namespace
 
 	Player player(world.getWorldPtr());
 	sf::RectangleShape sShape;
+
+	//int testI = 5;
 }
 
 void init()
@@ -40,6 +42,7 @@ void init()
 
 	if (g_debug){
 		debug = new DebugConsole;
+		//debug->assignPtr(&testI, "uhh");
 	}
 
 	//Top view
@@ -99,7 +102,6 @@ void update()
 	//End of update loop
 
 	if (g_debug){
-
 		debug->draw();
 	}
 }
