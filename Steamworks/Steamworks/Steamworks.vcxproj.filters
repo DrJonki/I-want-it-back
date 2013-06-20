@@ -75,12 +75,6 @@
     <ClCompile Include="src\Map.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="src\World.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FileIO.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameText.cpp">
       <Filter>Source Files\Graphics\Text</Filter>
     </ClCompile>
@@ -129,6 +123,12 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="src\WorldManager.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoadSettings.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -140,14 +140,8 @@
     <ClInclude Include="src\Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
     <ClInclude Include="src\Map.h">
       <Filter>Header Files\World</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FileIO.h">
-      <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\GameText.h">
       <Filter>Header Files\Graphics\Text</Filter>
@@ -196,6 +190,12 @@
     </ClInclude>
     <ClInclude Include="src\Pausemenu.h">
       <Filter>Header Files\System\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WorldManager.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoadSettings.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

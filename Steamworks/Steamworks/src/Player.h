@@ -10,9 +10,11 @@
 class Player : public Sprite
 {
 public:
-	Player(b2World *gameWorld);
+	Player();
 	~Player(void);
 
+	void loadPlayer(b2World* _world);
+	void unloadPlayer();
 
 	void update();
 private:

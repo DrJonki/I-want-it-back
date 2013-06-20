@@ -26,7 +26,7 @@ void Map::load(b2World* world,
 
 	_backGroundObject.clear();
 	_mapObjects.clear();
-	_backGroundObject.reserve(100);
+	_backGroundObject.reserve(50);
 	_mapObjects.reserve(100);
 	
 
@@ -62,32 +62,29 @@ void Map::createBackgrounds()
 	std::ifstream file(path, std::ifstream::in);
 
 	if (file.good()){
-	while (file.good()){
-		bool t_bottom = 0;
-		int t_sizeX = 0, t_sizeY = 0, t_posX = 0;
-		std::string t_textureDir;
+		while (file.good()){
+			bool t_bottom = 0;
+			int t_sizeX = 0, t_sizeY = 0, t_posX = 0;
+			std::string t_textureDir;
 
-		file >> t_bottom;
-		file >> t_sizeX;
-		file >> t_sizeY;
-		file >> t_textureDir;
+			file >> t_bottom;
+			file >> t_sizeX;
+			file >> t_sizeY;
+			file >> t_textureDir;
 		
-		if (!t_bottom && _backGroundObject.size() > 0) t_posX = _backGroundObject[temp - 1].getPosition().x + _backGroundObject[temp - 1].getLocalBounds().width;
-		else if (t_bottom && _backGroundObject.size() > 0){
-			if (_backGroundObject[temp - 1].getOrigin().y == 0) t_posX = t_posX = _backGroundObject[temp - 1].getPosition().x + _backGroundObject[temp - 1].getLocalBounds().width;
+			if (!t_bottom && _backGroundObject.size() > 0) t_posX = _backGroundObject[temp - 1].getPosition().x + _backGroundObject[temp - 1].getLocalBounds().width;
+			else if (t_bottom && _backGroundObject.size() > 0){
+				if (_backGroundObject[temp - 1].getOrigin().y == 0) t_posX = t_posX = _backGroundObject[temp - 1].getPosition().x + _backGroundObject[temp - 1].getLocalBounds().width;
+			}
+
+			_backGroundObject.emplace_back(BackgroundObject());
+			_backGroundObject.back().load(t_bottom, t_sizeX, t_sizeY, t_posX, t_textureDir);
+
+
+			if (file.peek() == '\n') temp++;
+			else if (file.peek() == file.eof()) break;
 		}
-
-		_backGroundObject.emplace_back(BackgroundObject());
-		_backGroundObject.back().load(t_bottom, t_sizeX, t_sizeY, t_posX, t_textureDir);
-
-
-		if (file.peek() == '\n') temp++;
-		else if (file.peek() == file.eof()) break;
 	}
-	}
-	
-
-
 }
 
 void Map::createStatics()
@@ -104,24 +101,30 @@ void Map::createStatics()
 	std::ifstream file(path, std::ifstream::in);
 
 	if (file.good()){
-	while (file.good()){
-		int t_sizeX = 0, t_sizeY = 0, t_posX = 0, t_posY = 0;
-		float t_bBoxModX = 0, t_bBoxModY = 0;
-		std::string t_textureDir;
+		while (file.good()){
+			int t_sizeX = 0, t_sizeY = 0, t_posX = 0, t_posY = 0;
+			float t_bBoxModX = 0, t_bBoxModY = 0;
+			float tempF[4] = {0, 0, 0 ,0};
+			std::string t_textureDir;
 
-		file >> t_sizeX;
-		file >> t_sizeY;
-		file >> t_posX;
-		file >> t_posY;
-		file >> t_bBoxModX;
-		file >> t_bBoxModY;
-		file >> t_textureDir;
+			file >> t_sizeX;
+			file >> t_sizeY;
+			file >> t_posX;
+			file >> t_posY;
+			file >> t_bBoxModX;
+			file >> t_bBoxModY;
+			file >> t_textureDir;
 
-		_mapObjects.emplace_back(MapObject());
-		_mapObjects.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir, t_bBoxModX, t_bBoxModY);
+			file >> tempF[0];
+			file >> tempF[1];
+			file >> tempF[2];
+			file >> tempF[3];
 
-		if (file.peek() == '\n') temp++;
-		else if (file.peek() == file.eof()) break;
-	}
+			_mapObjects.emplace_back(MapObject());
+			_mapObjects.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir, t_bBoxModX, t_bBoxModY);
+
+			if (file.peek() == '\n') temp++;
+			else if (file.peek() == file.eof()) break;
+		}
 	}
 }

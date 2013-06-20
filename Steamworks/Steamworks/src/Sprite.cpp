@@ -2,14 +2,10 @@
 
 
 Sprite::Sprite(void)
-{
-	
-}
+{}
 
 Sprite::~Sprite(void)
-{
-	_world->DestroyBody(_body);
-}
+{}
 
 //Public
 void Sprite::resetAnimations(const unsigned int exception)

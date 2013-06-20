@@ -1,8 +1,21 @@
 #pragma once
+
+#include <SFML\Graphics.hpp>
+
+#include "LoadSettings.h"
+
 class Mainmenu
 {
 public:
-	Mainmenu(void);
+	Mainmenu(sf::RenderWindow*);
 	~Mainmenu(void);
+
+	bool showMenu();
+	LoadSettings getSettings();
+
+private:
+
+	sf::RenderWindow* _window;
+	LoadSettings _settings;
 };
 

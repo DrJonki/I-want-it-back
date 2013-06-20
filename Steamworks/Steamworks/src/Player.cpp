@@ -1,7 +1,16 @@
 #include "Player.h"
 
 
-Player::Player(b2World* world)
+Player::Player()
+{
+	_world = nullptr;
+}
+
+
+Player::~Player(void)
+{}
+
+void Player::loadPlayer(b2World* world)
 {
 	_world = world;
 
@@ -17,9 +26,11 @@ Player::Player(b2World* world)
 	_world->SetContactListener(&cListener);
 }
 
+void Player::unloadPlayer()
+{
+	_world = nullptr;
+}
 
-Player::~Player(void)
-{}
 
 void Player::update()
 {
