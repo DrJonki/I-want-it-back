@@ -91,6 +91,7 @@
     <ClCompile Include="src\ContactListener.cpp" />
     <ClCompile Include="src\DebugConsole.cpp" />
     <ClCompile Include="src\DebugObject.cpp" />
+    <ClCompile Include="src\EngineSettings.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameText.cpp" />
     <ClCompile Include="src\Gui.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="src\ContactListener.h" />
     <ClInclude Include="src\DebugConsole.h" />
     <ClInclude Include="src\DebugObject.h" />
+    <ClInclude Include="src\EngineSettings.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameText.h" />
     <ClInclude Include="src\Globals.h" />

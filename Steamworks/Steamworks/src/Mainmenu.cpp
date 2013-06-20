@@ -2,18 +2,21 @@
 
 
 Mainmenu::Mainmenu(sf::RenderWindow* window) : _window(window)
-{
-	_settings._campaign = "Default";
-	_settings._level = "1";
-}
+{}
 
 
 Mainmenu::~Mainmenu(void)
-{}
+{
+	_window->close();
+}
 
 
 bool Mainmenu::showMenu()
 {
+	_window->create(sf::VideoMode(g_windowWidth, g_windowHeight), "Template title :(", sf::Style::Close);
+	_window->setVerticalSyncEnabled(g_useVSync);
+
+
 	return 1;
 }
 

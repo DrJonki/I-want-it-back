@@ -51,7 +51,6 @@ void Map::draw()
 void Map::createBackgrounds()
 {
 	int temp = 0;
-	std::string tString;
 
 	std::string path("Levels/");
 	path += _campaign;
@@ -90,7 +89,6 @@ void Map::createBackgrounds()
 void Map::createStatics()
 {
 	int temp = 0;
-	std::string tString;
 	
 	std::string path("Levels/");
 	path += _campaign;

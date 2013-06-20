@@ -4,6 +4,7 @@
 Player::Player()
 {
 	_world = nullptr;
+	_body = nullptr;
 }
 
 
@@ -16,7 +17,7 @@ void Player::loadPlayer(b2World* world)
 
 	loadAnimations();
 
-	setTexture(animations[IDLE].getCurrentTexture());
+	setTexture(animations[ANIM_IDLE].getCurrentTexture());
 	setOrigin(getLocalBounds().width / 2, getLocalBounds().height / 2);
 	setPosition(400, 100);
 
@@ -29,13 +30,14 @@ void Player::loadPlayer(b2World* world)
 void Player::unloadPlayer()
 {
 	_world = nullptr;
+	_body = nullptr;
 }
 
 
 void Player::update()
 {
-	setTexture(animations[IDLE].getCurrentTexture());
-	animations[IDLE].stepForward();
+	setTexture(animations[ANIM_IDLE].getCurrentTexture());
+	animations[ANIM_IDLE].stepForward();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cListener.touchingBottom()){
 		b2Vec2 impulse(0, -10);
@@ -114,8 +116,8 @@ void Player::loadAnimations()
 	animations.emplace_back(SpriteAnimation());
 
 	sf::Image playerImage;
-	playerImage.loadFromFile("Resources/Default/1/Graphics/Actor/Player/placeolderSpriteshit.png");
+	playerImage.loadFromFile("Resources/Common/Graphics/Actor/Player/player.png");
 
-	animations[IDLE].loadSheet(playerImage, 0, 0, 267, 384, 10);
-	animations[IDLE].setStepInterval(6);
+	animations[ANIM_IDLE].loadSheet(playerImage, 0, 0, 267, 384, 10);
+	animations[ANIM_IDLE].setStepInterval(6);
 }

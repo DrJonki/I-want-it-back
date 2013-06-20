@@ -2,7 +2,7 @@
 
 namespace
 {
-	bool exitState = false, runningState = true;
+	bool runningState = true;
 
 	DebugConsole* debug;
 
@@ -18,8 +18,8 @@ namespace
 
 	Mainmenu mainMenu(&gameWindow);
 	WorldManager worldManager(&gameWindow);
-	LoadSettings loadSettings;
 	Player player;
+	LoadSettings loadSettings;
 }
 
 
@@ -124,11 +124,7 @@ void Game::pollEvents()
 
 void Game::init()
 {
-	gameWindow.create(sf::VideoMode(g_windowWidth, g_windowHeight), "Template title :(", sf::Style::Close);
-	gameWindow.setVerticalSyncEnabled(g_useVSync);
-
-	loadSettings = mainMenu.getSettings();
-	worldManager.loadWorld(loadSettings);
+	worldManager.loadWorld(mainMenu.getSettings());
 	player.loadPlayer(worldManager.getWorldPtr());
 
 	if (g_debug){
@@ -169,9 +165,7 @@ void Game::init()
 void Game::deInit()
 {
 	player.unloadPlayer();
-	//worldManager.deleteWorld();
-
-	gameWindow.close();
+	worldManager.deleteWorld();
 
 	if (debug != 0) delete debug;
 }

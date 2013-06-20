@@ -3,6 +3,7 @@
 #include <SFML\Graphics.hpp>
 
 #include "LoadSettings.h"
+#include "Globals.h"
 
 class Mainmenu
 {

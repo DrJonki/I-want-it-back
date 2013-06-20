@@ -129,6 +129,9 @@
     <ClCompile Include="src\LoadSettings.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="src\EngineSettings.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -195,6 +198,9 @@
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="src\LoadSettings.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EngineSettings.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>

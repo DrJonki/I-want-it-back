@@ -15,7 +15,6 @@
 #include "Mainmenu.h"
 #include "Pausemenu.h"
 #include "WorldManager.h"
-#include "LoadSettings.h"
 #include "Player.h"
 
 class Game
