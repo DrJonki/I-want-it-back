@@ -93,6 +93,7 @@
     <ClCompile Include="src\DebugObject.cpp" />
     <ClCompile Include="src\EngineSettings.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameButton.cpp" />
     <ClCompile Include="src\GameText.cpp" />
     <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\LoadSettings.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="src\DebugObject.h" />
     <ClInclude Include="src\EngineSettings.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameButton.h" />
     <ClInclude Include="src\GameText.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Gui.h" />
