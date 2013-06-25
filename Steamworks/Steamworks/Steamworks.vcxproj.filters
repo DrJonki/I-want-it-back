@@ -135,6 +135,9 @@
     <ClCompile Include="src\GameButton.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\ForegroundObject.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -208,6 +211,12 @@
     </ClInclude>
     <ClInclude Include="src\GameButton.h">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dirent.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ForegroundObject.h">
+      <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

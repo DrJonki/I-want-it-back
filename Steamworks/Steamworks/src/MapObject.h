@@ -18,6 +18,7 @@ public:
 			  const float posX,
 			  const float posY,
 			  const std::string textureDir,
+			  const bool hasPhysics,
 			  const float bBoxModX = 1.0f,
 			  const float bBoxModY = 1.0f);
 

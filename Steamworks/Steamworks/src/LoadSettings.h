@@ -6,6 +6,10 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+#include <vector>
+#include <Windows.h>
+
+#include "dirent.h"
 
 class LoadSettings
 {
@@ -17,6 +21,7 @@ public:
 	void loadFromFile();
 
 	//Level
+	std::vector<std::string> _campaignVector;
 	std::string _campaign;
 	std::string _level;
 

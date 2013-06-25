@@ -11,6 +11,6 @@ public:
 	~GameText(void);
 	
 private:
-
+	sf::Font _font;
 };
 

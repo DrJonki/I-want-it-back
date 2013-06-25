@@ -48,3 +48,8 @@ void WorldManager::draw()
 		_gameMap->draw();
 	}
 }
+
+void WorldManager::drawForeground()
+{
+	_gameMap->drawForeground();
+}

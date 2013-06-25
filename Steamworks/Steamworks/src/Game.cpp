@@ -2,7 +2,7 @@
 
 namespace
 {
-	bool runningState = true;
+	bool runningState = false;
 
 	DebugConsole* debug;
 
@@ -16,9 +16,9 @@ namespace
 	
 	sf::RectangleShape sShape;
 
-	Mainmenu mainMenu(&gameWindow);
+	Mainmenu mainMenu(&gameWindow, e);
 	WorldManager worldManager(&gameWindow);
-	Player player;
+	Player* player;
 	LoadSettings loadSettings;
 }
 
@@ -33,7 +33,7 @@ Game::~Game(void)
 
 bool Game::runAndDontCrashPls()
 {
-	if (mainMenu.showMenu()){
+	while (mainMenu.showMenu()){
 		init();
 
 		while (runningState){
@@ -68,17 +68,17 @@ void Game::update()
 	updateClock.restart();
 
 	//Update loop here
-	player.update();
+	player->update();
+	if (player->getPosition().y > 600 + player->getLocalBounds().height || player->getPosition().x + (player->getLocalBounds().width / 2) < (view[0].getCenter().x - (view[0].getSize().x / 2)))
+		runningState = false;
+	
 	worldManager.stepWorldPhysics();
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-		view[0].move(5, 0);
-		view[1].move(5, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-		view[0].move(-5, 0);
-		view[1].move(-5, 0);
-	}
+	
+	view[0].move(5, 0);
+	view[1].move(5, 0);
+
+	//if (player.getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player.getPosition().x, view[0].getCenter().y));
 	//End of update loop
 
 	if (g_debug){
@@ -94,7 +94,8 @@ void Game::render()
 	gameWindow.setView(view[0]);
 
 	worldManager.draw();
-	gameWindow.draw(player);
+	gameWindow.draw(*player);
+	worldManager.drawForeground();
 
 
 	//Rendering for bottomview
@@ -116,7 +117,8 @@ void Game::render()
 void Game::pollEvents()
 {
 	while (gameWindow.pollEvent(e)){
-		if (e.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+			while (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
 			runningState = false;
 		}
 	}
@@ -124,8 +126,11 @@ void Game::pollEvents()
 
 void Game::init()
 {
+	player = new Player;
+
 	worldManager.loadWorld(mainMenu.getSettings());
-	player.loadPlayer(worldManager.getWorldPtr());
+	player->loadPlayer(worldManager.getWorldPtr());
+	runningState = true;
 
 	if (g_debug){
 		debug = new DebugConsole;
@@ -164,8 +169,13 @@ void Game::init()
 
 void Game::deInit()
 {
-	player.unloadPlayer();
+	player->unloadPlayer();
 	worldManager.deleteWorld();
+	delete player;
+	runningState = false;
 
-	if (debug != 0) delete debug;
+	if (debug != 0){
+		delete debug;
+		debug = nullptr;
+	}
 }

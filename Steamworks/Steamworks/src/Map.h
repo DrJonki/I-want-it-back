@@ -12,6 +12,7 @@
 
 #include "MapObject.h"
 #include "BackgroundObject.h"
+#include "ForegroundObject.h"
 
 class Map
 {
@@ -32,6 +33,7 @@ public:
 	
 	/// Draws all the objects in the map.
 	void draw();
+	void drawForeground();
 
 private:
 
@@ -43,11 +45,18 @@ private:
 	void createStatics();
 
 
+	/// A local function to load the data from foreground.dat and generate the foreground objects.
+	void createForeground();
+
+
 	/// A container for the background objects.
 	std::vector<BackgroundObject> _backGroundObject;
 
 	/// A container for the static physical objects.
-	std::vector<MapObject> _mapObjects;
+	std::vector<MapObject> _mapObject;
+
+	/// A container for the foreground objects.
+	std::vector<ForegroundObject> _foregroundObject;
 
 	/// A local pointer to the main window.
 	sf::RenderWindow* _window;

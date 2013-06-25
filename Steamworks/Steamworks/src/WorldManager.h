@@ -20,6 +20,7 @@ public:
 
 	void stepWorldPhysics();
 	void draw();
+	void drawForeground();
 
 	b2World* getWorldPtr() { return _gameWorld; };
 

@@ -3,9 +3,8 @@
 
 GameText::GameText(void)
 {
-	sf::Font font;
-	font.loadFromFile("Resources/Fonts/FancyPants.ttf");
+	_font.loadFromFile("Resources/Common/Fonts/Amble-Bold.ttf");
 
-	setFont(font);
+	setFont(_font);
 }
 GameText::~GameText(void){}

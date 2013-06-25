@@ -15,6 +15,7 @@ void MapObject::load(b2World* world,
 					 const float posX,
 					 const float posY,
 					 const std::string textureDir,
+					 const bool hasPhysics,
 					 const float bBoxModX,
 					 const float bBoxModY)
 {
@@ -26,18 +27,20 @@ void MapObject::load(b2World* world,
 	setTexture(&_texture);
 
 	//Phys body
-	b2BodyDef bodyDef;
-    bodyDef.position = b2Vec2(posX/g_P2MScale, posY/g_P2MScale);
-    bodyDef.type = b2_staticBody;
+	if (hasPhysics){
+		b2BodyDef bodyDef;
+		bodyDef.position = b2Vec2(posX/g_P2MScale, posY/g_P2MScale);
+		bodyDef.type = b2_staticBody;
 
-	_body = world->CreateBody(&bodyDef);
+		_body = world->CreateBody(&bodyDef);
 
-	b2PolygonShape shape;
-	shape.SetAsBox(((sizeX / 2) * bBoxModX) / g_P2MScale, ((sizeY / 2) * bBoxModY) / g_P2MScale);
+		b2PolygonShape shape;
+		shape.SetAsBox(((sizeX / 2) * bBoxModX) / g_P2MScale, ((sizeY / 2) * bBoxModY) / g_P2MScale);
 
-	b2FixtureDef fixtureDef;
-    fixtureDef.density = 0.f;
-    fixtureDef.shape = &shape;
+		b2FixtureDef fixtureDef;
+		fixtureDef.density = 0.f;
+		fixtureDef.shape = &shape;
 
-	_body->CreateFixture(&fixtureDef);
+		_body->CreateFixture(&fixtureDef);
+	}
 }
