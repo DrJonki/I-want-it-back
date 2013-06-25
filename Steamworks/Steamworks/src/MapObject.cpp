@@ -23,8 +23,8 @@ void MapObject::load(b2World* world,
 	setOrigin(sizeX / 2, sizeY / 2);
 	setPosition(posX, posY);
 
-	_texture.loadFromFile(textureDir);
-	setTexture(&_texture);
+	if (!_texture.loadFromFile(textureDir)) setFillColor(sf::Color::Transparent);
+	else setTexture(&_texture);
 
 	//Phys body
 	if (hasPhysics){

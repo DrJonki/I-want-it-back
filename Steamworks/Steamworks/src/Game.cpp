@@ -137,17 +137,11 @@ void Game::init()
 	}
 
 	//Top view
-	/*view[0].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.25f));
-	view[0].setSize(sf::Vector2f((float)g_windowWidth, (float)g_windowHeight / 2));
-	view[0].setViewport(sf::FloatRect(0, 0, 1.f, 0.5f));*/
 	view[0].setCenter(sf::Vector2f(g_windowWidth / 2, 300));
 	view[0].setSize(sf::Vector2f((float)g_windowWidth, 600));
 	view[0].setViewport(sf::FloatRect(0, 0, 1.f, 0.5f));
 
 	//Bottom view
-	/*view[1].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight * 0.75f));
-	view[1].setSize(sf::Vector2f((float)g_windowWidth, (float)g_windowHeight / 2));
-	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));*/
 	view[1].setCenter(sf::Vector2f(g_windowWidth / 2, 900));
 	view[1].setSize(sf::Vector2f((float)g_windowWidth, 600));
 	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));
