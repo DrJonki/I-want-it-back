@@ -39,6 +39,7 @@ void MapObject::load(b2World* world,
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.density = 0.f;
+		fixtureDef.friction = 0.f;
 		fixtureDef.shape = &shape;
 
 		_body->CreateFixture(&fixtureDef);

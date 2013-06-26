@@ -78,7 +78,7 @@ void Game::update()
 	view[0].move(5, 0);
 	view[1].move(5, 0);
 
-	//if (player.getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player.getPosition().x, view[0].getCenter().y));
+	if (player->getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player->getPosition().x, view[0].getCenter().y));
 	//End of update loop
 
 	if (g_debug){

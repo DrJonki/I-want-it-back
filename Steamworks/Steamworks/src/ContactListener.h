@@ -3,6 +3,8 @@
 #include <Box2D\Box2D.h>
 #include <SFML\System\Clock.hpp>
 
+#include <vector>
+
 class ContactListener : public b2ContactListener
 {
 public:
@@ -12,25 +14,17 @@ public:
 	void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact);
 
-	bool touchingTop();
-	bool touchingLeft();
-	bool touchingBottom();
-	bool touchingRight();
+	void addData(const int data, const int timeout = 0);
+
+	bool inContact(const int data);
 	
 private:
 
-	sf::Clock _timeout;
+	sf::Clock _timeoutClock;
 	sf::Time _timeout_t;
 
-	int _topContacts, _leftContacts, _bottomContacts, _rightContacts;
-
-	//Enumeration for the different sensors
-	static const enum
-	{
-		SEN_TOP = 0x11,
-		SEN_LEFT = 0x12,
-		SEN_BOTTOM = 0x13,
-		SEN_RIGHT = 0x14
-	};
+	std::vector<int> _contacts;
+	std::vector<int> _data;
+	std::vector<int> _timeout;
 };
 

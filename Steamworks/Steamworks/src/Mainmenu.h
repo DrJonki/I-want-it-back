@@ -28,4 +28,3 @@ private:
 
 	sf::Font font;
 };
-

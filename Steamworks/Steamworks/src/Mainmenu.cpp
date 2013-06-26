@@ -88,11 +88,11 @@ void Mainmenu::update()
 	}
 	while (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right));
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && t_campaign > 0){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && t_campaign > 0){
 		t_campaign--;
 		_settings._campaign = _settings._campaignVector[t_campaign];
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && _settings._campaignVector.size() - 1 > t_campaign){
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && _settings._campaignVector.size() - 1 > t_campaign){
 		t_campaign++;
 		_settings._campaign = _settings._campaignVector[t_campaign];
 	}

@@ -24,16 +24,22 @@ private:
 		ANIM_IDLE,
 		ANIM_RUNNING,
 		ANIM_JUMPING,
-		ANIM_FALLING
+		ANIM_FALLING,
+		ETC
 	};
 
 	//Enumeration for the different sensors
 	static const enum
 	{
-		SEN_TOP = 0x11,
-		SEN_LEFT = 0x12,
-		SEN_BOTTOM = 0x13,
-		SEN_RIGHT = 0x14
+		SEN_TOP,
+		SEN_LEFT,
+		SEN_BOTTOM,
+		SEN_RIGHT,
+
+		SEN_TOPLEFT,
+		SEN_TOPRIGHT,
+		SEN_BOTTOMRIGHT,
+		SEN_BOTTOMLEFT
 	};
 
 	void createSensors();

@@ -3,85 +3,57 @@
 
 ContactListener::ContactListener(void)
 {
-	_topContacts = 0;
-	_leftContacts = 0;
-	_bottomContacts = 0;
-	_rightContacts = 0;
+	_timeout = 0;
 
-	_timeout.restart();
+	_timeoutClock.restart();
 }
-
 
 ContactListener::~ContactListener(void)
-{}
+{
+	_data.clear();
+}
 
-bool ContactListener::touchingTop()
+bool ContactListener::inContact(const int data)
 {
-	_timeout_t = _timeout.getElapsedTime();
-	if (_topContacts >= 1 && _timeout_t.asMilliseconds() > 100){
-		_timeout.restart();
-		return true;
-	}
-	return false;
-}
-bool ContactListener::touchingLeft()
-{
-	_timeout_t = _timeout.getElapsedTime();
-	if (_leftContacts >= 1 && _timeout_t.asMilliseconds() > 100){
-		_timeout.restart();
-		return true;
-	}
-	return false;
-}
-bool ContactListener::touchingBottom()
-{
-	_timeout_t = _timeout.getElapsedTime();
-	if (_bottomContacts >= 1 && _timeout_t.asMilliseconds() > 100){
-		_timeout.restart();
-		return true;
-	}
-	return false;
-}
-bool ContactListener::touchingRight()
-{
-	_timeout_t = _timeout.getElapsedTime();
-	if (_rightContacts >= 1 && _timeout_t.asMilliseconds() > 100){
-		_timeout.restart();
+	_timeout_t = _timeoutClock.getElapsedTime();
+	if (_contacts >= 1 && _timeout_t.asMilliseconds() >= _timeout){
+		_timeoutClock.restart();
 		return true;
 	}
 	return false;
 }
 
+void ContactListener::addData(const int data, const int timeout)
+{
+
+
+}
 
 
 void ContactListener::BeginContact(b2Contact* contact){
     //check if fixture A was the foot sensor
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-	if ((int)fixtureUserData == SEN_TOP) _topContacts++;
-	if ((int)fixtureUserData == SEN_LEFT) _leftContacts++;
-	if ((int)fixtureUserData == SEN_BOTTOM) _bottomContacts++;
-    if ((int)fixtureUserData == SEN_RIGHT) _rightContacts++;
-
+	for (int i = 0; i < _data.size(); i++){
+		if ((int)fixtureUserData == _data[i]) _contacts[i]++;
+	}
+	
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
-	if ((int)fixtureUserData == SEN_TOP) _topContacts++;
-	if ((int)fixtureUserData == SEN_LEFT) _leftContacts++;
-	if ((int)fixtureUserData == SEN_BOTTOM) _bottomContacts++;
-    if ((int)fixtureUserData == SEN_RIGHT) _rightContacts++;
+	for (int i = 0; i < _data.size(); i++){
+		if ((int)fixtureUserData == _data[i]) _contacts[i]++;
+	}
 }
 
 void ContactListener::EndContact(b2Contact* contact){
     //check if fixture A was the foot sensor
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-    if ((int)fixtureUserData == SEN_TOP) _topContacts--;
-	if ((int)fixtureUserData == SEN_LEFT) _leftContacts--;
-	if ((int)fixtureUserData == SEN_BOTTOM) _bottomContacts--;
-    if ((int)fixtureUserData == SEN_RIGHT) _rightContacts--;
+    for (int i = 0; i < _data.size(); i++){
+		if ((int)fixtureUserData == _data[i]) _contacts[i]--;
+	}
 
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
-    if ((int)fixtureUserData == SEN_TOP) _topContacts--;
-	if ((int)fixtureUserData == SEN_LEFT) _leftContacts--;
-	if ((int)fixtureUserData == SEN_BOTTOM) _bottomContacts--;
-    if ((int)fixtureUserData == SEN_RIGHT) _rightContacts--;
+    for (int i = 0; i < _data.size(); i++){
+		if ((int)fixtureUserData == _data[i]) _contacts[i]--;
+	}
 }
