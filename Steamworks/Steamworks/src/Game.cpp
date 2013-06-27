@@ -16,10 +16,15 @@ namespace
 	
 	sf::RectangleShape sShape;
 
-	Mainmenu mainMenu(&gameWindow, e);
+	Mainmenu mainMenu(&gameWindow, &e);
 	WorldManager worldManager(&gameWindow);
-	Player* player;
+	Player* player[2];
 	LoadSettings loadSettings;
+
+	ContactListener* cListener;
+	int _sensorDataP1[8] = {0, 1, 2, 3, 4, 5, 6, 7};
+	int _sensorDataP2[8] = {8, 9, 10, 11, 12, 13, 14, 15};
+
 }
 
 
@@ -68,8 +73,16 @@ void Game::update()
 	updateClock.restart();
 
 	//Update loop here
-	player->update();
-	if (player->getPosition().y > 600 + player->getLocalBounds().height || player->getPosition().x + (player->getLocalBounds().width / 2) < (view[0].getCenter().x - (view[0].getSize().x / 2)))
+	//Player 1
+	gameWindow.setView(view[0]);
+	player[0]->update();
+	if (player[0]->getPosition().y > 600 + player[0]->getLocalBounds().height || player[0]->getPosition().x + (player[0]->getLocalBounds().width / 2) < (view[0].getCenter().x - (view[0].getSize().x / 2)))
+		runningState = false;
+
+	//Player 2
+	gameWindow.setView(view[1]);
+	player[1]->update();
+	if (player[1]->getPosition().y > 1200 + player[1]->getLocalBounds().height || player[1]->getPosition().x + (player[1]->getLocalBounds().width / 2) < (view[1].getCenter().x - (view[1].getSize().x / 2)))
 		runningState = false;
 	
 	worldManager.stepWorldPhysics();
@@ -78,7 +91,8 @@ void Game::update()
 	view[0].move(5, 0);
 	view[1].move(5, 0);
 
-	if (player->getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player->getPosition().x, view[0].getCenter().y));
+	if (player[0]->getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player[0]->getPosition().x, view[0].getCenter().y));
+	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
 	//End of update loop
 
 	if (g_debug){
@@ -94,7 +108,7 @@ void Game::render()
 	gameWindow.setView(view[0]);
 
 	worldManager.draw();
-	gameWindow.draw(*player);
+	gameWindow.draw(*player[0]);
 	worldManager.drawForeground();
 
 
@@ -102,6 +116,8 @@ void Game::render()
 	gameWindow.setView(view[1]);
 
 	worldManager.draw();
+	gameWindow.draw(*player[1]);
+	worldManager.drawForeground();
 
 
 	//UI rendering
@@ -126,24 +142,32 @@ void Game::pollEvents()
 
 void Game::init()
 {
-	player = new Player;
+	cListener = new ContactListener;
+
+	player[0] = new Player(true);
+	player[1] = new Player(false);
 
 	worldManager.loadWorld(mainMenu.getSettings());
-	player->loadPlayer(worldManager.getWorldPtr());
+	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, _sensorDataP1);
+	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, _sensorDataP2);
 	runningState = true;
+
+	worldManager.getWorldPtr()->SetContactListener(cListener);
 
 	if (g_debug){
 		debug = new DebugConsole;
 	}
 
+
+	float s_scale =  ((float)g_windowWidth / (float)g_windowHeight) / (1920.f / 1200.f);
 	//Top view
-	view[0].setCenter(sf::Vector2f(g_windowWidth / 2, 300));
-	view[0].setSize(sf::Vector2f((float)g_windowWidth, 600));
+	view[0].setCenter(sf::Vector2f((1920 * s_scale) / 2, 300));
+	view[0].setSize(sf::Vector2f(1920 * s_scale, 600));
 	view[0].setViewport(sf::FloatRect(0, 0, 1.f, 0.5f));
 
 	//Bottom view
-	view[1].setCenter(sf::Vector2f(g_windowWidth / 2, 900));
-	view[1].setSize(sf::Vector2f((float)g_windowWidth, 600));
+	view[1].setCenter(sf::Vector2f((1920 * s_scale) / 2, 900));
+	view[1].setSize(sf::Vector2f(1920 * s_scale, 600));
 	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));
 
 	//Whole view
@@ -163,9 +187,12 @@ void Game::init()
 
 void Game::deInit()
 {
-	player->unloadPlayer();
+	player[0]->unloadPlayer();
+	player[1]->unloadPlayer();
 	worldManager.deleteWorld();
-	delete player;
+	delete player[0];
+	delete player[1];
+	delete cListener;
 	runningState = false;
 
 	if (debug != 0){

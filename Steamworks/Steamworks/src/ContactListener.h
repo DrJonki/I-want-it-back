@@ -23,8 +23,13 @@ private:
 	sf::Clock _timeoutClock;
 	sf::Time _timeout_t;
 
-	std::vector<int> _contacts;
-	std::vector<int> _data;
-	std::vector<int> _timeout;
+	struct _contactDataStruct
+	{
+		int _contacts;
+		int _data;
+		int _timeout;
+	};
+
+	std::vector<_contactDataStruct> _contactData;
 };
 

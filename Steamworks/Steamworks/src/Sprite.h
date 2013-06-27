@@ -6,6 +6,7 @@
 
 #include "Globals.h"
 #include "SpriteAnimation.h"
+#include "ContactListener.h"
 
 class Sprite : public sf::Sprite
 {
@@ -23,6 +24,8 @@ protected:
 	//Pointers to access sprite's Box2D elements
 	b2Body* _body;
 	b2World* _world;
+	sf::RenderWindow* _window;
+	ContactListener* _cListener;
 
 	void createPhysBody(const float density,
 						const float friction,

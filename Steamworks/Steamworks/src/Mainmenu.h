@@ -11,7 +11,7 @@
 class Mainmenu
 {
 public:
-	Mainmenu(sf::RenderWindow*, sf::Event&);
+	Mainmenu(sf::RenderWindow*, sf::Event*);
 	~Mainmenu(void);
 
 	bool showMenu();
@@ -23,7 +23,7 @@ private:
 	void draw();
 
 	sf::RenderWindow* _window;
-	sf::Event& _e;
+	sf::Event* _e;
 	LoadSettings _settings;
 
 	sf::Font font;

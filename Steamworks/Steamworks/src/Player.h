@@ -10,41 +10,32 @@
 class Player : public Sprite
 {
 public:
-	Player();
+	Player(const bool firstPlayer);
 	~Player(void);
 
-	void loadPlayer(b2World* _world);
+	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis, const int senData[8]);
 	void unloadPlayer();
+	void createSensors();
 
 	void update();
 private:
-	//Enumeration for the different animation states
-	static const enum
-	{
-		ANIM_IDLE,
-		ANIM_RUNNING,
-		ANIM_JUMPING,
-		ANIM_FALLING,
-		ETC
-	};
+	int _sensorData[8];
 
-	//Enumeration for the different sensors
-	static const enum
+	const bool _firstPlayer;
+
+	void loadAnimations();
+
+	enum
 	{
 		SEN_TOP,
-		SEN_LEFT,
-		SEN_BOTTOM,
 		SEN_RIGHT,
+		SEN_BOTTOM,
+		SEN_LEFT,
 
 		SEN_TOPLEFT,
 		SEN_TOPRIGHT,
 		SEN_BOTTOMRIGHT,
 		SEN_BOTTOMLEFT
 	};
-
-	void createSensors();
-	void loadAnimations();
-
-	ContactListener cListener;
 };
 

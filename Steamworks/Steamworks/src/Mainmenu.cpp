@@ -9,7 +9,7 @@ namespace
 }
 
 
-Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event& e)
+Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event* e)
 	:_window(window),
 	 _e(e)
 {}
@@ -109,7 +109,7 @@ void Mainmenu::update()
 	ss << _settings._level;
 	_text[2].setString(ss.str());
 
-	while (_window->pollEvent(_e));
+	while (_window->pollEvent(*_e));
 }
 
 void Mainmenu::draw()
