@@ -60,6 +60,7 @@ void Player::update()
 {
 	setTexture(animations[ANIM_IDLE].getCurrentTexture());
 	animations[ANIM_IDLE].stepForward();
+	animations[ANIM_IDLE].setStepInterval(5);
 	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _cListener->inContact(_sensorData[SEN_BOTTOM])){
 		b2Vec2 impulse(0, -60);
@@ -71,7 +72,8 @@ void Player::update()
 
 	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || _cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
 		if (_window->getView().getCenter().x > getPosition().x){
-			maxSpeed = 6.f;
+			animations[ANIM_IDLE].setStepInterval(4);
+			maxSpeed = 6.5f;
 			desiredVel = b2Min(vel.x + 0.5f, maxSpeed);
 		}
 		desiredVel = b2Min(vel.x + 0.3f, maxSpeed);
