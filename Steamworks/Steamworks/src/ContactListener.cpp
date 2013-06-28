@@ -11,13 +11,11 @@ ContactListener::~ContactListener(void)
 	_contactData.clear();
 }
 
-bool ContactListener::inContact(const int data)
+bool ContactListener::inContact(void* data)
 {
-	_timeout_t = _timeoutClock.getElapsedTime();
-
 	for (int i = 0; i < _contactData.size(); i++){
 		if (_contactData[i]._data == data){
-			if (_contactData[i]._contacts > 0 && _timeout_t.asMilliseconds() >= _contactData[i]._timeout){
+			if (_contactData[i]._contacts > 0 && _timeoutClock.getElapsedTime().asMilliseconds() >= _contactData[i]._timeout){
 				_timeoutClock.restart();
 				return true;
 			}
@@ -27,7 +25,7 @@ bool ContactListener::inContact(const int data)
 	return false;
 }
 
-void ContactListener::addData(const int data, const int timeout)
+void ContactListener::addData(void* data, const int timeout)
 {
 	_contactData.push_back(_contactDataStruct());
 
@@ -41,13 +39,13 @@ void ContactListener::BeginContact(b2Contact* contact){
     //check if fixture A was the foot sensor
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
 	for (int i = 0; i < _contactData.size(); i++){
-		if ((int)fixtureUserData == _contactData[i]._data) _contactData[i]._contacts++;
+		if (fixtureUserData == _contactData[i]._data) _contactData[i]._contacts++;
 	}
 	
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
 	for (int i = 0; i < _contactData.size(); i++){
-		if ((int)fixtureUserData == _contactData[i]._data) _contactData[i]._contacts++;
+		if (fixtureUserData == _contactData[i]._data) _contactData[i]._contacts++;
 	}
 }
 
@@ -55,12 +53,12 @@ void ContactListener::EndContact(b2Contact* contact){
     //check if fixture A was the foot sensor
     void* fixtureUserData = contact->GetFixtureA()->GetUserData();
     for (int i = 0; i < _contactData.size(); i++){
-		if ((int)fixtureUserData == _contactData[i]._data) _contactData[i]._contacts--;
+		if (fixtureUserData == _contactData[i]._data) _contactData[i]._contacts--;
 	}
 
     //check if fixture B was the foot sensor
     fixtureUserData = contact->GetFixtureB()->GetUserData();
     for (int i = 0; i < _contactData.size(); i++){
-		if ((int)fixtureUserData == _contactData[i]._data) _contactData[i]._contacts--;
+		if (fixtureUserData == _contactData[i]._data) _contactData[i]._contacts--;
 	}
 }

@@ -14,19 +14,17 @@ public:
 	void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact);
 
-	void addData(const int data, const int timeout = 0);
+	void addData(void* data, const int timeout = 0);
 
-	bool inContact(const int data);
+	bool inContact(void* data);
 	
 private:
-
 	sf::Clock _timeoutClock;
-	sf::Time _timeout_t;
 
 	struct _contactDataStruct
 	{
 		int _contacts;
-		int _data;
+		void* _data;
 		int _timeout;
 	};
 

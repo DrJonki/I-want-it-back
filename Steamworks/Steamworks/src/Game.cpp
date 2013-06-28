@@ -8,9 +8,13 @@ namespace
 
 	sf::RenderWindow gameWindow;
 	sf::Event e;
+	sf::Clock debugUpdateClock;
 	sf::Clock updateClock;
+	sf::Clock renderClock;
 
-	sf::Time updateTime;
+	//Debug numbers
+	int d_updateTime = 0.f;
+	int d_renderTime = 0.f;
 
 	sf::View view[3];
 	
@@ -24,36 +28,34 @@ namespace
 	ContactListener* cListener;
 	int _sensorDataP1[8] = {0, 1, 2, 3, 4, 5, 6, 7};
 	int _sensorDataP2[8] = {8, 9, 10, 11, 12, 13, 14, 15};
-
 }
-
 
 Game::Game(void)
 {}
-
-
 Game::~Game(void)
 {}
 
 
 bool Game::runAndDontCrashPls()
 {
+	if (g_debug){
+		debug = new DebugConsole;
+		debug->draw();
+	}
+	
 	while (mainMenu.showMenu()){
 		init();
 
 		while (runningState){
-			updateTime = updateClock.getElapsedTime();
-
-
 			if (g_useVSync){
-				if (updateTime.asSeconds() > g_updateTimerValue){
+				if (updateClock.getElapsedTime().asSeconds() > g_updateTimerValue){
 					update();
 					render();
 					pollEvents();
 				}
 			}
 			else {
-				if (updateTime.asSeconds() > g_updateTimerValue){
+				if (updateClock.getElapsedTime().asSeconds() > g_updateTimerValue){
 					update();
 					pollEvents();
 				}
@@ -63,6 +65,8 @@ bool Game::runAndDontCrashPls()
 		deInit();
 	}
 
+	if (debug != 0) delete debug;
+	
 	return true;
 }
 
@@ -76,13 +80,14 @@ void Game::update()
 	//Player 1
 	gameWindow.setView(view[0]);
 	player[0]->update();
-	if (player[0]->getPosition().y > 600 + player[0]->getLocalBounds().height || player[0]->getPosition().x + (player[0]->getLocalBounds().width / 2) < (view[0].getCenter().x - (view[0].getSize().x / 2)))
-		runningState = false;
 
 	//Player 2
 	gameWindow.setView(view[1]);
 	player[1]->update();
-	if (player[1]->getPosition().y > 1200 + player[1]->getLocalBounds().height || player[1]->getPosition().x + (player[1]->getLocalBounds().width / 2) < (view[1].getCenter().x - (view[1].getSize().x / 2)))
+
+	//Border checks
+	if ((player[1]->getPosition().y > 1200 + player[1]->getLocalBounds().height || player[1]->getPosition().x + (player[1]->getLocalBounds().width / 2) < (view[1].getCenter().x - (view[1].getSize().x / 2))) ||
+		(player[0]->getPosition().y > 600 + player[0]->getLocalBounds().height || player[0]->getPosition().x + (player[0]->getLocalBounds().width / 2) < (view[0].getCenter().x - (view[0].getSize().x / 2))))
 		runningState = false;
 	
 	worldManager.stepWorldPhysics();
@@ -96,12 +101,19 @@ void Game::update()
 	//End of update loop
 
 	if (g_debug){
-		debug->draw();
+		//Pointer updates
+		d_updateTime = updateClock.getElapsedTime().asMilliseconds();
+
+		if (debugUpdateClock.getElapsedTime().asMilliseconds() >= 250){
+			debug->draw();
+			debugUpdateClock.restart();
+		}
 	}
 }
 
 void Game::render()
 {
+	renderClock.restart();
 	gameWindow.clear();
 
 	//Rendering for top view
@@ -112,7 +124,7 @@ void Game::render()
 	worldManager.drawForeground();
 
 
-	//Rendering for bottomview
+	//Rendering for bottom view
 	gameWindow.setView(view[1]);
 
 	worldManager.draw();
@@ -128,6 +140,10 @@ void Game::render()
 	//End of render loop
 	glFlush();
 	gameWindow.display();
+
+	if (g_debug){
+		d_renderTime = renderClock.getElapsedTime().asMilliseconds();
+	}
 }
 
 void Game::pollEvents()
@@ -155,7 +171,8 @@ void Game::init()
 	worldManager.getWorldPtr()->SetContactListener(cListener);
 
 	if (g_debug){
-		debug = new DebugConsole;
+		debug->assignPtr(&d_updateTime, "Update time(ms): ");
+		debug->assignPtr(&d_renderTime, "Render time(ms): ");
 	}
 
 
@@ -183,6 +200,7 @@ void Game::init()
 	sShape.setPosition(0, g_windowHeight / 2);
 
 	updateClock.restart();
+	SetForegroundWindow(gameWindow.getSystemHandle());
 }
 
 void Game::deInit()
@@ -195,8 +213,8 @@ void Game::deInit()
 	delete cListener;
 	runningState = false;
 
-	if (debug != 0){
-		delete debug;
-		debug = nullptr;
+	if (g_debug){
+		debug->clear();
+		debug->draw();
 	}
 }

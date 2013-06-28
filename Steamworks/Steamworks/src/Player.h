@@ -13,19 +13,20 @@ public:
 	Player(const bool firstPlayer);
 	~Player(void);
 
-	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis, const int senData[8]);
+	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis);
 	void unloadPlayer();
 	void createSensors();
 
 	void update();
 private:
-	int _sensorData[8];
+	std::string _sensorData[8];
 
 	const bool _firstPlayer;
 
 	void loadAnimations();
 
-	enum
+	//Anumeration for the sensors
+	static const enum
 	{
 		SEN_TOP,
 		SEN_RIGHT,
@@ -36,6 +37,16 @@ private:
 		SEN_TOPRIGHT,
 		SEN_BOTTOMRIGHT,
 		SEN_BOTTOMLEFT
+	};
+
+	//Enumeration for the different animation states
+	static const enum
+	{
+		ANIM_IDLE,
+		ANIM_RUNNING,
+		ANIM_JUMPING,
+		ANIM_FALLING,
+		ETC
 	};
 };
 

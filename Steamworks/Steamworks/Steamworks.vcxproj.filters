@@ -93,9 +93,6 @@
     <ClCompile Include="src\DebugConsole.cpp">
       <Filter>Source Files\Util\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="src\DebugObject.cpp">
-      <Filter>Source Files\Util\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="src\ContactListener.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
@@ -137,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="src\ForegroundObject.cpp">
       <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Trigger.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugObject.cpp">
+      <Filter>Source Files\Util\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +219,9 @@
       <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\ForegroundObject.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Trigger.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>

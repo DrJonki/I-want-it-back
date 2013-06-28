@@ -2,16 +2,16 @@
 
 //Debug configuration
 //#ifdef _DEBUG
-//	static const bool g_debug = true;
+	static const bool g_debug = true;
 //#else
-	static const bool g_debug = false;
+//	static const bool g_debug = false;
 //#endif
 
 //Window dimensions
 static const int g_windowWidth = 1600, g_windowHeight = 900;
 
 //Vertical sync setting
-static const bool g_useVSync = true;
+static const bool g_useVSync = false;
 
 //Update timer value in seconds
 static const float g_updateTimerValue = 1.f / 60.f;
@@ -27,13 +27,3 @@ static const float g_P2MScale = 60.f;
 //Resource directory strings for quick access
 //Fonts
 #define RES_FONTS "Resources/Common/Fonts/"
-
-//Enumeration for the different animation states
-static const enum
-{
-	ANIM_IDLE,
-	ANIM_RUNNING,
-	ANIM_JUMPING,
-	ANIM_FALLING,
-	ETC
-};

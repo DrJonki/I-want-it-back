@@ -11,7 +11,7 @@ Player::Player(const bool firstPlayer)
 Player::~Player(void)
 {}
 
-void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis, const int senData[8])
+void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis)
 {
 	_world = world;
 	_cListener = lis;
