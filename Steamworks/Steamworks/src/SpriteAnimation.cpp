@@ -7,6 +7,7 @@ SpriteAnimation::SpriteAnimation(void)
 	_frameCount = 1;
 	_stepInterval = 1;
 	_tempSteps = 1;
+	_frameChanged = false;
 }
 
 
@@ -15,7 +16,7 @@ SpriteAnimation::~SpriteAnimation(void)
 	frameTexture.clear();
 }
 
-void SpriteAnimation::loadSheet(sf::Image &sheet,
+bool SpriteAnimation::loadSheet(sf::Image &sheet,
 								const int startX,
 								const int startY,
 								const int frameSizeX,
@@ -31,6 +32,8 @@ void SpriteAnimation::loadSheet(sf::Image &sheet,
 		
 		frameTexture[i].loadFromImage(sheet, sf::IntRect((i * frameSizeX) + startX, startY, frameSizeX, frameSizeY));
 	}
+
+	return true;
 }
 
 
@@ -40,10 +43,14 @@ void SpriteAnimation::stepForward(const bool force)
 		_currentFrame++;
 		if (_currentFrame > _frameCount) _currentFrame = 1;
 		_tempSteps = 1;
+		_frameChanged = true;
 	}
 
 	else {
-		if (_stepInterval == _tempSteps) _currentFrame++;
+		if (_stepInterval == _tempSteps){
+			_currentFrame++;
+			_frameChanged = true;
+		}
 
 		if (_currentFrame > _frameCount) _currentFrame = 1;
 
@@ -57,10 +64,14 @@ void SpriteAnimation::stepBack(const bool force)
 		_currentFrame--;
 		if (_currentFrame < 1) _currentFrame = _frameCount;
 		_tempSteps = 1;
+		_frameChanged = true;
 	}
 
 	else {
-		if (_tempSteps == 1) _currentFrame--;
+		if (_tempSteps == 1){
+			_currentFrame--;
+			_frameChanged = true;
+		}
 
 		if (_currentFrame < 1) _currentFrame = _frameCount;
 
@@ -73,4 +84,13 @@ bool SpriteAnimation::lastFrame()
 {
 	if (_currentFrame == _frameCount) return true;
 	return false;
+}
+
+bool SpriteAnimation::frameChanged()
+{
+	if (_frameChanged){
+		_frameChanged = false;
+		return true;
+	}
+	else return false;
 }

@@ -26,8 +26,6 @@ namespace
 	LoadSettings loadSettings;
 
 	ContactListener* cListener;
-	int _sensorDataP1[8] = {0, 1, 2, 3, 4, 5, 6, 7};
-	int _sensorDataP2[8] = {8, 9, 10, 11, 12, 13, 14, 15};
 }
 
 Game::Game(void)
@@ -160,12 +158,12 @@ void Game::init()
 {
 	cListener = new ContactListener;
 
-	player[0] = new Player(true);
-	player[1] = new Player(false);
+	player[0] = new Player(1);
+	player[1] = new Player(2);
 
 	worldManager.loadWorld(mainMenu.getSettings());
-	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, _sensorDataP1);
-	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, _sensorDataP2);
+	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener);
+	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener);
 	runningState = true;
 
 	worldManager.getWorldPtr()->SetContactListener(cListener);

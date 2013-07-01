@@ -10,7 +10,7 @@
 class Player : public Sprite
 {
 public:
-	Player(const bool firstPlayer);
+	Player(const unsigned short playerNo);
 	~Player(void);
 
 	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis);
@@ -19,9 +19,8 @@ public:
 
 	void update();
 private:
-	std::string _sensorData[8];
-
-	const bool _firstPlayer;
+	const unsigned short _playerNumber;
+	unsigned int _sensorData[8];
 
 	void loadAnimations();
 

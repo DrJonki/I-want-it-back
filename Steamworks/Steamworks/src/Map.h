@@ -31,6 +31,9 @@ public:
 			  std::string campaign,
 			  std::string level);
 	
+	/// Updates the animation states
+	void update();
+
 	/// Draws all the objects in the map.
 	void draw();
 	void drawForeground();

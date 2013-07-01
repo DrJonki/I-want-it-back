@@ -14,8 +14,14 @@ void MapObject::load(b2World* world,
 					 const float sizeY,
 					 const float posX,
 					 const float posY,
-					 const std::string textureDir,
 					 const bool hasPhysics,
+					 const std::string textureDir,
+					 const int aSizeX,
+					 const int aSizeY,
+					 const int startX,
+					 const int startY,
+					 const unsigned int interval,
+					 const unsigned int frames,
 					 const float bBoxModX,
 					 const float bBoxModY)
 {
@@ -23,8 +29,14 @@ void MapObject::load(b2World* world,
 	setOrigin(sizeX / 2, sizeY / 2);
 	setPosition(posX, posY);
 
-	if (!_texture.loadFromFile(textureDir)) setFillColor(sf::Color::Transparent);
-	else setTexture(&_texture);
+	sf::Image image;
+	if (image.loadFromFile(textureDir)){
+		if (aSizeX <= 0 || aSizeY <= 0) loadSheet(image, startX, startY, sizeX, sizeY, frames);
+		else loadSheet(image, startX, startY, aSizeX, aSizeY, frames);
+		setStepInterval(interval);
+		setTexture(&getCurrentTexture());
+	}
+	else setFillColor(sf::Color::Transparent);
 
 	//Phys body
 	if (hasPhysics){

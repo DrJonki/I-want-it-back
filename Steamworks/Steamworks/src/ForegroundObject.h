@@ -2,7 +2,9 @@
 
 #include <SFML\Graphics.hpp>
 
-class ForegroundObject : public sf::RectangleShape
+#include "SpriteAnimation.h"
+
+class ForegroundObject : public sf::RectangleShape, public SpriteAnimation
 {
 public:
 	ForegroundObject(void);
@@ -12,9 +14,16 @@ public:
 			  const float sizeY,
 			  const float posX,
 			  const float posY,
-			  const std::string textureDir);
+			  const std::string textureDir,
+			  const int aSizeX = 0,
+			  const int aSizeY = 0,
+			  const int startX = 0,
+			  const int startY = 0,
+			  const unsigned int interval = 1,
+			  const unsigned int frames = 1);
 
-private:
-	sf::Texture _texture;
+	void update(){
+		stepForward();
+		if (frameChanged()) setTexture(&getCurrentTexture());
+	};
 };
-

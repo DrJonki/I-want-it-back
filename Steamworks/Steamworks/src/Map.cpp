@@ -39,6 +39,18 @@ void Map::load(b2World* world,
 }
 
 
+void Map::update()
+{
+	for (unsigned int i = 0; i < _mapObject.size(); i++){
+		_mapObject[i].update();
+	}
+
+	for (unsigned int i = 0; i < _foregroundObject.size(); i++){
+		_foregroundObject[i].update();
+	}
+}
+
+
 void Map::draw()
 {
 	for (unsigned int i = 0; i < _backGroundObject.size(); i++){
@@ -91,16 +103,14 @@ void Map::createBackgrounds()
 			_backGroundObject.back().load(t_bottom, t_sizeX, t_sizeY, t_posX, t_textureDir);
 
 
-			if (file.peek() == '\n') temp++;
-			else if (file.peek() == file.eof()) break;
+			temp++;
+			if (file.peek() == file.eof()) break;
 		}
 	}
 }
 
 void Map::createStatics()
 {
-	int temp = 0;
-	
 	std::string path("Levels/");
 	path += _campaign;
 	path += "/";
@@ -110,8 +120,18 @@ void Map::createStatics()
 	std::ifstream file(path, std::ifstream::in);
 
 	if (file.good()){
-		while (file.good()){
-			int t_sizeX = 0, t_sizeY = 0, t_posX = 0, t_posY = 0;
+		while (!file.eof()){
+			int t_sizeX = 0,
+				t_sizeY = 0,
+				t_posX = 0,
+				t_posY = 0,
+				t_aSizeX = 0,
+				t_aSizeY = 0,
+				t_startX = 0,
+				t_startY = 0,
+				t_interval = 1,
+				t_frames = 1;
+
 			float t_bBoxModX = 0, t_bBoxModY = 0;
 			bool hasPhys = true;
 			std::string t_textureDir;
@@ -125,19 +145,23 @@ void Map::createStatics()
 			file >> t_textureDir;
 			file >> hasPhys;
 
-			_mapObject.emplace_back(MapObject());
-			_mapObject.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir, hasPhys, t_bBoxModX, t_bBoxModY);
+			if (file.peek() != '\n'){
+				file >> t_aSizeX;
+				file >> t_aSizeY;
+				file >> t_startX;
+				file >> t_startY;
+				file >> t_interval;
+				file >> t_frames;
+			}
 
-			if (file.peek() == '\n') temp++;
-			else if (file.peek() == file.eof()) break;
+			_mapObject.emplace_back(MapObject());
+			_mapObject.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, hasPhys, t_textureDir, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames, t_bBoxModX, t_bBoxModY);
 		}
 	}
 }
 
 void Map::createForeground()
 {
-	int temp = 0;
-
 	std::string path("Levels/");
 	path += _campaign;
 	path += "/";
@@ -147,8 +171,18 @@ void Map::createForeground()
 	std::ifstream file(path, std::ifstream::in);
 
 	if (file.good()){
-		while (file.good()){
-			int t_sizeX = 0, t_sizeY = 0, t_posX = 0, t_posY = 0;
+		while (!file.eof()){
+			int t_sizeX = 0,
+				t_sizeY = 0,
+				t_posX = 0,
+				t_posY = 0,
+				t_aSizeX = 0,
+				t_aSizeY = 0,
+				t_startX = 0,
+				t_startY = 0,
+				t_interval = 1,
+				t_frames = 1;
+
 			std::string t_textureDir;
 
 			file >> t_sizeX;
@@ -157,11 +191,17 @@ void Map::createForeground()
 			file >> t_posY;
 			file >> t_textureDir;
 
-			_foregroundObject.emplace_back(ForegroundObject());
-			_foregroundObject.back().load(t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir);
+			if (file.peek() != '\n'){
+				file >> t_aSizeX;
+				file >> t_aSizeY;
+				file >> t_startX;
+				file >> t_startY;
+				file >> t_interval;
+				file >> t_frames;
+			}
 
-			if (file.peek() == '\n') temp++;
-			else if (file.peek() == file.eof()) break;
+			_foregroundObject.emplace_back(ForegroundObject());
+			_foregroundObject.back().load(t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames);
 		}
 	}
 }

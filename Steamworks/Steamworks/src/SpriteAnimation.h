@@ -21,7 +21,7 @@ public:
 	/// @param The horizontal size of one frame. All the frames on the sheet must be this same size.
 	/// @param The vertical size of one frame.
 	/// @param Number of frames to load. Must be exact. Missing textures will be replaced with a white box.
-	void loadSheet(sf::Image &sheet,
+	bool loadSheet(sf::Image &sheet,
 				   const int startX,
 				   const int startY,
 				   const int frameSizeX,
@@ -48,9 +48,13 @@ public:
 	void setCurrentFrame(const unsigned int currentFrame) { _currentFrame = currentFrame; _tempSteps = 1; };
 
 
-	/// Returns true if the current frame is the last one.
+	/// Returns true if the current frame is the last one in the cycle.
 	/// @return Current frame is the last one.
 	bool lastFrame();
+
+	/// Returns true if the current frame is different from the last one.
+	/// @return Current frame is different from the last.
+	bool frameChanged();
 
 
 	/// Set the step interval. For example,
@@ -93,6 +97,9 @@ private:
 
 	/// A helper variable to check the step interval.
 	unsigned int _tempSteps;
+
+	/// A helper variable to check if frame has changed.
+	bool _frameChanged;
 
 
 	/// A container for the textures.

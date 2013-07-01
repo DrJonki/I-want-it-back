@@ -2,10 +2,19 @@
 
 
 
-Player::Player(const bool firstPlayer)
-	: _firstPlayer(firstPlayer)
+Player::Player(const unsigned short playerNo)
+	: _playerNumber(playerNo)
 {
 	unloadPlayer();
+
+	_sensorData[SEN_TOP] = playerNo * 1;
+	_sensorData[SEN_RIGHT] = playerNo * 2;
+	_sensorData[SEN_BOTTOM] = playerNo * 3;
+	_sensorData[SEN_LEFT] = playerNo * 4;
+	_sensorData[SEN_TOPLEFT] = playerNo * 5;
+	_sensorData[SEN_TOPRIGHT] = playerNo * 6;
+	_sensorData[SEN_BOTTOMRIGHT] = playerNo * 7;
+	_sensorData[SEN_BOTTOMLEFT] = playerNo * 8;
 }
 
 Player::~Player(void)
@@ -21,28 +30,20 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 
 	setTexture(animations[ANIM_IDLE].getCurrentTexture());
 	setOrigin(getLocalBounds().width / 2, getLocalBounds().height / 2);
-	if (_firstPlayer) setPosition(g_windowWidth / 2, 250);
-	else setPosition(g_windowWidth / 2, 850);
+	if (_playerNumber == 1) setPosition(g_windowWidth / 2, 250);
+	else if (_playerNumber == 2) setPosition(g_windowWidth / 2, 850);
 
 
 	createPhysBody(1.f, 0.f, 0.f);
 
-	_sensorData[SEN_TOP] = senData[0];
-	_sensorData[SEN_RIGHT] = senData[1];
-	_sensorData[SEN_BOTTOM] = senData[2];
-	_sensorData[SEN_LEFT] = senData[3];
-	_sensorData[SEN_TOPLEFT] = senData[4];
-	_sensorData[SEN_TOPRIGHT] = senData[5];
-	_sensorData[SEN_BOTTOMRIGHT] = senData[6];
-	_sensorData[SEN_BOTTOMLEFT] = senData[7];
-	_cListener->addData(senData[0]);
-	_cListener->addData(senData[1]);
-	_cListener->addData(senData[2]);
-	_cListener->addData(senData[3]);
-	_cListener->addData(senData[4]);
-	_cListener->addData(senData[5]);
-	_cListener->addData(senData[6]);
-	_cListener->addData(senData[7]);
+	_cListener->addData((void*)_sensorData[SEN_TOP]);
+	_cListener->addData((void*)_sensorData[SEN_RIGHT]);
+	_cListener->addData((void*)_sensorData[SEN_BOTTOM]);
+	_cListener->addData((void*)_sensorData[SEN_LEFT]);
+	_cListener->addData((void*)_sensorData[SEN_TOPLEFT]);
+	_cListener->addData((void*)_sensorData[SEN_TOPRIGHT]);
+	_cListener->addData((void*)_sensorData[SEN_BOTTOMRIGHT]);
+	_cListener->addData((void*)_sensorData[SEN_BOTTOMLEFT]);
 	
 	createSensors();
 }
@@ -58,11 +59,11 @@ void Player::unloadPlayer()
 
 void Player::update()
 {
-	setTexture(animations[ANIM_IDLE].getCurrentTexture());
+	if (animations[ANIM_IDLE].frameChanged()) setTexture(animations[ANIM_IDLE].getCurrentTexture());
 	animations[ANIM_IDLE].stepForward();
 	animations[ANIM_IDLE].setStepInterval(5);
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _cListener->inContact(_sensorData[SEN_BOTTOM])){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _cListener->inContact((void*)_sensorData[SEN_BOTTOM])){
 		b2Vec2 impulse(0, -60);
 		_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
 	}
@@ -70,7 +71,7 @@ void Player::update()
 	b2Vec2 vel = _body->GetLinearVelocity();
     float desiredVel = 0, maxSpeed = 5.175f;
 
-	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || _cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
+	if (_cListener->inContact((void*)_sensorData[SEN_BOTTOM]) || _cListener->inContact((void*)_sensorData[SEN_BOTTOMRIGHT])){
 		if (_window->getView().getCenter().x > getPosition().x){
 			animations[ANIM_IDLE].setStepInterval(4);
 			maxSpeed = 6.5f;
@@ -156,10 +157,10 @@ void Player::loadAnimations()
 	animations.emplace_back(SpriteAnimation());
 	sf::Image playerImage;
 
-	if (_firstPlayer){
+	if (_playerNumber == 1){
 		playerImage.loadFromFile("Resources/Common/Graphics/Actor/Player/player1.png");
 	}
-	else{
+	else if (_playerNumber == 2){
 		playerImage.loadFromFile("Resources/Common/Graphics/Actor/Player/player2.png");
 	}
 

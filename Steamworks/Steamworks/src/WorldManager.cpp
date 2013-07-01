@@ -36,6 +36,10 @@ void WorldManager::deleteWorld()
 
 void WorldManager::stepWorldPhysics()
 {
+	if (_gameMap != 0){
+		_gameMap->update();
+	}
+
 	if (_gameWorld != 0){
 		_gameWorld->Step((float)g_updateTimerValue, 8, 3);
 		_gameWorld->ClearForces();
