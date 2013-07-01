@@ -17,6 +17,7 @@ Player::Player(const unsigned short playerNo, LoadSettings& settings)
 	_sensorData[SEN_BOTTOMLEFT] = (void*)(playerNo * 8);
 
 	loadProperties(settings);
+	loadAnimations(settings);
 }
 
 Player::~Player(void)
@@ -27,8 +28,6 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 	_world = world;
 	_cListener = lis;
 	_window = window;
-
-	loadAnimations();
 
 	setTexture(animations[ANIM_IDLE].getCurrentTexture());
 	setOrigin(getLocalBounds().width / 2, getLocalBounds().height / 2);
@@ -69,9 +68,15 @@ void Player::update()
 	animations[ANIM_IDLE].stepForward();
 	animations[ANIM_IDLE].setStepInterval(5);
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _cListener->inContact(_sensorData[SEN_BOTTOM])){
-		b2Vec2 impulse(0, -_playerProps.jumpForce);
-		_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+		if (_cListener->inContact(_sensorData[SEN_BOTTOM])){
+			b2Vec2 impulse(0, -_playerProps.jumpForce);
+			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+		}
+		else if (_cListener->inContact(_sensorData[SEN_RIGHT])){
+			b2Vec2 impulse(0, -_playerProps.jumpForce / 4);
+			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+		}
 	}
 
 	b2Vec2 vel = _body->GetLinearVelocity();
@@ -79,7 +84,7 @@ void Player::update()
 
 	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || _cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
 		if (_window->getView().getCenter().x > getPosition().x){
-			animations[ANIM_IDLE].setStepInterval(4);
+			animations[ANIM_IDLE].setStepInterval(animations[ANIM_IDLE].getStepInterval() - 1);
 			maxSpeed = _playerProps.catchingSpeed;
 			desiredVel = b2Min(vel.x + 0.5f, maxSpeed);
 		}
@@ -158,20 +163,50 @@ void Player::createSensors()
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 }
 
-void Player::loadAnimations()
+void Player::loadAnimations(LoadSettings& settings)
 {
-	animations.emplace_back(SpriteAnimation());
-	sf::Image playerImage;
+	animations.reserve(1);
 
-	if (_playerNumber == 1){
-		playerImage.loadFromFile("Resources/Common/Graphics/Actor/Player/player1.png");
-	}
-	else if (_playerNumber == 2){
-		playerImage.loadFromFile("Resources/Common/Graphics/Actor/Player/player2.png");
+	std::string path("Levels/");
+	path += settings._campaign;
+	path += "/0/playeranimdata.dat";
+
+	std::ifstream file(path, std::ifstream::in);
+	if (!file.good()){
+		path = "Levels/Common/Player/playeranimdata.dat";
+		file.open(path, std::ifstream::in);
 	}
 
-	animations[ANIM_IDLE].loadSheet(playerImage, 0, 0, 256, 256, 10);
-	animations[ANIM_IDLE].setStepInterval(5);
+	if (file.good()){
+		int t_animNo = 0;
+
+		while (!file.eof()){
+			int t_playerNo = 0;
+			file >> t_playerNo;
+
+			if (_playerNumber == t_playerNo){
+				sf::Image playerImage;
+				std::string t_textureDir;
+				int t_sizeX = 0, t_sizeY = 0, t_startX = 0, t_startY = 0, t_interval = 1, t_frames = 1;
+
+				file >> t_textureDir;
+				file >> t_sizeX;
+				file >> t_sizeY;
+				file >> t_startX;
+				file >> t_startY;
+				file >> t_interval;
+				file >> t_frames;
+				
+				animations.emplace_back(SpriteAnimation());
+				playerImage.loadFromFile(t_textureDir);
+				animations[t_animNo].loadSheet(playerImage, t_startX, t_startY, t_sizeX, t_sizeY, t_frames);
+				animations[t_animNo].setStepInterval(t_interval);
+
+				t_animNo++;
+			}
+			else file.ignore(256, '\n');
+		}
+	}
 }
 
 void Player::loadProperties(LoadSettings& settings)

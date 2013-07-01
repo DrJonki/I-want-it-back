@@ -26,7 +26,7 @@ private:
 	const unsigned short _playerNumber;
 	void* _sensorData[8];
 
-	void loadAnimations();
+	void loadAnimations(LoadSettings& settings);
 	void loadProperties(LoadSettings& settings);
 
 	struct
