@@ -158,8 +158,8 @@ void Game::init()
 {
 	cListener = new ContactListener;
 
-	player[0] = new Player(1);
-	player[1] = new Player(2);
+	player[0] = new Player(1, mainMenu.getSettings());
+	player[1] = new Player(2, mainMenu.getSettings());
 
 	worldManager.loadWorld(mainMenu.getSettings());
 	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener);

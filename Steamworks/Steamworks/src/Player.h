@@ -4,13 +4,17 @@
 #include <SFML\Window\Keyboard.hpp>
 #include <Box2D\Box2D.h>
 
+#include <sstream>
+#include <fstream>
+
 #include "Sprite.h"
 #include "ContactListener.h"
+#include "LoadSettings.h"
 
 class Player : public Sprite
 {
 public:
-	Player(const unsigned short playerNo);
+	Player(const unsigned short playerNo, LoadSettings& settings);
 	~Player(void);
 
 	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis);
@@ -20,9 +24,18 @@ public:
 	void update();
 private:
 	const unsigned short _playerNumber;
-	unsigned int _sensorData[8];
+	void* _sensorData[8];
 
 	void loadAnimations();
+	void loadProperties(LoadSettings& settings);
+
+	struct
+	{
+		float baseSpeed,
+			  catchingSpeed,
+			  jumpForce;
+
+	} _playerProps;
 
 	//Anumeration for the sensors
 	static const enum

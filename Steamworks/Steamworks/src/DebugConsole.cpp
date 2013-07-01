@@ -9,7 +9,7 @@ DebugConsole::DebugConsole(void)
 
 	defaultFont.loadFromFile(RES_FONTS "furore.otf");
 
-	debugWindow.create(sf::VideoMode(400, 200), "Debug", sf::Style::None);
+	debugWindow.create(sf::VideoMode(400, 200), "Debug", sf::Style::Close);
 	debugWindow.setPosition(sf::Vector2i(-500, 400));
 }
 
@@ -18,17 +18,22 @@ DebugConsole::~DebugConsole(void){}
 
 void DebugConsole::draw()
 {
-	debugWindow.clear(sf::Color::Color(24, 93, 145, 255));
+	if (debugWindow.isOpen()){
+		debugWindow.clear(sf::Color::Color(24, 93, 145, 255));
 
-	for (unsigned int i = 0; i < dObject.size(); i++){
-		dObject[i].update();
+		for (unsigned int i = 0; i < dObject.size(); i++){
+			dObject[i].update();
 
-		debugWindow.draw(dObject[i]);
+			debugWindow.draw(dObject[i]);
+		}
+
+		debugWindow.display();
 	}
 
-	debugWindow.display();
-
-	while (debugWindow.pollEvent(e));
+	while (debugWindow.pollEvent(e)){
+		if (e.type == sf::Event::Closed)
+			debugWindow.close();
+	}
 }
 
 void DebugConsole::clear()
