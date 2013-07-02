@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Globals.h"
 #include "LoadSettings.h"
+#include "EngineSettings.h"
 #include "Player.h"
 
 class WorldManager
@@ -15,7 +16,7 @@ public:
 	WorldManager(sf::RenderWindow* window);
 	~WorldManager(void);
 
-	void loadWorld(LoadSettings&);
+	void loadWorld(LoadSettings&, EngineSettings&);
 	void deleteWorld();
 
 	void stepWorldPhysics();

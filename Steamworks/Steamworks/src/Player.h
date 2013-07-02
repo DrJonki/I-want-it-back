@@ -9,6 +9,7 @@
 
 #include "Sprite.h"
 #include "ContactListener.h"
+#include "EngineSettings.h"
 #include "LoadSettings.h"
 #include "Globals.h"
 
@@ -18,7 +19,7 @@ public:
 	Player(const unsigned short playerNo, LoadSettings& settings);
 	~Player(void);
 
-	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis);
+	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis, EngineSettings& settings);
 	void unloadPlayer();
 	void createSensors();
 
@@ -34,7 +35,9 @@ private:
 
 	struct
 	{
-		float baseSpeed,
+		float sizeX,
+			  sizeY,
+			  baseSpeed,
 			  catchingSpeed,
 			  jumpForce,
 			  airDrag;

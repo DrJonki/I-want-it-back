@@ -23,16 +23,17 @@ Player::Player(const unsigned short playerNo, LoadSettings& settings)
 Player::~Player(void)
 {}
 
-void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis)
+void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis, EngineSettings& settings)
 {
 	_world = world;
 	_cListener = lis;
 	_window = window;
 
-	setTexture(animations[ANIM_IDLE].getCurrentTexture());
+	setSize(sf::Vector2f(_playerProps.sizeX, _playerProps.sizeY));
+	setTexture(&animations[ANIM_RUNNING].getCurrentTexture());
 	setOrigin(getLocalBounds().width / 2, getLocalBounds().height / 2);
-	if (_playerNumber == 1) setPosition(ns::g_windowWidth / 2, 250);
-	else if (_playerNumber == 2) setPosition(ns::g_windowWidth / 2, 850);
+	if (_playerNumber == 1) setPosition(settings.resolution.x / 2, 250);
+	else if (_playerNumber == 2) setPosition(settings.resolution.x / 2, 850);
 
 
 	createPhysBody(1.f, 0.f, 0.f);
@@ -56,6 +57,8 @@ void Player::unloadPlayer()
 	_cListener = nullptr;
 	_window = nullptr;
 
+	_playerProps.sizeX = 0.f;
+	_playerProps.sizeY = 0.f;
 	_playerProps.baseSpeed = 0.f;
 	_playerProps.catchingSpeed = 0.f;
 	_playerProps.jumpForce = 0.f;
@@ -93,7 +96,7 @@ void Player::update()
 		desiredVel = b2Min(vel.x + 0.3f, maxSpeed);
 	}
 	else{
-		desiredVel = vel.x * 0.99f;
+		desiredVel = vel.x * _playerProps.airDrag;
 	}
 	
 
@@ -112,14 +115,15 @@ void Player::updateAnimation()
 {
 	if (!_cListener->inContact(_sensorData[SEN_BOTTOM]) && !_cListener->inContact(_sensorData[SEN_BOTTOMLEFT]) && !_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
 		resetAnimations(ANIM_JUMPING);
-		if (animations[ANIM_JUMPING].frameChanged()) setTexture(animations[ANIM_JUMPING].getCurrentTexture());
-		animations[ANIM_JUMPING].stepForward();
+		if (animations[ANIM_JUMPING].frameChanged()) setTexture(&animations[ANIM_JUMPING].getCurrentTexture());
+		if (!animations[ANIM_JUMPING].lastFrame()) animations[ANIM_JUMPING].stepForward();
 	}
 
 	else{
 		resetAnimations(ANIM_RUNNING);
-		if (animations[ANIM_RUNNING].frameChanged()) setTexture(animations[ANIM_RUNNING].getCurrentTexture());
+		if (animations[ANIM_RUNNING].frameChanged()) setTexture(&animations[ANIM_RUNNING].getCurrentTexture());
 		animations[ANIM_RUNNING].stepForward();
+		animations[ANIM_RUNNING].setStepInterval(5);
 	}
 }
 
@@ -250,7 +254,15 @@ void Player::loadProperties(LoadSettings& settings)
 		while (!file.eof()){
 			file >> tempS;
 
-			if (tempS == "baseSpeed:"){
+			if (tempS == "sizeX:"){
+				file >> tempF;
+				_playerProps.sizeX = tempF;
+			}
+			else if (tempS == "sizeY:"){
+				file >> tempF;
+				_playerProps.sizeY = tempF;
+			}
+			else if (tempS == "baseSpeed:"){
 				file >> tempF;
 				_playerProps.baseSpeed = tempF;
 			}

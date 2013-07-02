@@ -1,3 +1,5 @@
+sizeX: 256.f
+sizeY: 256.f
 baseSpeed: 5.175f
 catchingSpeed: 6.5f
 jumpForce: 30.f

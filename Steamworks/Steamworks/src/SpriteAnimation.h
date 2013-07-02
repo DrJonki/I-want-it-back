@@ -42,6 +42,9 @@ public:
 	/// @param Ignore step interval and force frame change.
 	void stepBack(const bool force = false);
 
+	/// Get the current frame number.
+	/// @return Number of the current frame.
+	int getCurrentFrame() { return _currentFrame; };
 
 	/// Set the current frame. Can be used to reset the animation.
 	/// @param The number of the frame to be set as current.

@@ -23,7 +23,6 @@ namespace
 	Mainmenu mainMenu(&gameWindow, &e);
 	WorldManager worldManager(&gameWindow);
 	Player* player[2];
-	LoadSettings loadSettings;
 
 	ContactListener* cListener;
 }
@@ -45,7 +44,7 @@ bool Game::runAndDontCrashPls()
 		init();
 
 		while (runningState){
-			if (ns::g_useVSync){
+			if (mainMenu.getEngineSettings().vSync){
 				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
 					update();
 					render();
@@ -158,12 +157,12 @@ void Game::init()
 {
 	cListener = new ContactListener;
 
-	player[0] = new Player(1, mainMenu.getSettings());
-	player[1] = new Player(2, mainMenu.getSettings());
+	player[0] = new Player(1, mainMenu.getLoadSettings());
+	player[1] = new Player(2, mainMenu.getLoadSettings());
 
-	worldManager.loadWorld(mainMenu.getSettings());
-	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener);
-	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener);
+	worldManager.loadWorld(mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
+	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
+	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
 	runningState = true;
 
 	worldManager.getWorldPtr()->SetContactListener(cListener);
@@ -173,8 +172,8 @@ void Game::init()
 		debug->assignPtr(&d_renderTime, "Render time(ms): ");
 	}
 
-
-	float s_scale =  ((float)ns::g_windowWidth / (float)ns::g_windowHeight) / (1920.f / 1200.f);
+	EngineSettings engineSettings = mainMenu.getEngineSettings();
+	float s_scale =  ((float)engineSettings.resolution.x / (float)engineSettings.resolution.y) / (1920.f / 1200.f);
 	//Top view
 	view[0].setCenter(sf::Vector2f((1920 * s_scale) / 2, 300));
 	view[0].setSize(sf::Vector2f(1920 * s_scale, 600));
@@ -186,16 +185,16 @@ void Game::init()
 	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));
 
 	//Whole view
-	view[2].setCenter(sf::Vector2f(ns::g_windowWidth / 2, ns::g_windowHeight / 2));
-	view[2].setSize(sf::Vector2f((float)ns::g_windowWidth, (float)ns::g_windowHeight));
+	view[2].setCenter(sf::Vector2f(engineSettings.resolution.x / 2, engineSettings.resolution.y / 2));
+	view[2].setSize(sf::Vector2f((float)engineSettings.resolution.x, (float)engineSettings.resolution.y));
 	view[2].setViewport(sf::FloatRect(0, 0, 1.f, 1.f));
 
 	sShape.setFillColor(sf::Color::Black);
 	sShape.setOutlineThickness(2);
 	sShape.setOutlineColor(sf::Color::Yellow);
-	sShape.setSize(sf::Vector2f((float)ns::g_windowWidth, 11));
+	sShape.setSize(sf::Vector2f((float)engineSettings.resolution.x, 11));
 	sShape.setOrigin(0, 6);
-	sShape.setPosition(0, ns::g_windowHeight / 2);
+	sShape.setPosition(0, engineSettings.resolution.y / 2);
 
 	updateClock.restart();
 	SetForegroundWindow(gameWindow.getSystemHandle());

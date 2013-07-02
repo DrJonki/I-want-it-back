@@ -11,14 +11,14 @@ WorldManager::~WorldManager(void)
 {}
 
 
-void WorldManager::loadWorld(LoadSettings& settings)
+void WorldManager::loadWorld(LoadSettings& lsettings, EngineSettings& esettings)
 {
-	b2Vec2 gravity(0.f, ns::g_worldGravity);
+	b2Vec2 gravity(0.f, esettings.worldGravity);
 	_gameWorld = new b2World(gravity);
 	_gameWorld->SetAllowSleeping(true);
 
 	_gameMap = new Map;
-	_gameMap->load(_gameWorld, _window, settings._campaign, settings._level);
+	_gameMap->load(_gameWorld, _window, lsettings._campaign, lsettings._level);
 }
 
 void WorldManager::deleteWorld()

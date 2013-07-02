@@ -8,7 +8,7 @@
 #include "SpriteAnimation.h"
 #include "ContactListener.h"
 
-class Sprite : public sf::Sprite
+class Sprite : public sf::RectangleShape
 {
 public:
 	Sprite(void);

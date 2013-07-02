@@ -1,2 +1,4 @@
-1 Resources/Common/Graphics/Actor/Player/player1.png 256 256 0 0 5 10
-2 Resources/Common/Graphics/Actor/Player/player2.png 256 256 0 0 5 10
+1 Resources/Common/Graphics/Actor/Player/player1running.png 256 256 0 0 5 10
+1 Resources/Common/Graphics/Actor/Player/player1jumping.png 256 256 0 0 5 8
+2 Resources/Common/Graphics/Actor/Player/player2running.png 256 256 0 0 5 10
+2 Resources/Common/Graphics/Actor/Player/player1jumping.png 256 256 0 0 5 8

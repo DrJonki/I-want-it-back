@@ -12,17 +12,8 @@ namespace ns
 	static const bool g_debug = false;
 #endif
 
-//Window dimensions
-static const int g_windowWidth = 1600, g_windowHeight = 900;
-
-//Vertical sync setting
-static const bool g_useVSync = false;
-
 //Update timer value in seconds
 static const float g_updateTimerValue = 1.f / 60.f;
-
-//Gravity
-static const float g_worldGravity = 25.f;
 
 //Pixels2Metric & vice-versa. Needed to make B2D and SFML work together.
 //When converting from SFML units(pixels) to B2D meters, divide by this value.

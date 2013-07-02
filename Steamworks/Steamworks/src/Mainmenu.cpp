@@ -10,8 +10,8 @@ namespace
 
 
 Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event* e)
-	:_window(window),
-	 _e(e)
+	: _window(window),
+	  _e(e)
 {}
 
 
@@ -40,16 +40,16 @@ bool Mainmenu::showMenu()
 	}
 }
 
-LoadSettings Mainmenu::getSettings()
-{
-	return _settings;
-}
-
 
 void Mainmenu::init()
 {
-	if (!_window->isOpen()) _window->create(sf::VideoMode(ns::g_windowWidth, ns::g_windowHeight), "Template title :(", sf::Style::Close);
-	_window->setVerticalSyncEnabled(ns::g_useVSync);
+	if (!_window->isOpen()){
+		if (_engineSettings.fullScreen)
+			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Fullscreen);
+		else
+			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Default);
+	}
+	_window->setVerticalSyncEnabled(_engineSettings.vSync);
 	sf::View view;
 	view.setCenter(sf::Vector2f(1920 / 2, 1200 / 2));
 	view.setSize(sf::Vector2f(1920, 1200));
@@ -73,28 +73,28 @@ void Mainmenu::update()
 	ss.str("");
 
 	
-	int t_level = std::atoi(_settings._level.c_str());
+	int t_level = std::atoi(_loadSettings._level.c_str());
 	
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && t_level > 1){
 		t_level--;
 		ss << t_level;
-		_settings._level = ss.str();
+		_loadSettings._level = ss.str();
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		t_level++;
 		ss << t_level;
-		_settings._level = ss.str();
+		_loadSettings._level = ss.str();
 	}
 	while (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right));
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && t_campaign > 0){
 		t_campaign--;
-		_settings._campaign = _settings._campaignVector[t_campaign];
+		_loadSettings._campaign = _loadSettings._campaignVector[t_campaign];
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && _settings._campaignVector.size() - 1 > t_campaign){
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && _loadSettings._campaignVector.size() - 1 > t_campaign){
 		t_campaign++;
-		_settings._campaign = _settings._campaignVector[t_campaign];
+		_loadSettings._campaign = _loadSettings._campaignVector[t_campaign];
 	}
 	while (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up));
 
@@ -102,11 +102,11 @@ void Mainmenu::update()
 
 	
 	ss.str("");
-	ss << _settings._campaign;
+	ss << _loadSettings._campaign;
 	_text[1].setString(ss.str());
 
 	ss.str("");
-	ss << _settings._level;
+	ss << _loadSettings._level;
 	_text[2].setString(ss.str());
 
 	while (_window->pollEvent(*_e));

@@ -4,6 +4,7 @@
 
 #include <sstream>
 
+#include "EngineSettings.h"
 #include "LoadSettings.h"
 #include "Globals.h"
 #include "GameText.h"
@@ -15,7 +16,8 @@ public:
 	~Mainmenu(void);
 
 	bool showMenu();
-	LoadSettings getSettings();
+	LoadSettings getLoadSettings() { return _loadSettings; };
+	EngineSettings getEngineSettings() { return _engineSettings; };
 
 private:
 	void init();
@@ -24,7 +26,8 @@ private:
 
 	sf::RenderWindow* _window;
 	sf::Event* _e;
-	LoadSettings _settings;
+	LoadSettings _loadSettings;
+	EngineSettings _engineSettings;
 
 	sf::Font font;
 };

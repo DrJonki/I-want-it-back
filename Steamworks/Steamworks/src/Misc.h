@@ -1,8 +1,11 @@
 #pragma once
-class Misc
-{
-public:
-	Misc(void);
-	~Misc(void);
-};
 
+#include <fstream>
+#include <Windows.h>
+
+
+namespace ns
+{
+	std::wstring s2ws(const std::string& s);
+
+}
