@@ -13,7 +13,7 @@ WorldManager::~WorldManager(void)
 
 void WorldManager::loadWorld(LoadSettings& settings)
 {
-	b2Vec2 gravity(0.f, g_worldGravity);
+	b2Vec2 gravity(0.f, ns::g_worldGravity);
 	_gameWorld = new b2World(gravity);
 	_gameWorld->SetAllowSleeping(true);
 
@@ -41,7 +41,7 @@ void WorldManager::stepWorldPhysics()
 	}
 
 	if (_gameWorld != 0){
-		_gameWorld->Step((float)g_updateTimerValue, 8, 3);
+		_gameWorld->Step((float)ns::g_updateTimerValue, 8, 3);
 		_gameWorld->ClearForces();
 	}
 }

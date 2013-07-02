@@ -1,11 +1,16 @@
 #pragma once
 
+
+namespace ns
+{
+
+
 //Debug configuration
-//#ifdef _DEBUG
+#ifdef _DEBUG
 	static const bool g_debug = true;
-//#else
-//	static const bool g_debug = false;
-//#endif
+#else
+	static const bool g_debug = false;
+#endif
 
 //Window dimensions
 static const int g_windowWidth = 1600, g_windowHeight = 900;
@@ -27,3 +32,8 @@ static const float g_P2MScale = 60.f;
 //Resource directory strings for quick access
 //Fonts
 #define RES_FONTS "Resources/Common/Fonts/"
+
+
+
+
+}

@@ -31,8 +31,8 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 
 	setTexture(animations[ANIM_IDLE].getCurrentTexture());
 	setOrigin(getLocalBounds().width / 2, getLocalBounds().height / 2);
-	if (_playerNumber == 1) setPosition(g_windowWidth / 2, 250);
-	else if (_playerNumber == 2) setPosition(g_windowWidth / 2, 850);
+	if (_playerNumber == 1) setPosition(ns::g_windowWidth / 2, 250);
+	else if (_playerNumber == 2) setPosition(ns::g_windowWidth / 2, 850);
 
 
 	createPhysBody(1.f, 0.f, 0.f);
@@ -59,15 +59,13 @@ void Player::unloadPlayer()
 	_playerProps.baseSpeed = 0.f;
 	_playerProps.catchingSpeed = 0.f;
 	_playerProps.jumpForce = 0.f;
+	_playerProps.airDrag = 0.f;
 }
 
 
 void Player::update()
 {
-	if (animations[ANIM_IDLE].frameChanged()) setTexture(animations[ANIM_IDLE].getCurrentTexture());
-	animations[ANIM_IDLE].stepForward();
-	animations[ANIM_IDLE].setStepInterval(5);
-	
+	//Jumping
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
 		if (_cListener->inContact(_sensorData[SEN_BOTTOM])){
 			b2Vec2 impulse(0, -_playerProps.jumpForce);
@@ -79,12 +77,16 @@ void Player::update()
 		}
 	}
 
+
+
+
+	//Forward movement
 	b2Vec2 vel = _body->GetLinearVelocity();
 	float desiredVel = 0, maxSpeed = _playerProps.baseSpeed;
 
 	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || _cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
 		if (_window->getView().getCenter().x > getPosition().x){
-			animations[ANIM_IDLE].setStepInterval(animations[ANIM_IDLE].getStepInterval() - 1);
+			animations[ANIM_RUNNING].setStepInterval(animations[ANIM_RUNNING].getStepInterval() - 1);
 			maxSpeed = _playerProps.catchingSpeed;
 			desiredVel = b2Min(vel.x + 0.5f, maxSpeed);
 		}
@@ -94,11 +96,31 @@ void Player::update()
 		desiredVel = vel.x * 0.99f;
 	}
 	
+
+
+
     float velChange = desiredVel - vel.x;
     float impulse = _body->GetMass() * velChange; //disregard time factor
     _body->ApplyLinearImpulse(b2Vec2(impulse, 0), _body->GetWorldCenter());
 
-	setPosition(_body->GetPosition().x * g_P2MScale, _body->GetPosition().y * g_P2MScale);
+	setPosition(_body->GetPosition().x * ns::g_P2MScale, _body->GetPosition().y * ns::g_P2MScale);
+
+	updateAnimation();
+}
+
+void Player::updateAnimation()
+{
+	if (!_cListener->inContact(_sensorData[SEN_BOTTOM]) && !_cListener->inContact(_sensorData[SEN_BOTTOMLEFT]) && !_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
+		resetAnimations(ANIM_JUMPING);
+		if (animations[ANIM_JUMPING].frameChanged()) setTexture(animations[ANIM_JUMPING].getCurrentTexture());
+		animations[ANIM_JUMPING].stepForward();
+	}
+
+	else{
+		resetAnimations(ANIM_RUNNING);
+		if (animations[ANIM_RUNNING].frameChanged()) setTexture(animations[ANIM_RUNNING].getCurrentTexture());
+		animations[ANIM_RUNNING].stepForward();
+	}
 }
 
 
@@ -114,50 +136,50 @@ void Player::createSensors()
 
 
 	//Top sensor
-	t_shape.SetAsBox((getLocalBounds().width / 8) / g_P2MScale, 6 / g_P2MScale, b2Vec2(0, (-getLocalBounds().height / 2) / g_P2MScale), 0);
+	t_shape.SetAsBox((getLocalBounds().width / 8) / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2(0, (-getLocalBounds().height / 2) / ns::g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[0];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Right sensor
-	t_shape.SetAsBox(6 / g_P2MScale, (getLocalBounds().height / 8) / g_P2MScale, b2Vec2((getLocalBounds().height / 2) / g_P2MScale, 0), 0);
+	t_shape.SetAsBox(6 / ns::g_P2MScale, (getLocalBounds().height / 8) / ns::g_P2MScale, b2Vec2((getLocalBounds().height / 2) / ns::g_P2MScale, 0), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[1];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Bottom sensor
-	t_shape.SetAsBox((getLocalBounds().width / 8) / g_P2MScale, 6 / g_P2MScale, b2Vec2(0, (getLocalBounds().height / 2) / g_P2MScale), 0);
+	t_shape.SetAsBox((getLocalBounds().width / 8) / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2(0, (getLocalBounds().height / 2) / ns::g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[2];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Left sensor
-	t_shape.SetAsBox(6 / g_P2MScale, (getLocalBounds().height / 8) / g_P2MScale, b2Vec2((-getLocalBounds().height / 2) / g_P2MScale, 0), 0);
+	t_shape.SetAsBox(6 / ns::g_P2MScale, (getLocalBounds().height / 8) / ns::g_P2MScale, b2Vec2((-getLocalBounds().height / 2) / ns::g_P2MScale, 0), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[3];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 
 	//Top-left
-	t_shape.SetAsBox(6 / g_P2MScale, 6 / g_P2MScale, b2Vec2((-getLocalBounds().height / 2) / g_P2MScale, (-getLocalBounds().height / 2) / g_P2MScale), 0);
+	t_shape.SetAsBox(6 / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2((-getLocalBounds().height / 2) / ns::g_P2MScale, (-getLocalBounds().height / 2) / ns::g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[4];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Top-right
-	t_shape.SetAsBox(6 / g_P2MScale, 6 / g_P2MScale, b2Vec2((getLocalBounds().height / 2) / g_P2MScale, (-getLocalBounds().height / 2) / g_P2MScale), 0);
+	t_shape.SetAsBox(6 / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2((getLocalBounds().height / 2) / ns::g_P2MScale, (-getLocalBounds().height / 2) / ns::g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[5];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Bottom-right
-	t_shape.SetAsBox(6 / g_P2MScale, 6 / g_P2MScale, b2Vec2((getLocalBounds().height / 2) / g_P2MScale, (getLocalBounds().height / 2) / g_P2MScale), 0);
+	t_shape.SetAsBox(6 / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2((getLocalBounds().height / 2) / ns::g_P2MScale, (getLocalBounds().height / 2) / ns::g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[6];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
 	//Bottom-left
-	t_shape.SetAsBox(6 / g_P2MScale, 6 / g_P2MScale, b2Vec2((-getLocalBounds().height / 2) / g_P2MScale, (getLocalBounds().height / 2) / g_P2MScale), 0);
+	t_shape.SetAsBox(6 / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2((-getLocalBounds().height / 2) / ns::g_P2MScale, (getLocalBounds().height / 2) / ns::g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[7];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
@@ -165,7 +187,7 @@ void Player::createSensors()
 
 void Player::loadAnimations(LoadSettings& settings)
 {
-	animations.reserve(1);
+	animations.reserve(2);
 
 	std::string path("Levels/");
 	path += settings._campaign;
@@ -239,6 +261,10 @@ void Player::loadProperties(LoadSettings& settings)
 			else if (tempS == "jumpForce:"){
 				file >> tempF;
 				_playerProps.jumpForce = tempF;
+			}
+			else if (tempS == "airDrag:"){
+				file >> tempF;
+				_playerProps.airDrag = tempF;
 			}
 		}
 	}

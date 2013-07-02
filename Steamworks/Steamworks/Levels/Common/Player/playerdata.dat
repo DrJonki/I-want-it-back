@@ -1,3 +1,4 @@
 baseSpeed: 5.175f
 catchingSpeed: 6.5f
 jumpForce: 30.f
+airDrag: 0.99f

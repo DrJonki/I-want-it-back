@@ -48,8 +48,8 @@ LoadSettings Mainmenu::getSettings()
 
 void Mainmenu::init()
 {
-	if (!_window->isOpen()) _window->create(sf::VideoMode(g_windowWidth, g_windowHeight), "Template title :(", sf::Style::Close);
-	_window->setVerticalSyncEnabled(g_useVSync);
+	if (!_window->isOpen()) _window->create(sf::VideoMode(ns::g_windowWidth, ns::g_windowHeight), "Template title :(", sf::Style::Close);
+	_window->setVerticalSyncEnabled(ns::g_useVSync);
 	sf::View view;
 	view.setCenter(sf::Vector2f(1920 / 2, 1200 / 2));
 	view.setSize(sf::Vector2f(1920, 1200));

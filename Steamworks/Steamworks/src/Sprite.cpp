@@ -27,13 +27,13 @@ void Sprite::createPhysBody(const float density,
 							const bool fixedAngle)
 {
 	b2BodyDef bodyDef;
-	bodyDef.position = b2Vec2(getPosition().x / g_P2MScale, getPosition().y / g_P2MScale);
+	bodyDef.position = b2Vec2(getPosition().x / ns::g_P2MScale, getPosition().y / ns::g_P2MScale);
     bodyDef.type = b2_dynamicBody;
 
     _body = _world->CreateBody(&bodyDef);
 	
 	b2CircleShape physShape;
-	physShape.m_radius = (getLocalBounds().width / 2) / g_P2MScale;
+	physShape.m_radius = (getLocalBounds().width / 2) / ns::g_P2MScale;
 
     b2FixtureDef fixtureDef;
     fixtureDef.density = density;

@@ -36,7 +36,7 @@ Game::~Game(void)
 
 bool Game::runAndDontCrashPls()
 {
-	if (g_debug){
+	if (ns::g_debug){
 		debug = new DebugConsole;
 		debug->draw();
 	}
@@ -45,15 +45,15 @@ bool Game::runAndDontCrashPls()
 		init();
 
 		while (runningState){
-			if (g_useVSync){
-				if (updateClock.getElapsedTime().asSeconds() > g_updateTimerValue){
+			if (ns::g_useVSync){
+				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
 					update();
 					render();
 					pollEvents();
 				}
 			}
 			else {
-				if (updateClock.getElapsedTime().asSeconds() > g_updateTimerValue){
+				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
 					update();
 					pollEvents();
 				}
@@ -98,7 +98,7 @@ void Game::update()
 	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
 	//End of update loop
 
-	if (g_debug){
+	if (ns::g_debug){
 		//Pointer updates
 		d_updateTime = updateClock.getElapsedTime().asMilliseconds();
 
@@ -139,7 +139,7 @@ void Game::render()
 	glFlush();
 	gameWindow.display();
 
-	if (g_debug){
+	if (ns::g_debug){
 		d_renderTime = renderClock.getElapsedTime().asMilliseconds();
 	}
 }
@@ -168,13 +168,13 @@ void Game::init()
 
 	worldManager.getWorldPtr()->SetContactListener(cListener);
 
-	if (g_debug){
+	if (ns::g_debug){
 		debug->assignPtr(&d_updateTime, "Update time(ms): ");
 		debug->assignPtr(&d_renderTime, "Render time(ms): ");
 	}
 
 
-	float s_scale =  ((float)g_windowWidth / (float)g_windowHeight) / (1920.f / 1200.f);
+	float s_scale =  ((float)ns::g_windowWidth / (float)ns::g_windowHeight) / (1920.f / 1200.f);
 	//Top view
 	view[0].setCenter(sf::Vector2f((1920 * s_scale) / 2, 300));
 	view[0].setSize(sf::Vector2f(1920 * s_scale, 600));
@@ -186,16 +186,16 @@ void Game::init()
 	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));
 
 	//Whole view
-	view[2].setCenter(sf::Vector2f(g_windowWidth / 2, g_windowHeight / 2));
-	view[2].setSize(sf::Vector2f((float)g_windowWidth, (float)g_windowHeight));
+	view[2].setCenter(sf::Vector2f(ns::g_windowWidth / 2, ns::g_windowHeight / 2));
+	view[2].setSize(sf::Vector2f((float)ns::g_windowWidth, (float)ns::g_windowHeight));
 	view[2].setViewport(sf::FloatRect(0, 0, 1.f, 1.f));
 
 	sShape.setFillColor(sf::Color::Black);
 	sShape.setOutlineThickness(2);
 	sShape.setOutlineColor(sf::Color::Yellow);
-	sShape.setSize(sf::Vector2f((float)g_windowWidth, 11));
+	sShape.setSize(sf::Vector2f((float)ns::g_windowWidth, 11));
 	sShape.setOrigin(0, 6);
-	sShape.setPosition(0, g_windowHeight / 2);
+	sShape.setPosition(0, ns::g_windowHeight / 2);
 
 	updateClock.restart();
 	SetForegroundWindow(gameWindow.getSystemHandle());
@@ -211,7 +211,7 @@ void Game::deInit()
 	delete cListener;
 	runningState = false;
 
-	if (g_debug){
+	if (ns::g_debug){
 		debug->clear();
 		debug->draw();
 	}

@@ -10,6 +10,7 @@
 #include "Sprite.h"
 #include "ContactListener.h"
 #include "LoadSettings.h"
+#include "Globals.h"
 
 class Player : public Sprite
 {
@@ -29,11 +30,14 @@ private:
 	void loadAnimations(LoadSettings& settings);
 	void loadProperties(LoadSettings& settings);
 
+	void updateAnimation();
+
 	struct
 	{
 		float baseSpeed,
 			  catchingSpeed,
-			  jumpForce;
+			  jumpForce,
+			  airDrag;
 
 	} _playerProps;
 
@@ -54,10 +58,8 @@ private:
 	//Enumeration for the different animation states
 	static const enum
 	{
-		ANIM_IDLE,
 		ANIM_RUNNING,
 		ANIM_JUMPING,
-		ANIM_FALLING,
 		ETC
 	};
 };

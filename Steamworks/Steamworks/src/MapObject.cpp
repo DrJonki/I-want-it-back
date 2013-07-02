@@ -41,13 +41,13 @@ void MapObject::load(b2World* world,
 	//Phys body
 	if (hasPhysics){
 		b2BodyDef bodyDef;
-		bodyDef.position = b2Vec2(posX/g_P2MScale, posY/g_P2MScale);
+		bodyDef.position = b2Vec2(posX / ns::g_P2MScale, posY / ns::g_P2MScale);
 		bodyDef.type = b2_staticBody;
 
 		_body = world->CreateBody(&bodyDef);
 
 		b2PolygonShape shape;
-		shape.SetAsBox(((sizeX / 2) * bBoxModX) / g_P2MScale, ((sizeY / 2) * bBoxModY) / g_P2MScale);
+		shape.SetAsBox(((sizeX / 2) * bBoxModX) / ns::g_P2MScale, ((sizeY / 2) * bBoxModY) / ns::g_P2MScale);
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.density = 0.f;
