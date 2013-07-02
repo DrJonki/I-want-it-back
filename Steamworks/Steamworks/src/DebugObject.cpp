@@ -11,7 +11,7 @@ DebugObject::~DebugObject(void)
 
 void DebugObject::update()
 {
-	if (_dValuef != 0){
+	if (_dValuef != nullptr){
 		std::string string = _dTitle;
 		std::stringstream ss;
 	
@@ -21,7 +21,7 @@ void DebugObject::update()
 
 		setString(string);
 	}
-	else if (_dValuei != 0){
+	else if (_dValuei != nullptr){
 		std::string string = _dTitle;
 		std::stringstream ss;
 	

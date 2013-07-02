@@ -21,12 +21,14 @@ public:
 	/// @param The horizontal size of one frame. All the frames on the sheet must be this same size.
 	/// @param The vertical size of one frame.
 	/// @param Number of frames to load. Must be exact. Missing textures will be replaced with a white box.
+	/// @param Is texture smoothing on.
 	bool loadSheet(sf::Image &sheet,
 				   const int startX,
 				   const int startY,
 				   const int frameSizeX,
 				   const int frameSizeY,
-				   const int frameCount);
+				   const int frameCount,
+				   const bool smooth = false);
 
 
 	/// Step animation cycle forward by 1 / _stepInterval.

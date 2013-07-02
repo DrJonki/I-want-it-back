@@ -35,7 +35,7 @@ Game::~Game(void)
 
 bool Game::runAndDontCrashPls()
 {
-	if (ns::g_debug){
+	if (mainMenu.getEngineSettings().debug){
 		debug = new DebugConsole;
 		debug->draw();
 	}
@@ -62,7 +62,7 @@ bool Game::runAndDontCrashPls()
 		deInit();
 	}
 
-	if (debug != 0) delete debug;
+	if (debug != nullptr) delete debug;
 	
 	return true;
 }
@@ -97,7 +97,7 @@ void Game::update()
 	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
 	//End of update loop
 
-	if (ns::g_debug){
+	if (mainMenu.getEngineSettings().debug){
 		//Pointer updates
 		d_updateTime = updateClock.getElapsedTime().asMilliseconds();
 
@@ -138,7 +138,7 @@ void Game::render()
 	glFlush();
 	gameWindow.display();
 
-	if (ns::g_debug){
+	if (mainMenu.getEngineSettings().debug){
 		d_renderTime = renderClock.getElapsedTime().asMilliseconds();
 	}
 }
@@ -157,8 +157,8 @@ void Game::init()
 {
 	cListener = new ContactListener;
 
-	player[0] = new Player(1, mainMenu.getLoadSettings());
-	player[1] = new Player(2, mainMenu.getLoadSettings());
+	player[0] = new Player(1, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
+	player[1] = new Player(2, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
 
 	worldManager.loadWorld(mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
 	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
@@ -167,7 +167,7 @@ void Game::init()
 
 	worldManager.getWorldPtr()->SetContactListener(cListener);
 
-	if (ns::g_debug){
+	if (mainMenu.getEngineSettings().debug){
 		debug->assignPtr(&d_updateTime, "Update time(ms): ");
 		debug->assignPtr(&d_renderTime, "Render time(ms): ");
 	}
@@ -210,7 +210,7 @@ void Game::deInit()
 	delete cListener;
 	runningState = false;
 
-	if (ns::g_debug){
+	if (mainMenu.getEngineSettings().debug){
 		debug->clear();
 		debug->draw();
 	}

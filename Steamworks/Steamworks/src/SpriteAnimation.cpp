@@ -21,7 +21,8 @@ bool SpriteAnimation::loadSheet(sf::Image &sheet,
 								const int startY,
 								const int frameSizeX,
 								const int frameSizeY,
-								const int frameCount)
+								const int frameCount,
+								const bool smooth)
 {
 	_frameCount = frameCount;
 
@@ -31,6 +32,7 @@ bool SpriteAnimation::loadSheet(sf::Image &sheet,
 		frameTexture.emplace_back(sf::Texture());
 		
 		frameTexture[i].loadFromImage(sheet, sf::IntRect((i * frameSizeX) + startX, startY, frameSizeX, frameSizeY));
+		frameTexture[i].setSmooth(smooth);
 	}
 
 	return true;

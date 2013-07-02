@@ -5,13 +5,6 @@ namespace ns
 {
 
 
-//Debug configuration
-#ifdef _DEBUG
-	static const bool g_debug = true;
-#else
-	static const bool g_debug = false;
-#endif
-
 //Update timer value in seconds
 static const float g_updateTimerValue = 1.f / 60.f;
 

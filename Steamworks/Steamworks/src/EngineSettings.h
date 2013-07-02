@@ -20,9 +20,13 @@ public:
 	void writeToFile();
 
 	sf::Vector2i resolution;
+	unsigned int antiAliasing;
+	bool smoothTextures;
 	bool vSync;
 	bool fullScreen;
 
 	float worldGravity;
+
+	bool debug;
 };
 

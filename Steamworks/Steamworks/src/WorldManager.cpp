@@ -23,11 +23,11 @@ void WorldManager::loadWorld(LoadSettings& lsettings, EngineSettings& esettings)
 
 void WorldManager::deleteWorld()
 {
-	if (_gameWorld != 0){
+	if (_gameWorld != nullptr){
 		delete _gameWorld;
 		_gameWorld = nullptr;
 	}
-	if (_gameMap != 0){
+	if (_gameMap != nullptr){
 		delete _gameMap;
 		_gameMap = nullptr;
 	}
@@ -36,11 +36,11 @@ void WorldManager::deleteWorld()
 
 void WorldManager::stepWorldPhysics()
 {
-	if (_gameMap != 0){
+	if (_gameMap != nullptr){
 		_gameMap->update();
 	}
 
-	if (_gameWorld != 0){
+	if (_gameWorld != nullptr){
 		_gameWorld->Step((float)ns::g_updateTimerValue, 8, 3);
 		_gameWorld->ClearForces();
 	}
@@ -48,7 +48,7 @@ void WorldManager::stepWorldPhysics()
 
 void WorldManager::draw()
 {
-	if (_gameMap != 0){
+	if (_gameMap != nullptr){
 		_gameMap->draw();
 	}
 }

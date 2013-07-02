@@ -16,7 +16,7 @@
 class Player : public Sprite
 {
 public:
-	Player(const unsigned short playerNo, LoadSettings& settings);
+	Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSettings& esettings);
 	~Player(void);
 
 	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis, EngineSettings& settings);
@@ -28,7 +28,7 @@ private:
 	const unsigned short _playerNumber;
 	void* _sensorData[8];
 
-	void loadAnimations(LoadSettings& settings);
+	void loadAnimations(LoadSettings& lsettings, EngineSettings& esettings);
 	void loadProperties(LoadSettings& settings);
 
 	void updateAnimation();

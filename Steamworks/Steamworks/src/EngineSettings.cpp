@@ -15,10 +15,14 @@ void EngineSettings::loadDefaults()
 {
 	resolution.x = sf::VideoMode::getDesktopMode().width;
 	resolution.y = sf::VideoMode::getDesktopMode().height;
+	antiAliasing = 0;
+	smoothTextures = false;
 	vSync = true;
 	fullScreen = false;
 
 	worldGravity = 25.f;
+
+	debug = false;
 }
 
 void EngineSettings::loadFromFile()
@@ -57,7 +61,17 @@ void EngineSettings::loadFromFile()
 			else if (tempS == "World_gravity:"){
 				file >> worldGravity;
 			}
+			else if (tempS == "Debug_mode:"){
+				file >> debug;
+			}
+			else if (tempS == "Anti-aliasing:"){
+				file >> antiAliasing;
+			}
+			else if (tempS == "Smooth_textures:"){
+				file >> smoothTextures;
+			}
 		}
+		writeToFile();
 	}
 	else{
 		writeToFile();
@@ -78,12 +92,18 @@ void EngineSettings::writeToFile()
 	file << s << resolution.x << std::endl;
 	s = "ResolutionY: ";
 	file << s << resolution.y << std::endl;
-	s = "Vertical sync: ";
+	s = "Vertical_sync: ";
 	file << s << vSync << std::endl;
-	s = "Full screen: ";
+	s = "Full_screen: ";
 	file << s << fullScreen << std::endl;
-	s = "World gravity: ";
-	file << s << worldGravity;
+	s = "World_gravity: ";
+	file << s << worldGravity << std::endl;
+	s = "Debug_mode: ";
+	file << s << debug << std::endl;
+	s = "Anti-aliasing: ";
+	file << s << antiAliasing << std::endl;
+	s = "Smooth_textures: ";
+	file << s << smoothTextures;
 
 
 	file.close();

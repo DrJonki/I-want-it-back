@@ -2,7 +2,7 @@
 
 
 
-Player::Player(const unsigned short playerNo, LoadSettings& settings)
+Player::Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSettings& esettings)
 	: _playerNumber(playerNo)
 {
 	unloadPlayer();
@@ -16,8 +16,8 @@ Player::Player(const unsigned short playerNo, LoadSettings& settings)
 	_sensorData[SEN_BOTTOMRIGHT] = (void*)(playerNo * 7);
 	_sensorData[SEN_BOTTOMLEFT] = (void*)(playerNo * 8);
 
-	loadProperties(settings);
-	loadAnimations(settings);
+	loadProperties(lsettings);
+	loadAnimations(lsettings, esettings);
 }
 
 Player::~Player(void)
@@ -189,12 +189,12 @@ void Player::createSensors()
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 }
 
-void Player::loadAnimations(LoadSettings& settings)
+void Player::loadAnimations(LoadSettings& lsettings, EngineSettings& esettings)
 {
 	animations.reserve(2);
 
 	std::string path("Levels/");
-	path += settings._campaign;
+	path += lsettings._campaign;
 	path += "/0/playeranimdata.dat";
 
 	std::ifstream file(path, std::ifstream::in);
@@ -225,7 +225,7 @@ void Player::loadAnimations(LoadSettings& settings)
 				
 				animations.emplace_back(SpriteAnimation());
 				playerImage.loadFromFile(t_textureDir);
-				animations[t_animNo].loadSheet(playerImage, t_startX, t_startY, t_sizeX, t_sizeY, t_frames);
+				animations[t_animNo].loadSheet(playerImage, t_startX, t_startY, t_sizeX, t_sizeY, t_frames, esettings.smoothTextures);
 				animations[t_animNo].setStepInterval(t_interval);
 
 				t_animNo++;
