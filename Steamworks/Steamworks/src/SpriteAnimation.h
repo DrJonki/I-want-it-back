@@ -50,7 +50,7 @@ public:
 
 	/// Set the current frame. Can be used to reset the animation.
 	/// @param The number of the frame to be set as current.
-	void setCurrentFrame(const unsigned int currentFrame) { _currentFrame = currentFrame; _tempSteps = 1; };
+	void setCurrentFrame(const unsigned int currentFrame);
 
 
 	/// Returns true if the current frame is the last one in the cycle.
@@ -111,7 +111,4 @@ private:
 	std::vector<sf::Texture> frameTexture; 
 
 	//std::vector<> assignedSounds;
-
-protected:
-
 };

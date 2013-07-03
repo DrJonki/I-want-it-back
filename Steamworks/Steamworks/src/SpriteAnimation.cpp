@@ -82,6 +82,13 @@ void SpriteAnimation::stepBack(const bool force)
 	}
 }
 
+void SpriteAnimation::setCurrentFrame(const unsigned int currentFrame)
+{
+	_currentFrame = currentFrame;
+	_tempSteps = 1;
+	_frameChanged = true;
+}
+
 bool SpriteAnimation::lastFrame()
 {
 	if (_currentFrame == _frameCount) return true;

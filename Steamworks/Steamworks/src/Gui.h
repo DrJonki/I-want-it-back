@@ -1,7 +1,5 @@
 #pragma once
 
-#include <SFGUI\SFGUI.hpp>
-
 class Gui
 {
 public:
@@ -9,6 +7,5 @@ public:
 	~Gui(void);
 
 private:
-	sfg::SFGUI _gui;
 };
 

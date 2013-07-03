@@ -3,11 +3,13 @@
 #include <SFML\Graphics.hpp>
 
 #include <sstream>
+#include <vector>
 
 #include "EngineSettings.h"
 #include "LoadSettings.h"
 #include "Globals.h"
 #include "GameText.h"
+#include "GameButton.h"
 
 class Mainmenu
 {
@@ -29,5 +31,17 @@ private:
 	LoadSettings _loadSettings;
 	EngineSettings _engineSettings;
 
-	sf::Font font;
+	sf::Font _font;
+	std::vector<GameButton> button;
+
+	static const enum
+	{
+		BUT_START,
+		BUT_CAMPAIGN,
+		BUT_LEVEL,
+		BUT_SETTINGS,
+		BUT_CREDITS,
+		BUT_EXIT,
+		BUT_LAST
+	};
 };
