@@ -26,6 +26,12 @@ private:
 	void update();
 	void draw();
 
+	//Sub menu functions
+	void campaignSelect();
+	void levelSelect();
+	void settingsMenu();
+	void creditsMenu();
+
 	sf::RenderWindow* _window;
 	sf::Event* _e;
 	LoadSettings _loadSettings;

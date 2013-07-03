@@ -27,8 +27,6 @@ void GameButton::load(const float sizeX,
 
 bool GameButton::isPressed()
 {
-	update();
-
 	if (wasPressed){
 		wasPressed = false;
 		return true;

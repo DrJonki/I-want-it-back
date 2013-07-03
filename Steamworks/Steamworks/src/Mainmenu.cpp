@@ -32,6 +32,18 @@ bool Mainmenu::showMenu()
 		if (mainButton[BUT_START].isPressed()){
 			return true;
 		}
+		else if (mainButton[BUT_CAMPAIGN].isPressed()){
+
+		}
+		else if (mainButton[BUT_LEVEL].isPressed()){
+
+		}
+		else if (mainButton[BUT_SETTINGS].isPressed()){
+
+		}
+		else if (mainButton[BUT_CREDITS].isPressed()){
+
+		}
 		else if (mainButton[BUT_EXIT].isPressed()){
 			return false;
 		}
@@ -115,6 +127,8 @@ void Mainmenu::init()
 
 void Mainmenu::update()
 {
+	
+	//Campaign && level selection
 	std::stringstream ss;
 	ss.str("");
 
@@ -142,11 +156,18 @@ void Mainmenu::update()
 	}
 	while (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up));
 
+	//Button state updates
 	for (int i = 0; i < mainButton.size(); i++){
-		if (mainButton[i].isOver()) selectionState = i;
-		mainButton[i].update(i == selectionState);
+		if (menuState <= -1){
+			if (mainButton[i].isOver()) selectionState = i;
+			mainButton[i].update(i == selectionState);
+		}
+		else{
+			mainButton[i].update();
+		}
 	}
 
+	//Selection shape repositioning
 	selectionShape.setPosition(mainButton[selectionState].getPosition().x - 25, mainButton[selectionState].getPosition().y + (mainButton[selectionState].getGlobalBounds().height / 2));
 
 	//Events
