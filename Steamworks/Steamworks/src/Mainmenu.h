@@ -32,7 +32,10 @@ private:
 	EngineSettings _engineSettings;
 
 	sf::Font _font;
-	std::vector<GameButton> button;
+	std::vector<GameButton> mainButton;
+	std::vector<GameButton> subButton;
+
+	sf::CircleShape selectionShape;
 
 	static const enum
 	{
@@ -44,4 +47,7 @@ private:
 		BUT_EXIT,
 		BUT_LAST
 	};
+
+	int selectionState;
+	int menuState;
 };

@@ -29,7 +29,7 @@ bool GameButton::isPressed()
 {
 	update();
 
-	if (wasPressed && !sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+	if (wasPressed){
 		wasPressed = false;
 		return true;
 	}
@@ -38,20 +38,19 @@ bool GameButton::isPressed()
 
 
 //Private
-void GameButton::update()
+void GameButton::update(const bool selected)
 {
-	if (mouseOnButton() && sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+	if (selected && (sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return))){
 		setCurrentFrame(3);
 		wasPressed = true;
 	}
 
-	else if (mouseOnButton()){
+	else if (mouseOnButton() || selected){
 		setCurrentFrame(2);
 	}
 
 	else{
 		setCurrentFrame(1);
-		wasPressed = false;
 	}
 	
 	if (frameChanged()) setTexture(&getCurrentTexture());

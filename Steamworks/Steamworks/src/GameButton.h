@@ -18,7 +18,8 @@ public:
 			  sf::Image& image);
 
 	bool isPressed();
-	void update();
+	bool isOver() { return mouseOnButton(); };
+	void update(const bool selected = false);
 
 	sf::Text _text;
 

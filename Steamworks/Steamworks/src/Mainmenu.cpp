@@ -4,13 +4,14 @@
 namespace
 {
 	int t_campaign = 0;
-
 }
 
 
 Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event* e)
 	: _window(window),
-	  _e(e)
+	  _e(e),
+	  selectionState(0),
+	  menuState(-1)
 {}
 
 
@@ -28,12 +29,10 @@ bool Mainmenu::showMenu()
 		update();
 		draw();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || button[BUT_START].isPressed()){
-			while (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
+		if (mainButton[BUT_START].isPressed()){
 			return true;
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || button[BUT_EXIT].isPressed()){
-			while (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
+		else if (mainButton[BUT_EXIT].isPressed()){
 			return false;
 		}
 	}
@@ -42,7 +41,7 @@ bool Mainmenu::showMenu()
 
 void Mainmenu::init()
 {
-	button.clear();
+	mainButton.clear();
 
 	if (!_window->isOpen()){
 		if (_engineSettings.fullScreen)
@@ -56,55 +55,62 @@ void Mainmenu::init()
 	view.setSize(sf::Vector2f(1920, 1200));
 	_window->setView(view);
 
-	button.reserve(BUT_LAST);
+	mainButton.reserve(BUT_LAST);
 	for (int i = 0; i < BUT_LAST; i++){
-		button.emplace_back(GameButton(_window));
+		mainButton.emplace_back(GameButton(_window));
 	}
 	sf::Image image;
 	image.loadFromFile("Resources/Common/Graphics/UI/button_start.png");
 	_font.loadFromFile("Resources/Common/Fonts/Amble-Bold.ttf");
 
 	//Start
-	button[BUT_START].load(250, 150, 200, 200, image);
-	button[BUT_START]._text.setFont(_font);
-	button[BUT_START]._text.setCharacterSize(40);
-	button[BUT_START]._text.setString("Start");
-	button[BUT_START]._text.setColor(sf::Color::Black);
+	mainButton[BUT_START].load(250, 150, 200, 200, image);
+	mainButton[BUT_START]._text.setFont(_font);
+	mainButton[BUT_START]._text.setCharacterSize(40);
+	mainButton[BUT_START]._text.setString("Start");
+	mainButton[BUT_START]._text.setColor(sf::Color::Black);
 
 	//Campaign
-	button[BUT_CAMPAIGN].load(200, 100, 200, 400, image);
-	button[BUT_CAMPAIGN]._text.setFont(_font);
-	button[BUT_CAMPAIGN]._text.setCharacterSize(30);
-	button[BUT_CAMPAIGN]._text.setString("Select\ncampaign");
-	button[BUT_CAMPAIGN]._text.setColor(sf::Color::Black);
+	mainButton[BUT_CAMPAIGN].load(200, 100, 200, mainButton[BUT_START].getPosition().y + 200, image);
+	mainButton[BUT_CAMPAIGN]._text.setFont(_font);
+	mainButton[BUT_CAMPAIGN]._text.setCharacterSize(30);
+	mainButton[BUT_CAMPAIGN]._text.setString("Select\ncampaign");
+	mainButton[BUT_CAMPAIGN]._text.setColor(sf::Color::Black);
 
 	//Level
-	button[BUT_LEVEL].load(200, 100, 200, 550, image);
-	button[BUT_LEVEL]._text.setFont(_font);
-	button[BUT_LEVEL]._text.setCharacterSize(30);
-	button[BUT_LEVEL]._text.setString("Select\nlevel");
-	button[BUT_LEVEL]._text.setColor(sf::Color::Black);
+	mainButton[BUT_LEVEL].load(200, 100, 200, mainButton[BUT_CAMPAIGN].getPosition().y + 125, image);
+	mainButton[BUT_LEVEL]._text.setFont(_font);
+	mainButton[BUT_LEVEL]._text.setCharacterSize(30);
+	mainButton[BUT_LEVEL]._text.setString("Select\nlevel");
+	mainButton[BUT_LEVEL]._text.setColor(sf::Color::Black);
 
 	//Settings
-	button[BUT_SETTINGS].load(200, 100, 200, 700, image);
-	button[BUT_SETTINGS]._text.setFont(_font);
-	button[BUT_SETTINGS]._text.setCharacterSize(30);
-	button[BUT_SETTINGS]._text.setString("Settings");
-	button[BUT_SETTINGS]._text.setColor(sf::Color::Black);
+	mainButton[BUT_SETTINGS].load(200, 100, 200, mainButton[BUT_LEVEL].getPosition().y + 125, image);
+	mainButton[BUT_SETTINGS]._text.setFont(_font);
+	mainButton[BUT_SETTINGS]._text.setCharacterSize(30);
+	mainButton[BUT_SETTINGS]._text.setString("Settings");
+	mainButton[BUT_SETTINGS]._text.setColor(sf::Color::Black);
 
 	//Credits
-	button[BUT_CREDITS].load(150, 75, 200, 875, image);
-	button[BUT_CREDITS]._text.setFont(_font);
-	button[BUT_CREDITS]._text.setCharacterSize(26);
-	button[BUT_CREDITS]._text.setString("Credits");
-	button[BUT_CREDITS]._text.setColor(sf::Color::Black);
+	mainButton[BUT_CREDITS].load(150, 75, 200, mainButton[BUT_SETTINGS].getPosition().y + 150, image);
+	mainButton[BUT_CREDITS]._text.setFont(_font);
+	mainButton[BUT_CREDITS]._text.setCharacterSize(26);
+	mainButton[BUT_CREDITS]._text.setString("Credits");
+	mainButton[BUT_CREDITS]._text.setColor(sf::Color::Black);
 
 	//Exit
-	button[BUT_EXIT].load(150, 75, 400, 875, image);
-	button[BUT_EXIT]._text.setFont(_font);
-	button[BUT_EXIT]._text.setCharacterSize(26);
-	button[BUT_EXIT]._text.setString("Exit");
-	button[BUT_EXIT]._text.setColor(sf::Color::Black);
+	mainButton[BUT_EXIT].load(150, 75, 200, mainButton[BUT_CREDITS].getPosition().y + 100, image);
+	mainButton[BUT_EXIT]._text.setFont(_font);
+	mainButton[BUT_EXIT]._text.setCharacterSize(26);
+	mainButton[BUT_EXIT]._text.setString("Exit");
+	mainButton[BUT_EXIT]._text.setColor(sf::Color::Black);
+
+	selectionShape.setRadius(4);
+	selectionShape.setFillColor(sf::Color::Red);
+	selectionShape.setOutlineThickness(2);
+	selectionShape.setOutlineColor(sf::Color::White);
+	selectionShape.setOrigin(selectionShape.getRadius(), selectionShape.getRadius());
+	selectionShape.setPosition(mainButton[BUT_START].getPosition().x - 25, mainButton[BUT_START].getPosition().y + (mainButton[BUT_START].getGlobalBounds().height / 2));
 }
 
 void Mainmenu::update()
@@ -136,21 +142,32 @@ void Mainmenu::update()
 	}
 	while (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up));
 
-	for (int i = 0; i < button.size(); i++){
-		button[i].update();
+	for (int i = 0; i < mainButton.size(); i++){
+		if (mainButton[i].isOver()) selectionState = i;
+		mainButton[i].update(i == selectionState);
 	}
 
-	while (_window->pollEvent(*_e));
+	selectionShape.setPosition(mainButton[selectionState].getPosition().x - 25, mainButton[selectionState].getPosition().y + (mainButton[selectionState].getGlobalBounds().height / 2));
+
+	//Events
+	while (_window->pollEvent(*_e)){
+		if (_e->type == sf::Event::KeyPressed && menuState <= -1){
+			if (_e->key.code == sf::Keyboard::Up && selectionState > 0) selectionState--;
+			else if (_e->key.code == sf::Keyboard::Down && selectionState < BUT_LAST - 1) selectionState++;
+		}
+	}
 }
 
 void Mainmenu::draw()
 {
 	_window->clear();
 
-	for (int i = 0; i < button.size(); i++){
-		_window->draw(button[i]);
-		_window->draw(button[i]._text);
+	for (int i = 0; i < mainButton.size(); i++){
+		_window->draw(mainButton[i]);
+		_window->draw(mainButton[i]._text);
 	}
+
+	_window->draw(selectionShape);
 
 	_window->display();
 }
