@@ -23,6 +23,9 @@ void EngineSettings::loadDefaults()
 	worldGravity = 25.f;
 
 	debug = false;
+
+	soundVolume = 100;
+	musicVolume = 100;
 }
 
 void EngineSettings::loadFromFile()

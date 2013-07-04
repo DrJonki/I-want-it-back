@@ -95,7 +95,6 @@
     <ClCompile Include="src\ForegroundObject.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameButton.cpp" />
-    <ClCompile Include="src\GameText.cpp" />
     <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\LoadSettings.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -124,7 +123,6 @@
     <ClInclude Include="src\ForegroundObject.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameButton.h" />
-    <ClInclude Include="src\GameText.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Gui.h" />
     <ClInclude Include="src\LoadSettings.h" />

@@ -75,9 +75,6 @@
     <ClCompile Include="src\Map.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameText.cpp">
-      <Filter>Source Files\Graphics\Text</Filter>
-    </ClCompile>
     <ClCompile Include="src\Player.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
@@ -154,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="src\Map.h">
       <Filter>Header Files\World</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameText.h">
-      <Filter>Header Files\Graphics\Text</Filter>
     </ClInclude>
     <ClInclude Include="src\Player.h">
       <Filter>Header Files\System</Filter>

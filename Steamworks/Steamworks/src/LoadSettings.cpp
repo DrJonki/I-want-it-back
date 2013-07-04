@@ -4,7 +4,7 @@
 LoadSettings::LoadSettings(void)
 {
 	resetValues();
-	loadFromFile();
+	loadCampaigns();
 }
 
 
@@ -15,18 +15,21 @@ LoadSettings::~LoadSettings(void)
 void LoadSettings::resetValues()
 {
 	_campaign = "Default";
-	_level = "1";
+	_level = "";
 
 	_playerPath = "Levels/Common/playerdata.dat";
 }
 
-void LoadSettings::loadFromFile()
+void LoadSettings::loadCampaigns()
 {
+	_campaignVector.clear();
+
 	DIR *dir;
 	struct dirent *ent;
 
-	if ((dir = opendir ("Levels")) != NULL) {
-		while ((ent = readdir (dir)) != NULL) {
+	//Campaigns
+	if ((dir = opendir("Levels")) != NULL){
+		while ((ent = readdir(dir)) != NULL){
 			if (std::string(ent->d_name) != "Common" &&
 				std::string(ent->d_name) != "." &&
 				std::string(ent->d_name) != "..")
@@ -35,20 +38,42 @@ void LoadSettings::loadFromFile()
 				_campaignVector.back() = ent->d_name;
 			}
 		}
-		closedir (dir);
-		}
-		else{
-			MessageBox(NULL, L"Couldn't find the Levels folder!", L"ERROR", MB_OK);
-		}
+		closedir(dir);
+	}
 
+	if (_campaignVector.size() == 0){
+		_campaignVector.emplace_back(std::string());
+		_campaignVector.back() = "No levels :(";
+	}
 	_campaign = _campaignVector[0];
+}
 
-	/*std::ifstream file("temp.dat", std::ifstream::in);
+void LoadSettings::loadLevels()
+{
+	_levelVector.clear();
 
-	_campaign.emplace_back(std::string());
+	DIR *dir;
+	struct dirent *ent;
 
-	if (file.good()){
-		file >> _campaign[0];
-		file >> _level;
-	}*/
+	std::string s = "Levels/";
+	s += _campaign;
+
+	if ((dir = opendir(s.c_str())) != NULL){
+		while ((ent = readdir(dir)) != NULL){
+			if (std::string(ent->d_name) != "0" &&
+				std::string(ent->d_name) != "." &&
+				std::string(ent->d_name) != "..")
+			{
+				_levelVector.emplace_back(std::string());
+				_levelVector.back() = ent->d_name;
+			}
+		}
+		closedir(dir);
+	}
+
+	if (_levelVector.size() == 0){
+		_levelVector.emplace_back(std::string());
+		_levelVector.back() = "No levels :(";
+	}
+	_level = _levelVector[0];
 }

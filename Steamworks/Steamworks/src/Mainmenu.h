@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio\Music.hpp>
 
 #include <sstream>
 #include <vector>
@@ -8,7 +9,6 @@
 #include "EngineSettings.h"
 #include "LoadSettings.h"
 #include "Globals.h"
-#include "GameText.h"
 #include "GameButton.h"
 
 class Mainmenu
@@ -26,11 +26,7 @@ private:
 	void update();
 	void draw();
 
-	//Sub menu functions
-	void campaignSelect();
-	void levelSelect();
-	void settingsMenu();
-	void creditsMenu();
+	void initLevels();
 
 	sf::RenderWindow* _window;
 	sf::Event* _e;
@@ -38,10 +34,21 @@ private:
 	EngineSettings _engineSettings;
 
 	sf::Font _font;
+	//Main buttons
 	std::vector<GameButton> mainButton;
-	std::vector<GameButton> subButton;
+
+	//Campaign
+	std::vector<sf::Text> campaignText;
+
+	//Level
+	std::vector<sf::Text> levelText;
+
 
 	sf::CircleShape selectionShape;
+
+	sf::RectangleShape titleBackground;
+	SpriteAnimation titleAnimation;
+	sf::Music titleMusic;
 
 	static const enum
 	{
@@ -55,5 +62,7 @@ private:
 	};
 
 	int selectionState;
+	int subSelectionState;
+	int subSelectionMax;
 	int menuState;
 };

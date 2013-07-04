@@ -27,7 +27,7 @@ void GameButton::load(const float sizeX,
 
 bool GameButton::isPressed()
 {
-	if (wasPressed){
+	if (wasPressed && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
 		wasPressed = false;
 		return true;
 	}
@@ -43,7 +43,7 @@ void GameButton::update(const bool selected)
 		wasPressed = true;
 	}
 
-	else if (mouseOnButton() || selected){
+	else if (selected){
 		setCurrentFrame(2);
 	}
 

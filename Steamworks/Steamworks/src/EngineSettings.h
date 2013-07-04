@@ -28,5 +28,8 @@ public:
 	float worldGravity;
 
 	bool debug;
+
+	int soundVolume;
+	int musicVolume;
 };
 

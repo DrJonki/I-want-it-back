@@ -18,11 +18,13 @@ public:
 	~LoadSettings(void);
 	
 	void resetValues();
-	void loadFromFile();
+	void loadCampaigns();
+	void loadLevels();
 
 	//Level
 	std::vector<std::string> _campaignVector;
 	std::string _campaign;
+	std::vector<std::string> _levelVector;
 	std::string _level;
 
 	//Player
