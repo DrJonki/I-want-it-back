@@ -23,9 +23,9 @@ public:
 
 	//Level
 	std::vector<std::string> _campaignVector;
-	std::string _campaign;
+	unsigned int _campaign;
 	std::vector<std::string> _levelVector;
-	std::string _level;
+	unsigned int _level;
 
 	//Player
 	std::string _playerPath;

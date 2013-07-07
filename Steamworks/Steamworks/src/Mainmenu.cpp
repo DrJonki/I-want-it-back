@@ -8,7 +8,8 @@ Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event* e)
 	  selectionState(0),
 	  subSelectionState(0),
 	  subSelectionMax(0),
-	  menuState(0)
+	  menuState(0),
+	  lockMouse(false)
 {}
 
 Mainmenu::~Mainmenu(void)
@@ -129,7 +130,7 @@ void Mainmenu::init()
 	campaignText[0].setPosition(800, 500);
 
 	//Level
-	//Nuthing to see hia :)
+	//Nuthing to see hiar :)
 
 	//Settings
 
@@ -165,7 +166,7 @@ void Mainmenu::update()
 			{
 			subSelectionMax = _loadSettings._campaignVector.size() - 1;
 
-			_loadSettings._campaign = _loadSettings._campaignVector[subSelectionState];
+			subSelectionState = _loadSettings._campaign;
 
 			if (campaignText[0].getPosition().y < 500 - (subSelectionState * 60)) campaignText[0].move(0, 4);
 			else if (campaignText[0].getPosition().y > 500 - (subSelectionState * 60)) campaignText[0].move(0, -4);
@@ -185,7 +186,7 @@ void Mainmenu::update()
 			{
 			subSelectionMax = _loadSettings._levelVector.size() - 1;
 
-			_loadSettings._level = _loadSettings._levelVector[subSelectionState];
+			subSelectionState = _loadSettings._level;
 
 			if (levelText[0].getPosition().y < 500 - (subSelectionState * 60)) levelText[0].move(0, 4);
 			else if (levelText[0].getPosition().y > 500 - (subSelectionState * 60)) levelText[0].move(0, -4);
@@ -218,7 +219,7 @@ void Mainmenu::update()
 			//Main button state updates
 			for (unsigned int i = 0; i < mainButton.size(); i++){
 				if (menuState <= 0){
-					if (mainButton[i].isOver()) selectionState = i;
+					if (mainButton[i].isOver() && !lockMouse) selectionState = i;
 					mainButton[i].update(i == selectionState);
 				}
 				else{
@@ -268,19 +269,34 @@ void Mainmenu::update()
 		//Events
 	while (_window->pollEvent(*_e)){
 		if (_e->type == sf::Event::KeyPressed && menuState <= 0){
-			if (_e->key.code == sf::Keyboard::Up && selectionState > 0) selectionState--;
-			else if (_e->key.code == sf::Keyboard::Down && selectionState < BUT_LAST - 1) selectionState++;
-			
+			if (_e->key.code == sf::Keyboard::Up && selectionState > 0){
+				selectionState--;
+				lockMouse = true;
+
+			}
+			else if (_e->key.code == sf::Keyboard::Down && selectionState < BUT_LAST - 1){
+				selectionState++;
+				lockMouse = true;
+			}
 		}
 		else if (_e->type == sf::Event::KeyPressed && menuState > 0){
-			if (_e->key.code == sf::Keyboard::Up && subSelectionState > 0) subSelectionState--;
-			else if (_e->key.code == sf::Keyboard::Down && subSelectionState < subSelectionMax) subSelectionState++;
+			if (_e->key.code == sf::Keyboard::Up && subSelectionState > 0){
+				subSelectionState--;
+				lockMouse = true;
+			}
+			else if (_e->key.code == sf::Keyboard::Down && subSelectionState < subSelectionMax){
+				subSelectionState++;
+				lockMouse = true;
+			}
 			else if (_e->key.code == sf::Keyboard::Escape){
 				menuState = 0;
 				subSelectionState = 0;
 				subSelectionMax = 0;
 			}
 		}
+
+		//Mouse events
+		if (_e->type == sf::Event::MouseMoved) lockMouse = false;
 	}
 }
 

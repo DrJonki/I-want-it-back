@@ -65,4 +65,6 @@ private:
 	int subSelectionState;
 	int subSelectionMax;
 	int menuState;
+
+	bool lockMouse;
 };

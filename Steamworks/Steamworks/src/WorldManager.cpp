@@ -18,7 +18,7 @@ void WorldManager::loadWorld(LoadSettings& lsettings, EngineSettings& esettings)
 	_gameWorld->SetAllowSleeping(true);
 
 	_gameMap = new Map;
-	_gameMap->load(_gameWorld, _window, lsettings._campaign, lsettings._level);
+	_gameMap->load(_gameWorld, _window, lsettings._campaignVector[lsettings._campaign], lsettings._levelVector[lsettings._level]);
 }
 
 void WorldManager::deleteWorld()

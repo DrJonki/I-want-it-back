@@ -5,6 +5,7 @@ LoadSettings::LoadSettings(void)
 {
 	resetValues();
 	loadCampaigns();
+	loadLevels();
 }
 
 
@@ -14,8 +15,8 @@ LoadSettings::~LoadSettings(void)
 
 void LoadSettings::resetValues()
 {
-	_campaign = "Default";
-	_level = "";
+	_campaign = 0;
+	_level = 0;
 
 	_playerPath = "Levels/Common/playerdata.dat";
 }
@@ -43,9 +44,8 @@ void LoadSettings::loadCampaigns()
 
 	if (_campaignVector.size() == 0){
 		_campaignVector.emplace_back(std::string());
-		_campaignVector.back() = "No levels :(";
+		_campaignVector.back() = "No campaigns :(";
 	}
-	_campaign = _campaignVector[0];
 }
 
 void LoadSettings::loadLevels()
@@ -56,7 +56,7 @@ void LoadSettings::loadLevels()
 	struct dirent *ent;
 
 	std::string s = "Levels/";
-	s += _campaign;
+	s += _campaignVector[_campaign];
 
 	if ((dir = opendir(s.c_str())) != NULL){
 		while ((ent = readdir(dir)) != NULL){
@@ -75,5 +75,4 @@ void LoadSettings::loadLevels()
 		_levelVector.emplace_back(std::string());
 		_levelVector.back() = "No levels :(";
 	}
-	_level = _levelVector[0];
 }
