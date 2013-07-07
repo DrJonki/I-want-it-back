@@ -6,6 +6,7 @@ LoadSettings::LoadSettings(void)
 	resetValues();
 	loadCampaigns();
 	loadLevels();
+	loadCredits();
 }
 
 
@@ -19,6 +20,8 @@ void LoadSettings::resetValues()
 	_level = 0;
 
 	_playerPath = "Levels/Common/playerdata.dat";
+
+	_credits = "No credits file found!\nWhy would you delete it? :(";
 }
 
 void LoadSettings::loadCampaigns()
@@ -74,5 +77,28 @@ void LoadSettings::loadLevels()
 	if (_levelVector.size() == 0){
 		_levelVector.emplace_back(std::string());
 		_levelVector.back() = "No levels :(";
+	}
+}
+
+void LoadSettings::loadCredits()
+{
+	std::string path = "Resources/Common/credits.txt";
+
+	std::ifstream file(path, std::ifstream::in);
+
+	if (file.good()){
+		_credits = "";
+
+		while (!file.eof()){
+			std::string s;
+
+			file >> s;
+
+			if (s == "#") _credits += "\n";
+			else{
+				_credits += s;
+				_credits += " ";
+			}
+		}
 	}
 }

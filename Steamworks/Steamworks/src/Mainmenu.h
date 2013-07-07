@@ -5,6 +5,7 @@
 
 #include <sstream>
 #include <vector>
+#include <cmath>
 
 #include "EngineSettings.h"
 #include "LoadSettings.h"
@@ -43,8 +44,15 @@ private:
 	//Level
 	std::vector<sf::Text> levelText;
 
+	//Settings
+	std::vector<GameButton> settingButton;
+	std::vector<sf::Text> settingText;
+
+	//Credits
+	sf::Text creditsText[2];
 
 	sf::CircleShape selectionShape;
+	std::vector<GameButton> confirmButton;
 
 	sf::RectangleShape titleBackground;
 	SpriteAnimation titleAnimation;
@@ -61,10 +69,13 @@ private:
 		BUT_LAST
 	};
 
-	int selectionState;
-	int subSelectionState;
-	int subSelectionMax;
-	int menuState;
-
-	bool lockMouse;
+	static const enum
+	{
+		SET_RESOLUTION,
+		SET_VSYNC,
+		SET_FULLSCREEN,
+		SET_AA,
+		SET_SMOOTH,
+		SET_LAST
+	};
 };

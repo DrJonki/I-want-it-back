@@ -27,7 +27,7 @@ void GameButton::load(const float sizeX,
 
 bool GameButton::isPressed()
 {
-	if (wasPressed && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+	if (wasPressed && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 		wasPressed = false;
 		return true;
 	}

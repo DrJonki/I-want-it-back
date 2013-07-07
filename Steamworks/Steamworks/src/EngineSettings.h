@@ -3,6 +3,7 @@
 #include <SFML\Graphics.hpp>
 
 #include <fstream>
+#include <sstream>
 #include <Windows.h>
 #include <iostream>
 #include <direct.h>
@@ -19,6 +20,13 @@ public:
 	void loadFromFile();
 	void writeToFile();
 
+	void updateResolution();
+
+	std::string getResolutionString();
+	std::string getAAString();
+	bool usingCustomRes();
+
+	int resVectorNumber;
 	sf::Vector2i resolution;
 	unsigned int antiAliasing;
 	bool smoothTextures;

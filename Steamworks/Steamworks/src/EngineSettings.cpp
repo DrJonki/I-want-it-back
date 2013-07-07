@@ -5,6 +5,8 @@ EngineSettings::EngineSettings(void)
 {
 	loadDefaults();
 	loadFromFile();
+
+	usingCustomRes();
 }
 
 EngineSettings::~EngineSettings(void)
@@ -13,6 +15,7 @@ EngineSettings::~EngineSettings(void)
 
 void EngineSettings::loadDefaults()
 {
+	resVectorNumber = sf::VideoMode::getFullscreenModes().size() / 3 - 2;
 	resolution.x = sf::VideoMode::getDesktopMode().width;
 	resolution.y = sf::VideoMode::getDesktopMode().height;
 	antiAliasing = 0;
@@ -23,7 +26,7 @@ void EngineSettings::loadDefaults()
 	worldGravity = 25.f;
 
 	debug = false;
-
+	
 	soundVolume = 100;
 	musicVolume = 100;
 }
@@ -110,4 +113,47 @@ void EngineSettings::writeToFile()
 
 
 	file.close();
+}
+
+void EngineSettings::updateResolution()
+{
+	resolution.x = sf::VideoMode::getFullscreenModes()[resVectorNumber].width;
+	resolution.y = sf::VideoMode::getFullscreenModes()[resVectorNumber].height;
+
+	usingCustomRes();
+}
+
+std::string EngineSettings::getResolutionString()
+{
+	if (usingCustomRes()) return "Custom";
+	else{
+		std::stringstream ss;
+
+		ss << resolution.x;
+		ss << " x ";
+		ss << resolution.y;
+
+		return ss.str();
+	}
+}
+
+std::string EngineSettings::getAAString()
+{
+	std::stringstream ss;
+
+	ss << "x";
+	ss << antiAliasing;
+
+	return ss.str();
+}
+
+bool EngineSettings::usingCustomRes()
+{
+	for (unsigned int i = 0; i < sf::VideoMode::getFullscreenModes().size(); i++){
+		if (sf::VideoMode::getFullscreenModes()[i].width == resolution.x && sf::VideoMode::getFullscreenModes()[i].height == resolution.y){
+			resVectorNumber = i;
+			return false;
+		}
+	}
+	return true;
 }
