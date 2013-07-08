@@ -53,6 +53,12 @@ void MapObject::load(b2World* world,
 		fixtureDef.density = 0.f;
 		fixtureDef.friction = 0.f;
 		fixtureDef.shape = &shape;
+		if (getPosition().y > 600){
+			fixtureDef.filter.categoryBits = FIL_BOTTOMLEVEL;
+		}
+		else{
+			fixtureDef.filter.categoryBits = FIL_TOPLEVEL;
+		}
 
 		_body->CreateFixture(&fixtureDef);
 	}

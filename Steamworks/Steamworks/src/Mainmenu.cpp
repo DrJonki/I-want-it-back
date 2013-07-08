@@ -8,6 +8,8 @@ namespace
 	int menuState;
 
 	bool lockMouse;
+
+	bool loaded;
 }
 
 Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event* e)
@@ -20,6 +22,8 @@ Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event* e)
 	menuState = 0;
 
 	lockMouse = true;
+
+	loaded = false;
 }
 
 Mainmenu::~Mainmenu(void)
@@ -30,12 +34,14 @@ Mainmenu::~Mainmenu(void)
 
 bool Mainmenu::showMenu()
 {
-	init();
+	if (!loaded) init();
+	sf::View view;
+	view.setCenter(sf::Vector2f(1920 / 2, 1200 / 2));
+	view.setSize(sf::Vector2f(1920, 1200));
+	_window->setView(view);
+	titleMusic.play();
 
 	while (1){
-		update();
-		draw();
-
 		if (mainButton[BUT_START].isPressed()){
 			titleMusic.stop();
 			menuState = BUT_START;
@@ -55,8 +61,6 @@ bool Mainmenu::showMenu()
 		}
 		else if (mainButton[BUT_SETTINGS].isPressed() && menuState == 0){
 			menuState = BUT_SETTINGS;
-			_engineSettings.loadFromFile();
-			settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
 		}
 		else if (mainButton[BUT_CREDITS].isPressed() && menuState == 0){
 			menuState = BUT_CREDITS;
@@ -66,6 +70,10 @@ bool Mainmenu::showMenu()
 		else if (mainButton[BUT_EXIT].isPressed() && menuState == 0){
 			return false;
 		}
+
+		
+		update();
+		draw();
 	}
 }
 
@@ -82,10 +90,6 @@ void Mainmenu::init()
 			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
 	}
 	_window->setVerticalSyncEnabled(_engineSettings.vSync);
-	sf::View view;
-	view.setCenter(sf::Vector2f(1920 / 2, 1200 / 2));
-	view.setSize(sf::Vector2f(1920, 1200));
-	_window->setView(view);
 
 	mainButton.reserve(BUT_LAST);
 	for (int i = 0; i < BUT_LAST; i++){
@@ -230,6 +234,33 @@ void Mainmenu::init()
 	settingText[SET_SMOOTH].setOrigin(0, settingText[SET_SMOOTH].getGlobalBounds().height / 2);
 	settingText[SET_SMOOTH].setPosition(settingButton[SET_SMOOTH].getPosition().x + settingButton[SET_SMOOTH].getSize().x + 25, settingButton[SET_SMOOTH].getPosition().y + (settingButton[SET_SMOOTH].getSize().y / 3));
 
+	//Music volume
+	settingButton[SET_MVOLUME].load(200, 50, 800, settingButton[SET_SMOOTH].getPosition().y + 100, image);
+	settingButton[SET_MVOLUME]._text.setFont(_font);
+	settingButton[SET_MVOLUME]._text.setCharacterSize(24);
+	settingButton[SET_MVOLUME]._text.setString("Music volume");
+	settingButton[SET_MVOLUME]._text.setColor(sf::Color::Black);
+
+	settingText[SET_MVOLUME].setFont(_font);
+	settingText[SET_MVOLUME].setCharacterSize(30);
+	settingText[SET_MVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_MVOLUME].setColor(sf::Color::White);
+	settingText[SET_MVOLUME].setOrigin(0, settingText[SET_MVOLUME].getGlobalBounds().height / 2);
+	settingText[SET_MVOLUME].setPosition(settingButton[SET_MVOLUME].getPosition().x + settingButton[SET_MVOLUME].getSize().x + 25, settingButton[SET_MVOLUME].getPosition().y + (settingButton[SET_MVOLUME].getSize().y / 3));
+
+	//Sound volume
+	settingButton[SET_SVOLUME].load(200, 50, 800, settingButton[SET_MVOLUME].getPosition().y + 75, image);
+	settingButton[SET_SVOLUME]._text.setFont(_font);
+	settingButton[SET_SVOLUME]._text.setCharacterSize(24);
+	settingButton[SET_SVOLUME]._text.setString("Sound volume");
+	settingButton[SET_SVOLUME]._text.setColor(sf::Color::Black);
+
+	settingText[SET_SVOLUME].setFont(_font);
+	settingText[SET_SVOLUME].setCharacterSize(30);
+	settingText[SET_SVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_SVOLUME].setColor(sf::Color::White);
+	settingText[SET_SVOLUME].setOrigin(0, settingText[SET_SVOLUME].getGlobalBounds().height / 2);
+	settingText[SET_SVOLUME].setPosition(settingButton[SET_SVOLUME].getPosition().x + settingButton[SET_SVOLUME].getSize().x + 25, settingButton[SET_SVOLUME].getPosition().y + (settingButton[SET_SVOLUME].getSize().y / 3));
 
 
 
@@ -265,8 +296,9 @@ void Mainmenu::init()
 
 	titleMusic.openFromFile("Resources/Common/Audio/Music/junakulkee.ogg");
 	titleMusic.setLoop(true);
-	titleMusic.setVolume(100);
-	titleMusic.play();
+	titleMusic.setVolume(_engineSettings.musicVolume);
+
+	loaded = true;
 }
 
 void Mainmenu::update()
@@ -318,8 +350,20 @@ void Mainmenu::update()
 			subSelectionMax = settingButton.size() - 1;
 
 			for (unsigned int i = 0; i < settingButton.size(); i++){
-				settingButton[i].update();
+				if (settingButton[i].isOver() && !lockMouse) subSelectionState = i;
+					settingButton[i].update(i == subSelectionState);
 			}
+
+			settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
+			if (_engineSettings.vSync) settingText[SET_VSYNC].setString("Enabled");
+			else settingText[SET_VSYNC].setString("Disabled");
+			if (_engineSettings.fullScreen) settingText[SET_FULLSCREEN].setString("Enabled");
+			else settingText[SET_FULLSCREEN].setString("Disabled");
+			settingText[SET_AA].setString(_engineSettings.getAAString());
+			if (_engineSettings.smoothTextures) settingText[SET_SMOOTH].setString("Enabled");
+			else settingText[SET_SMOOTH].setString("Disabled");
+			settingText[SET_MVOLUME].setString(_engineSettings.getMVolumeString());
+			settingText[SET_SVOLUME].setString(_engineSettings.getSVolumeString());
 
 			break;
 			}
@@ -384,8 +428,13 @@ void Mainmenu::update()
 	else{
 		titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
 	}
+	
 
-		//Events
+	//Volume updates
+	titleMusic.setVolume(_engineSettings.musicVolume);
+
+
+	//Events
 	while (_window->pollEvent(*_e)){
 
 		//In main menu
@@ -415,6 +464,7 @@ void Mainmenu::update()
 				menuState = 0;
 				subSelectionState = 0;
 				subSelectionMax = 0;
+				_engineSettings.loadFromFile();
 			}
 
 			//Settings menu
@@ -423,50 +473,56 @@ void Mainmenu::update()
 					if ((_e->key.code == sf::Keyboard::Left || _e->key.code == sf::Keyboard::Right) && _engineSettings.usingCustomRes()){
 						_engineSettings.resVectorNumber = sf::VideoMode::getFullscreenModes().size() / 3 - 1;
 						_engineSettings.updateResolution();
-						settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
 					}
 					else if (_e->key.code == sf::Keyboard::Left && (sf::VideoMode::getFullscreenModes().size() / 3) - 1 > _engineSettings.resVectorNumber){
 						_engineSettings.resVectorNumber++;
 						_engineSettings.updateResolution();
-						settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
 					}
 					else if (_e->key.code == sf::Keyboard::Right && _engineSettings.resVectorNumber > 0){
 						_engineSettings.resVectorNumber--;
 						_engineSettings.updateResolution();
-						settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
 					}
 				}
 				else if (subSelectionState == SET_VSYNC){
 					if (_e->key.code == sf::Keyboard::Left || _e->key.code == sf::Keyboard::Right){
 						_engineSettings.vSync = !_engineSettings.vSync;
-						if (_engineSettings.vSync) settingText[SET_VSYNC].setString("Enabled");
-						else settingText[SET_VSYNC].setString("Disabled");
 					}
 				}
 				else if (subSelectionState == SET_FULLSCREEN){
 					if (_e->key.code == sf::Keyboard::Left || _e->key.code == sf::Keyboard::Right){
 						_engineSettings.fullScreen = !_engineSettings.fullScreen;
-						if (_engineSettings.fullScreen) settingText[SET_FULLSCREEN].setString("Enabled");
-						else settingText[SET_FULLSCREEN].setString("Disabled");
 					}
 				}
 				else if (subSelectionState == SET_AA){
 					if (_e->key.code == sf::Keyboard::Left && _engineSettings.antiAliasing > 0){
 						_engineSettings.antiAliasing -= 2;
-						settingText[SET_AA].setString(_engineSettings.getAAString());
 					}
 					else if (_e->key.code == sf::Keyboard::Right && _engineSettings.antiAliasing < 8){
 						_engineSettings.antiAliasing += 2;
-						settingText[SET_AA].setString(_engineSettings.getAAString());
 					}
 				}
 				else if (subSelectionState == SET_SMOOTH){
 					if (_e->key.code == sf::Keyboard::Left || _e->key.code == sf::Keyboard::Right){
 						_engineSettings.smoothTextures = !_engineSettings.smoothTextures;
-						if (_engineSettings.smoothTextures) settingText[SET_SMOOTH].setString("Enabled");
-						else settingText[SET_SMOOTH].setString("Disabled");
 					}
 				}
+				else if (subSelectionState == SET_MVOLUME){
+					if (_e->key.code == sf::Keyboard::Left && _engineSettings.musicVolume > 0){
+						_engineSettings.musicVolume--;
+					}
+					else if (_e->key.code == sf::Keyboard::Right && _engineSettings.musicVolume < 100){
+						_engineSettings.musicVolume++;
+					}
+				}
+				else if (subSelectionState == SET_SVOLUME){
+					if (_e->key.code == sf::Keyboard::Left && _engineSettings.soundVolume > 0){
+						_engineSettings.soundVolume--;
+					}
+					else if (_e->key.code == sf::Keyboard::Right && _engineSettings.soundVolume < 100){
+						_engineSettings.soundVolume++;
+					}
+				}
+
 
 				if (_e->key.code == sf::Keyboard::Return){
 					_engineSettings.writeToFile();

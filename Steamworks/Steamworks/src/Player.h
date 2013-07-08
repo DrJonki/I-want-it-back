@@ -33,6 +33,9 @@ private:
 
 	void updateAnimation();
 
+	sf::Clock hangTime;
+	bool hitGround;
+
 	struct
 	{
 		float sizeX,
@@ -63,6 +66,7 @@ private:
 	{
 		ANIM_RUNNING,
 		ANIM_JUMPING,
+		ANIM_SOMERSAULT,
 		ETC
 	};
 };

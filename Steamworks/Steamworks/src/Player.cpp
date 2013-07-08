@@ -3,7 +3,8 @@
 
 
 Player::Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSettings& esettings)
-	: _playerNumber(playerNo)
+	: _playerNumber(playerNo),
+	  hitGround(false)
 {
 	unloadPlayer();
 
@@ -36,7 +37,7 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 	else if (_playerNumber == 2) setPosition(settings.resolution.x / 2, 850);
 
 
-	createPhysBody(1.f, 0.f, 0.f);
+	createPhysBody(1.f, 0.f, 0.f, _playerNumber);
 
 	_cListener->addData(_sensorData[SEN_TOP]);
 	_cListener->addData(_sensorData[SEN_RIGHT]);
@@ -79,7 +80,22 @@ void Player::update()
 			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
 		}
 	}
+	//Crouching
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+		b2Filter filter = topFixture->GetFilterData();
 
+		filter.maskBits = FIL_NULL;
+
+		topFixture->SetFilterData(filter);
+	}
+	else{
+		b2Filter filter = topFixture->GetFilterData();
+
+		if (_playerNumber == 1) filter.maskBits = FIL_TOPLEVEL;
+		else if (_playerNumber == 2) filter.maskBits = FIL_BOTTOMLEVEL;
+
+		topFixture->SetFilterData(filter);
+	}
 
 
 
@@ -109,11 +125,23 @@ void Player::update()
 	setPosition(_body->GetPosition().x * ns::g_P2MScale, _body->GetPosition().y * ns::g_P2MScale);
 
 	updateAnimation();
+
+	if (_cListener->inContact(_sensorData[SEN_BOTTOM])) hangTime.restart();
 }
 
 void Player::updateAnimation()
 {
-	if (!_cListener->inContact(_sensorData[SEN_BOTTOM]) && !_cListener->inContact(_sensorData[SEN_BOTTOMLEFT]) && !_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
+	if ((hangTime.getElapsedTime().asMilliseconds() > 1250 || hitGround) && _cListener->inContact(_sensorData[SEN_BOTTOM])){
+		resetAnimations(ANIM_SOMERSAULT);
+		if (!animations[ANIM_SOMERSAULT].lastFrame()){
+			animations[ANIM_SOMERSAULT].stepForward();
+			if (animations[ANIM_SOMERSAULT].frameChanged()) setTexture(&animations[ANIM_SOMERSAULT].getCurrentTexture());
+			hitGround = true;
+		}
+		else hitGround = false;
+	}
+
+	else if (!_cListener->inContact(_sensorData[SEN_BOTTOM]) && !_cListener->inContact(_sensorData[SEN_BOTTOMLEFT]) && !_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
 		resetAnimations(ANIM_JUMPING);
 		if (animations[ANIM_JUMPING].frameChanged()) setTexture(&animations[ANIM_JUMPING].getCurrentTexture());
 		if (!animations[ANIM_JUMPING].lastFrame()) animations[ANIM_JUMPING].stepForward();
@@ -191,7 +219,7 @@ void Player::createSensors()
 
 void Player::loadAnimations(LoadSettings& lsettings, EngineSettings& esettings)
 {
-	animations.reserve(2);
+	animations.reserve(3);
 
 	std::string path("Levels/");
 	path += lsettings._campaign;

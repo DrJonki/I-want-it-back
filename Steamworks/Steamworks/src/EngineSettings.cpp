@@ -76,6 +76,12 @@ void EngineSettings::loadFromFile()
 			else if (tempS == "Smooth_textures:"){
 				file >> smoothTextures;
 			}
+			else if (tempS == "Music_volume:"){
+				file >> musicVolume;
+			}
+			else if (tempS == "Sound_volume"){
+				file >> soundVolume;
+			}
 		}
 		writeToFile();
 	}
@@ -109,7 +115,11 @@ void EngineSettings::writeToFile()
 	s = "Anti-aliasing: ";
 	file << s << antiAliasing << std::endl;
 	s = "Smooth_textures: ";
-	file << s << smoothTextures;
+	file << s << smoothTextures << std::endl;
+	s = "Music_volume: ";
+	file << s << musicVolume << std::endl;
+	s = "Sound_volume: ";
+	file << s << soundVolume;
 
 
 	file.close();
@@ -143,6 +153,24 @@ std::string EngineSettings::getAAString()
 
 	ss << "x";
 	ss << antiAliasing;
+
+	return ss.str();
+}
+
+std::string EngineSettings::getMVolumeString()
+{
+	std::stringstream ss;
+
+	ss << musicVolume;
+
+	return ss.str();
+}
+
+std::string EngineSettings::getSVolumeString()
+{
+	std::stringstream ss;
+
+	ss << soundVolume;
 
 	return ss.str();
 }

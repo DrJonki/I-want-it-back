@@ -24,6 +24,8 @@ public:
 
 	std::string getResolutionString();
 	std::string getAAString();
+	std::string getMVolumeString();
+	std::string getSVolumeString();
 	bool usingCustomRes();
 
 	int resVectorNumber;

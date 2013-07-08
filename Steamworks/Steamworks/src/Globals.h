@@ -21,3 +21,17 @@ static const float g_P2MScale = 60.f;
 
 
 }
+
+static const enum
+{
+	FIL_TOPPLAYER1 = 0x0001,
+	FIL_BOTTOMPLAYER1 = 0x0002,
+
+	FIL_TOPPLAYER2 = 0x0004,
+	FIL_BOTTOMPLAYER2 = 0x0008,
+
+	FIL_TOPLEVEL = 0x0010,
+	FIL_BOTTOMLEVEL = 0x0012,
+
+	FIL_NULL = 0x0000
+};

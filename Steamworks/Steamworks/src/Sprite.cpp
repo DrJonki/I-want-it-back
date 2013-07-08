@@ -22,25 +22,50 @@ void Sprite::resetAnimations(const unsigned int exception)
 void Sprite::createPhysBody(const float density,
 							const float friction,
 							const float restitution,
+							const unsigned int playerNumber,
 							const float bBoxModX,
 							const float bBoxModY,
 							const bool fixedAngle)
 {
 	b2BodyDef bodyDef;
-	bodyDef.position = b2Vec2(getPosition().x / ns::g_P2MScale, getPosition().y / ns::g_P2MScale);
     bodyDef.type = b2_dynamicBody;
+	bodyDef.position = b2Vec2(getPosition().x / ns::g_P2MScale, getPosition().y / ns::g_P2MScale);
 
-    _body = _world->CreateBody(&bodyDef);
-	
+	_body = _world->CreateBody(&bodyDef);
+
 	b2CircleShape physShape;
-	physShape.m_radius = (getLocalBounds().width / 2) / ns::g_P2MScale;
+	physShape.m_radius = (getLocalBounds().height / 4) / ns::g_P2MScale;
 
-    b2FixtureDef fixtureDef;
-    fixtureDef.density = density;
+	b2FixtureDef fixtureDef;
+	fixtureDef.density = density;
 	fixtureDef.friction = friction;
 	fixtureDef.restitution = restitution;
-    fixtureDef.shape = &physShape;
+	fixtureDef.shape = &physShape;
+
+	//Bottom
+	if (playerNumber == 1){
+		fixtureDef.filter.categoryBits = FIL_BOTTOMPLAYER1;
+		fixtureDef.filter.maskBits = FIL_TOPLEVEL;
+	}
+	else if (playerNumber == 2){
+		fixtureDef.filter.categoryBits = FIL_BOTTOMPLAYER2;
+		fixtureDef.filter.maskBits = FIL_BOTTOMLEVEL;
+	}
+	physShape.m_p = b2Vec2(0, (getLocalBounds().height * 0.25) / ns::g_P2MScale);
+	bottomFixture = _body->CreateFixture(&fixtureDef);
+    
+	//Top
+	if (playerNumber == 1){
+		fixtureDef.filter.categoryBits = FIL_TOPPLAYER1;
+		fixtureDef.filter.maskBits = FIL_TOPLEVEL;
+	}
+	else if (playerNumber == 2){
+		fixtureDef.filter.categoryBits = FIL_TOPPLAYER2;
+		fixtureDef.filter.maskBits = FIL_BOTTOMLEVEL;
+	}
+	physShape.m_p = b2Vec2(0, -(getLocalBounds().height * 0.25) / ns::g_P2MScale);
+	topFixture = _body->CreateFixture(&fixtureDef);
+	
 
 	_body->SetFixedRotation(fixedAngle);
-    _body->CreateFixture(&fixtureDef);
 }

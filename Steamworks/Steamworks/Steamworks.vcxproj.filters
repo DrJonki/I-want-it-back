@@ -138,6 +138,9 @@
     <ClCompile Include="src\DebugObject.cpp">
       <Filter>Source Files\Util\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="src\Trigger.h">
       <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -52,6 +52,9 @@ public:
 	/// @param The number of the frame to be set as current.
 	void setCurrentFrame(const unsigned int currentFrame);
 
+	/// Get the current tempSteps value. Useful for consistent frame durations when checking for last frames.
+	/// @return the tempSteps value.
+	int getTempSteps() { return _tempSteps; };
 
 	/// Returns true if the current frame is the last one in the cycle.
 	/// @return Current frame is the last one.

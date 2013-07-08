@@ -76,6 +76,8 @@ private:
 		SET_FULLSCREEN,
 		SET_AA,
 		SET_SMOOTH,
+		SET_MVOLUME,
+		SET_SVOLUME,
 		SET_LAST
 	};
 };
