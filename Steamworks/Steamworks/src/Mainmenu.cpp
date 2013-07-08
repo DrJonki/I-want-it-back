@@ -40,7 +40,8 @@ bool Mainmenu::showMenu()
 	view.setSize(sf::Vector2f(1920, 1200));
 	_window->setView(view);
 	titleMusic.play();
-
+	titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
+	
 	while (1){
 		if (mainButton[BUT_START].isPressed()){
 			titleMusic.stop();

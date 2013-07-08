@@ -117,7 +117,6 @@ void Player::update()
 	
 
 
-
     float velChange = desiredVel - vel.x;
     float impulse = _body->GetMass() * velChange; //disregard time factor
     _body->ApplyLinearImpulse(b2Vec2(impulse, 0), _body->GetWorldCenter());
@@ -145,6 +144,8 @@ void Player::updateAnimation()
 		resetAnimations(ANIM_JUMPING);
 		if (animations[ANIM_JUMPING].frameChanged()) setTexture(&animations[ANIM_JUMPING].getCurrentTexture());
 		if (!animations[ANIM_JUMPING].lastFrame()) animations[ANIM_JUMPING].stepForward();
+
+		hitGround = false;
 	}
 
 	else{
@@ -152,6 +153,8 @@ void Player::updateAnimation()
 		if (animations[ANIM_RUNNING].frameChanged()) setTexture(&animations[ANIM_RUNNING].getCurrentTexture());
 		animations[ANIM_RUNNING].stepForward();
 		animations[ANIM_RUNNING].setStepInterval(5);
+
+		hitGround = false;
 	}
 }
 

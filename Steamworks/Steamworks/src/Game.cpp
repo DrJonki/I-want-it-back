@@ -24,6 +24,9 @@ namespace
 	WorldManager worldManager(&gameWindow);
 	Player* player[2];
 
+	sf::Listener audioListener;
+	unsigned int soundSelection = 1;
+
 	ContactListener* cListener;
 }
 
@@ -95,6 +98,8 @@ void Game::update()
 
 	if (player[0]->getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player[0]->getPosition().x, view[0].getCenter().y));
 	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
+
+	audioListener.setPosition(sf::Vector3f(player[soundSelection + 1]->getPosition().x, 0.f, player[soundSelection + 1]->getPosition().y));
 	//End of update loop
 
 	if (mainMenu.getEngineSettings().debug){
