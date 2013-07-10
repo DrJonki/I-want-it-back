@@ -400,8 +400,15 @@ void Mainmenu::update()
 	switch (menuState)
 	{
 		case BUT_CAMPAIGN: //Campaign
-			selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + campaignText[subSelectionState].getGlobalBounds().height);
+			{
+			if (campaignText.size() <= 1){
+				selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + (campaignText[subSelectionState].getLocalBounds().height / 1.5));
+			}
+			else{
+				selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + campaignText[subSelectionState].getLocalBounds().height);
+			}
 			break;
+			}
 		case BUT_LEVEL: //Level
 			{
 			if (levelText.size() <= 1){

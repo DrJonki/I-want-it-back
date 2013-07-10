@@ -26,4 +26,6 @@ public:
 		stepForward();
 		if (frameChanged()) setTexture(&getCurrentTexture());
 	};
+
+	unsigned int _data;
 };

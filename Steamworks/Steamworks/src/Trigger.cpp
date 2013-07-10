@@ -2,6 +2,8 @@
 
 
 Trigger::Trigger(void)
+	: _type(0),
+	  _data(0)
 {}
 
 Trigger::~Trigger(void)
@@ -13,7 +15,9 @@ void Trigger::load(b2World* world,
 				   const float sizeY,
 				   const float posX,
 				   const float posY,
-				   void* data)
+				   void* data,
+				   const unsigned int resourceType,
+				   const unsigned int resourceData)
 {
 	b2BodyDef bodyDef;
 	bodyDef.position = b2Vec2(posX / ns::g_P2MScale, posY / ns::g_P2MScale);
@@ -31,4 +35,6 @@ void Trigger::load(b2World* world,
 
 	_body->SetFixedRotation(true);
     _body->CreateFixture(&fixtureDef);
+
+	_data = resourceData;
 }

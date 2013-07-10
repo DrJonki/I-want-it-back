@@ -61,6 +61,12 @@
     <Filter Include="Source Files\System\Menu">
       <UniqueIdentifier>{88f4c474-aafd-4247-801d-5f447cf64433}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System\Sound">
+      <UniqueIdentifier>{2e7c736a-eeb5-436b-83fd-a958fd9aae6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Sound">
+      <UniqueIdentifier>{30a4e78f-ce21-4362-9d85-40b818c1311e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -83,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="src\SpriteAnimation.cpp">
       <Filter>Source Files\Graphics\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sound.cpp">
-      <Filter>Source Files\System</Filter>
     </ClCompile>
     <ClCompile Include="src\DebugConsole.cpp">
       <Filter>Source Files\Util\Debug</Filter>
@@ -139,7 +142,13 @@
       <Filter>Source Files\Util\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\SoundManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundSource.cpp">
+      <Filter>Source Files\System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundStream.cpp">
+      <Filter>Source Files\System\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,9 +172,6 @@
     </ClInclude>
     <ClInclude Include="src\SpriteAnimation.h">
       <Filter>Header Files\Graphics\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sound.h">
-      <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="src\DebugConsole.h">
       <Filter>Header Files\Util\Debug</Filter>
@@ -222,7 +228,13 @@
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="src\SoundManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundSource.h">
+      <Filter>Header Files\System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundStream.h">
+      <Filter>Header Files\System\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

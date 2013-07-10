@@ -16,7 +16,8 @@ Map::~Map(void)
 void Map::load(b2World* world,
 			   sf::RenderWindow* window,
 			   std::string campaign,
-			   std::string level)
+			   std::string level,
+			   EngineSettings& esettings)
 {
 	_world = world;
 	_window = window;
@@ -28,9 +29,9 @@ void Map::load(b2World* world,
 	_backGroundObject.clear();
 	_mapObject.clear();
 	_foregroundObject.clear();
-	_backGroundObject.reserve(50);
-	_mapObject.reserve(100);
-	_foregroundObject.reserve(50);
+	_backGroundObject.reserve(esettings.backgroundObjectLimit);
+	_mapObject.reserve(esettings.mapObjectLimit);
+	_foregroundObject.reserve(esettings.foregroundObjectLimit);
 	
 
 	createBackgrounds();
@@ -84,7 +85,7 @@ void Map::createBackgrounds()
 	std::ifstream file(path, std::ifstream::in);
 
 	if (file.good()){
-		while (file.good()){
+		while (!file.eof()){
 			bool t_bottom = 0;
 			int t_sizeX = 0, t_sizeY = 0, t_posX = 0;
 			std::string t_textureDir;
@@ -104,7 +105,6 @@ void Map::createBackgrounds()
 
 
 			temp++;
-			if (file.peek() == file.eof()) break;
 		}
 	}
 }
@@ -202,6 +202,37 @@ void Map::createForeground()
 
 			_foregroundObject.emplace_back(ForegroundObject());
 			_foregroundObject.back().load(t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames);
+		}
+	}
+}
+
+void Map::createTriggers()
+{
+	std::string path("Levels/");
+	path += _campaign;
+	path += "/";
+	path += _level;
+	path += "/triggers.dat";
+
+	std::ifstream file(path, std::ifstream::in);
+
+	if (file.good()){
+		while (!file.eof()){
+			float t_sizeX = 0, t_sizeY = 0, t_posX = 0, t_posY = 0;
+			unsigned int t_data = 0, t_rType = 0, t_rData = 0;
+
+			file >> t_sizeX;
+			file >> t_sizeY;
+			file >> t_posX;
+			file >> t_posY;
+			file >> t_data;
+			if (file.peek() != '\n'){
+				file >> t_rType;
+				file >> t_rData;
+			}
+
+			_triggerObject.emplace_back(Trigger());
+			_triggerObject.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, (void*)t_data, t_rType, t_rData);
 		}
 	}
 }

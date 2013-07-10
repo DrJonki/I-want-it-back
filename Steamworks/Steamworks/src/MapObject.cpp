@@ -2,6 +2,7 @@
 
 
 MapObject::MapObject(void)
+	: _data(0)
 {}
 
 

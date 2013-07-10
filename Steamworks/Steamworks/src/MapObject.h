@@ -34,6 +34,8 @@ public:
 		if (frameChanged()) setTexture(&getCurrentTexture());
 	};
 
+	unsigned int _data;
+
 private:
 	b2Body* _body;
 };

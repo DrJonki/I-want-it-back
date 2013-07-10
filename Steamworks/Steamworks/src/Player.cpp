@@ -33,8 +33,8 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 	setSize(sf::Vector2f(_playerProps.sizeX, _playerProps.sizeY));
 	setTexture(&animations[ANIM_RUNNING].getCurrentTexture());
 	setOrigin(getLocalBounds().width / 2, getLocalBounds().height / 2);
-	if (_playerNumber == 1) setPosition(settings.resolution.x / 2, 250);
-	else if (_playerNumber == 2) setPosition(settings.resolution.x / 2, 850);
+	if (_playerNumber == 1) setPosition((float)settings.resolution.x / 2, 250);
+	else if (_playerNumber == 2) setPosition((float)settings.resolution.x / 2, 850);
 
 
 	createPhysBody(1.f, 0.f, 0.f, _playerNumber);
@@ -81,7 +81,7 @@ void Player::update()
 		}
 	}
 	//Crouching
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || hitGround){
 		b2Filter filter = topFixture->GetFilterData();
 
 		filter.maskBits = FIL_NULL;
@@ -112,7 +112,7 @@ void Player::update()
 		desiredVel = b2Min(vel.x + 0.3f, maxSpeed);
 	}
 	else{
-		desiredVel = vel.x * _playerProps.airDrag;
+		desiredVel = vel.x * (1.f - _playerProps.airDrag);
 	}
 	
 
@@ -130,7 +130,7 @@ void Player::update()
 
 void Player::updateAnimation()
 {
-	if ((hangTime.getElapsedTime().asMilliseconds() > 1250 || hitGround) && _cListener->inContact(_sensorData[SEN_BOTTOM])){
+	if ((hangTime.getElapsedTime().asMilliseconds() > 1000 || hitGround) && _cListener->inContact(_sensorData[SEN_BOTTOM])){
 		resetAnimations(ANIM_SOMERSAULT);
 		if (!animations[ANIM_SOMERSAULT].lastFrame()){
 			animations[ANIM_SOMERSAULT].stepForward();
@@ -225,7 +225,7 @@ void Player::loadAnimations(LoadSettings& lsettings, EngineSettings& esettings)
 	animations.reserve(3);
 
 	std::string path("Levels/");
-	path += lsettings._campaign;
+	path += (char)lsettings._campaign;
 	path += "/0/playeranimdata.dat";
 
 	std::ifstream file(path, std::ifstream::in);
@@ -269,7 +269,7 @@ void Player::loadAnimations(LoadSettings& lsettings, EngineSettings& esettings)
 void Player::loadProperties(LoadSettings& settings)
 {
 	std::string path("Levels/");
-	path += settings._campaign;
+	path += (char)settings._campaign;
 	path += "/0/playerdata.dat";
 
 	std::ifstream file(path, std::ifstream::in);

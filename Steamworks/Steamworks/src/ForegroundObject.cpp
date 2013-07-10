@@ -2,6 +2,7 @@
 
 
 ForegroundObject::ForegroundObject(void)
+	: _data(0)
 {}
 
 ForegroundObject::~ForegroundObject(void)

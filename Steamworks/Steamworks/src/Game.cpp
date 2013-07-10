@@ -24,7 +24,6 @@ namespace
 	WorldManager worldManager(&gameWindow);
 	Player* player[2];
 
-	sf::Listener audioListener;
 	unsigned int soundSelection = 1;
 
 	ContactListener* cListener;
@@ -93,18 +92,19 @@ void Game::update()
 	worldManager.stepWorldPhysics();
 
 	
-	view[0].move(5, 0);
-	view[1].move(5, 0);
+	view[0].move(mainMenu.getEngineSettings().cameraSpeed, 0);
+	view[1].move(mainMenu.getEngineSettings().cameraSpeed, 0);
 
 	if (player[0]->getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player[0]->getPosition().x, view[0].getCenter().y));
 	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
 
-	audioListener.setPosition(sf::Vector3f(player[soundSelection + 1]->getPosition().x, 0.f, player[soundSelection + 1]->getPosition().y));
+	sf::Listener::setPosition(sf::Vector3f(view[soundSelection - 1].getCenter().x, view[soundSelection - 1].getCenter().y, 0.f));
+	sf::Listener::setGlobalVolume(mainMenu.getEngineSettings().soundVolume);
 	//End of update loop
 
 	if (mainMenu.getEngineSettings().debug){
 		//Pointer updates
-		d_updateTime = updateClock.getElapsedTime().asMilliseconds();
+		d_updateTime = updateClock.getElapsedTime().asMicroseconds();
 
 		if (debugUpdateClock.getElapsedTime().asMilliseconds() >= 250){
 			debug->draw();
@@ -144,7 +144,7 @@ void Game::render()
 	gameWindow.display();
 
 	if (mainMenu.getEngineSettings().debug){
-		d_renderTime = renderClock.getElapsedTime().asMilliseconds();
+		d_renderTime = renderClock.getElapsedTime().asMicroseconds();
 	}
 }
 
@@ -175,8 +175,8 @@ void Game::init()
 	worldManager.getWorldPtr()->SetContactListener(cListener);
 
 	if (mainMenu.getEngineSettings().debug){
-		debug->assignPtr(&d_updateTime, "Update time(ms): ");
-		debug->assignPtr(&d_renderTime, "Render time(ms): ");
+		debug->assignPtr(&d_updateTime, "Update time(us): ");
+		debug->assignPtr(&d_renderTime, "Render time(us): ");
 	}
 
 	EngineSettings engineSettings = mainMenu.getEngineSettings();

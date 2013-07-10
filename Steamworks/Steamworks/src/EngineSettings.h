@@ -41,5 +41,13 @@ public:
 
 	int soundVolume;
 	int musicVolume;
+
+	unsigned int backgroundObjectLimit;
+	unsigned int mapObjectLimit;
+	unsigned int foregroundObjectLimit;
+	unsigned int soundSourceLimit;
+	unsigned int soundStreamLimit;
+
+	float cameraSpeed;
 };
 

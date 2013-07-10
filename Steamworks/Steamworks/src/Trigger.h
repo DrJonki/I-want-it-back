@@ -15,9 +15,15 @@ public:
 			  const float sizeY,
 			  const float posX,
 			  const float posY,
-			  void* data);
+			  void* sensorData,
+			  const unsigned int resourceType = 0,
+			  const unsigned int resourceData = 0);
 
 private:
 	b2Body* _body;
+
+	unsigned int _type;
+
+	unsigned int _data;
 };
 

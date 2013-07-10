@@ -13,6 +13,8 @@
 #include "MapObject.h"
 #include "BackgroundObject.h"
 #include "ForegroundObject.h"
+#include "EngineSettings.h"
+#include "Trigger.h"
 
 class Map
 {
@@ -29,7 +31,8 @@ public:
 	void load(b2World* world,
 			  sf::RenderWindow* window,
 			  std::string campaign,
-			  std::string level);
+			  std::string level,
+			  EngineSettings& esettings);
 	
 	/// Updates the animation states
 	void update();
@@ -52,6 +55,10 @@ private:
 	void createForeground();
 
 
+	/// A local function to load the data from triggers.dat and generate the triggers.
+	void createTriggers();
+
+
 	/// A container for the background objects.
 	std::vector<BackgroundObject> _backGroundObject;
 
@@ -60,6 +67,9 @@ private:
 
 	/// A container for the foreground objects.
 	std::vector<ForegroundObject> _foregroundObject;
+
+	// A container for the trigger objects.
+	std::vector<Trigger> _triggerObject;
 
 	/// A local pointer to the main window.
 	sf::RenderWindow* _window;

@@ -36,3 +36,9 @@ static const enum
 
 	FIL_NULL = 0x0000
 };
+
+static const enum
+{
+	RD_ANIMATION,
+	RD_SOUND
+};

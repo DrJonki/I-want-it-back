@@ -29,6 +29,14 @@ void EngineSettings::loadDefaults()
 	
 	soundVolume = 100;
 	musicVolume = 100;
+
+	backgroundObjectLimit = 50;
+	mapObjectLimit = 100;
+	foregroundObjectLimit = 50;
+	soundSourceLimit = 50;
+	soundStreamLimit = 50;
+
+	cameraSpeed = 5.f;
 }
 
 void EngineSettings::loadFromFile()
@@ -79,8 +87,26 @@ void EngineSettings::loadFromFile()
 			else if (tempS == "Music_volume:"){
 				file >> musicVolume;
 			}
-			else if (tempS == "Sound_volume"){
+			else if (tempS == "Sound_volume:"){
 				file >> soundVolume;
+			}
+			else if (tempS == "Background_object_limit:"){
+				file >> backgroundObjectLimit;
+			}
+			else if (tempS == "Map_object_limit:"){
+				file >> mapObjectLimit;
+			}
+			else if (tempS == "Foreground_object_limit:"){
+				file >> foregroundObjectLimit;
+			}
+			else if (tempS == "Sound_source_limit:"){
+				file >> soundSourceLimit;
+			}
+			else if (tempS == "Sound_stream_limit:"){
+				file >> soundStreamLimit;
+			}
+			else if (tempS == "Camera_speed:"){
+				file >> cameraSpeed;
 			}
 		}
 		writeToFile();
@@ -119,7 +145,20 @@ void EngineSettings::writeToFile()
 	s = "Music_volume: ";
 	file << s << musicVolume << std::endl;
 	s = "Sound_volume: ";
-	file << s << soundVolume;
+	file << s << soundVolume << std::endl;
+	s = "Background_object_limit: ";
+	file << s << backgroundObjectLimit << std::endl;
+	s = "Map_object_limit: ";
+	file << s << mapObjectLimit << std::endl;
+	s = "Foreground_object_limit: ";
+	file << s << foregroundObjectLimit << std::endl;
+	s = "Sound_source_limit: ";
+	file << s << soundSourceLimit << std::endl;
+	s = "Sound_stream_limit: ";
+	file << s << soundStreamLimit << std::endl;
+	s = "Camera_speed: ";
+	file << s << cameraSpeed;
+
 
 
 	file.close();
