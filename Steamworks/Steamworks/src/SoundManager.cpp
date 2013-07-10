@@ -1,11 +1,6 @@
 #include "SoundManager.h"
 
 
-namespace ns
-{
-	unsigned int soundState;
-}
-
 SoundManager::SoundManager(void)
 	: managerNumber(0)
 {}

@@ -3,7 +3,7 @@
 #include <SFML\Graphics.hpp>
 #include <vector>
 
-#include "Globals.h"
+//#include "Globals.h"
 #include "DebugObject.h"
 
 class DebugConsole

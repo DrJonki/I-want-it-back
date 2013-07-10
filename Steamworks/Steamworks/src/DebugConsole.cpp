@@ -7,7 +7,7 @@ DebugConsole::DebugConsole(void)
 	textProps.y = 5;
 	textProps.charSize = 14;
 
-	defaultFont.loadFromFile(RES_FONTS "furore.otf");
+	defaultFont.loadFromFile("Resources/Common/Fonts/furore.otf");
 
 	debugWindow.create(sf::VideoMode(400, 200), "Debug", sf::Style::Close);
 	debugWindow.setPosition(sf::Vector2i(-500, 400));

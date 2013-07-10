@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-#include "Globals.h"
+//#include "Globals.h"
 
 class DebugObject : public sf::Text
 {

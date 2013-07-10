@@ -95,6 +95,7 @@
     <ClCompile Include="src\ForegroundObject.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameButton.cpp" />
+    <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\LoadSettings.cpp" />
     <ClCompile Include="src\main.cpp" />

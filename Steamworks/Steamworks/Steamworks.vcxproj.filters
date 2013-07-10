@@ -150,6 +150,9 @@
     <ClCompile Include="src\SoundStream.cpp">
       <Filter>Source Files\System\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="src\Globals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">

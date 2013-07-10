@@ -1,10 +1,6 @@
 #include "EngineSettings.h"
 
 
-namespace ns
-{
-	unsigned int soundState = 0;
-}
 
 EngineSettings::EngineSettings(void)
 {

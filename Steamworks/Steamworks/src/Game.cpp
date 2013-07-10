@@ -1,17 +1,9 @@
 #include "Game.h"
 
-namespace ns
-{
-	bool deathState = false;
-
-	unsigned int soundState;
-}
 
 namespace
 {
 	bool runningState = false;
-
-	DebugConsole* debug;
 
 	sf::RenderWindow gameWindow;
 	sf::Event e;
@@ -45,8 +37,8 @@ Game::~Game(void)
 bool Game::runAndDontCrashPls()
 {
 	if (mainMenu.getEngineSettings().debug){
-		debug = new DebugConsole;
-		debug->draw();
+	//	ns::debug = new DebugConsole;
+		ns::debug->draw();
 	}
 	
 	while (mainMenu.showMenu()){
@@ -71,7 +63,7 @@ bool Game::runAndDontCrashPls()
 		deInit();
 	}
 
-	if (debug != nullptr) delete debug;
+	if (ns::debug != nullptr) delete ns::debug;
 	
 	return true;
 }
@@ -115,7 +107,7 @@ void Game::update()
 		d_updateTime = updateClock.getElapsedTime().asMicroseconds();
 
 		if (debugUpdateClock.getElapsedTime().asMilliseconds() >= 250){
-			debug->draw();
+			ns::debug->draw();
 			debugUpdateClock.restart();
 		}
 	}
@@ -188,8 +180,8 @@ void Game::init()
 	worldManager.getWorldPtr()->SetContactListener(cListener);
 
 	if (mainMenu.getEngineSettings().debug){
-		debug->assignPtr(&d_updateTime, "Update time(us): ");
-		debug->assignPtr(&d_renderTime, "Render time(us): ");
+		ns::debug->assignPtr(&d_updateTime, "Update time(us): ");
+		ns::debug->assignPtr(&d_renderTime, "Render time(us): ");
 	}
 
 	EngineSettings engineSettings = mainMenu.getEngineSettings();
@@ -231,7 +223,7 @@ void Game::deInit()
 	runningState = false;
 
 	if (mainMenu.getEngineSettings().debug){
-		debug->clear();
-		debug->draw();
+		ns::debug->clear();
+		ns::debug->draw();
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "DebugConsole.h"
 
 namespace ns
 {
@@ -20,6 +21,7 @@ namespace ns
 
 	extern unsigned int soundState;
 
+	extern DebugConsole* debug;
 }
 
 static const enum
