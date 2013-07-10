@@ -99,7 +99,7 @@ void Game::update()
 	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
 
 	sf::Listener::setPosition(sf::Vector3f(view[soundSelection - 1].getCenter().x, view[soundSelection - 1].getCenter().y, 0.f));
-	sf::Listener::setGlobalVolume(mainMenu.getEngineSettings().soundVolume);
+	sf::Listener::setGlobalVolume(mainMenu.getEngineSettings().globalVolume);
 	//End of update loop
 
 	if (mainMenu.getEngineSettings().debug){

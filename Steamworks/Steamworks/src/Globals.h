@@ -22,7 +22,7 @@ static const float g_P2MScale = 60.f;
 
 }
 
-static const enum
+static const enum // Filter data
 {
 	FIL_TOPLEVEL = 0x0001,
 	FIL_BOTTOMLEVEL = 0x0002,
@@ -37,8 +37,8 @@ static const enum
 	FIL_NULL = 0x0000
 };
 
-static const enum
+static const enum  // Resource types
 {
-	RD_ANIMATION,
-	RD_SOUND
+	RT_ANIMATION,
+	RT_SOUND
 };

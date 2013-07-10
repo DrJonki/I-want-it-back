@@ -235,8 +235,23 @@ void Mainmenu::init()
 	settingText[SET_SMOOTH].setOrigin(0, settingText[SET_SMOOTH].getGlobalBounds().height / 2);
 	settingText[SET_SMOOTH].setPosition(settingButton[SET_SMOOTH].getPosition().x + settingButton[SET_SMOOTH].getSize().x + 25, settingButton[SET_SMOOTH].getPosition().y + (settingButton[SET_SMOOTH].getSize().y / 3));
 
+
+	//Global volume
+	settingButton[SET_GVOLUME].load(200, 50, 800, settingButton[SET_SMOOTH].getPosition().y + 100, image);
+	settingButton[SET_GVOLUME]._text.setFont(_font);
+	settingButton[SET_GVOLUME]._text.setCharacterSize(24);
+	settingButton[SET_GVOLUME]._text.setString("Global volume");
+	settingButton[SET_GVOLUME]._text.setColor(sf::Color::Black);
+
+	settingText[SET_GVOLUME].setFont(_font);
+	settingText[SET_GVOLUME].setCharacterSize(30);
+	settingText[SET_GVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_GVOLUME].setColor(sf::Color::White);
+	settingText[SET_GVOLUME].setOrigin(0, settingText[SET_GVOLUME].getGlobalBounds().height / 2);
+	settingText[SET_GVOLUME].setPosition(settingButton[SET_GVOLUME].getPosition().x + settingButton[SET_GVOLUME].getSize().x + 25, settingButton[SET_GVOLUME].getPosition().y + (settingButton[SET_GVOLUME].getSize().y / 3));
+
 	//Music volume
-	settingButton[SET_MVOLUME].load(200, 50, 800, settingButton[SET_SMOOTH].getPosition().y + 100, image);
+	settingButton[SET_MVOLUME].load(200, 50, 800, settingButton[SET_GVOLUME].getPosition().y + 75, image);
 	settingButton[SET_MVOLUME]._text.setFont(_font);
 	settingButton[SET_MVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_MVOLUME]._text.setString("Music volume");
@@ -263,6 +278,20 @@ void Mainmenu::init()
 	settingText[SET_SVOLUME].setOrigin(0, settingText[SET_SVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_SVOLUME].setPosition(settingButton[SET_SVOLUME].getPosition().x + settingButton[SET_SVOLUME].getSize().x + 25, settingButton[SET_SVOLUME].getPosition().y + (settingButton[SET_SVOLUME].getSize().y / 3));
 
+	//Anbient volume
+	settingButton[SET_AVOLUME].load(200, 50, 800, settingButton[SET_SVOLUME].getPosition().y + 75, image);
+	settingButton[SET_AVOLUME]._text.setFont(_font);
+	settingButton[SET_AVOLUME]._text.setCharacterSize(24);
+	settingButton[SET_AVOLUME]._text.setString("Anbient volume");
+	settingButton[SET_AVOLUME]._text.setColor(sf::Color::Black);
+
+	settingText[SET_AVOLUME].setFont(_font);
+	settingText[SET_AVOLUME].setCharacterSize(30);
+	settingText[SET_AVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_AVOLUME].setColor(sf::Color::White);
+	settingText[SET_AVOLUME].setOrigin(0, settingText[SET_AVOLUME].getGlobalBounds().height / 2);
+	settingText[SET_AVOLUME].setPosition(settingButton[SET_AVOLUME].getPosition().x + settingButton[SET_AVOLUME].getSize().x + 25, settingButton[SET_AVOLUME].getPosition().y + (settingButton[SET_AVOLUME].getSize().y / 3));
+
 
 
 	//Credits
@@ -279,7 +308,7 @@ void Mainmenu::init()
 	creditsText[1].setPosition(creditsText[0].getPosition().x, creditsText[0].getPosition().y + 150);
 
 	//Other
-	selectionShape.setRadius(4);
+	selectionShape.setRadius(5);
 	selectionShape.setFillColor(sf::Color::Red);
 	selectionShape.setOutlineThickness(2);
 	selectionShape.setOutlineColor(sf::Color::White);
@@ -363,8 +392,10 @@ void Mainmenu::update()
 			settingText[SET_AA].setString(_engineSettings.getAAString());
 			if (_engineSettings.smoothTextures) settingText[SET_SMOOTH].setString("Enabled");
 			else settingText[SET_SMOOTH].setString("Disabled");
+			settingText[SET_GVOLUME].setString(_engineSettings.getGVolumeString());
 			settingText[SET_MVOLUME].setString(_engineSettings.getMVolumeString());
 			settingText[SET_SVOLUME].setString(_engineSettings.getSVolumeString());
+			settingText[SET_AVOLUME].setString(_engineSettings.getAVolumeString());
 
 			break;
 			}
@@ -514,6 +545,14 @@ void Mainmenu::update()
 						_engineSettings.smoothTextures = !_engineSettings.smoothTextures;
 					}
 				}
+				else if (subSelectionState == SET_GVOLUME){
+					if (_e->key.code == sf::Keyboard::Left && _engineSettings.globalVolume > 0){
+						_engineSettings.globalVolume--;
+					}
+					else if (_e->key.code == sf::Keyboard::Right && _engineSettings.globalVolume < 100){
+						_engineSettings.globalVolume++;
+					}
+				}
 				else if (subSelectionState == SET_MVOLUME){
 					if (_e->key.code == sf::Keyboard::Left && _engineSettings.musicVolume > 0){
 						_engineSettings.musicVolume--;
@@ -528,6 +567,14 @@ void Mainmenu::update()
 					}
 					else if (_e->key.code == sf::Keyboard::Right && _engineSettings.soundVolume < 100){
 						_engineSettings.soundVolume++;
+					}
+				}
+				else if (subSelectionState == SET_AVOLUME){
+					if (_e->key.code == sf::Keyboard::Left && _engineSettings.anbientVolume > 0){
+						_engineSettings.anbientVolume--;
+					}
+					else if (_e->key.code == sf::Keyboard::Right && _engineSettings.anbientVolume < 100){
+						_engineSettings.anbientVolume++;
 					}
 				}
 

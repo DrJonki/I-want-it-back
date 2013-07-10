@@ -27,8 +27,10 @@ void EngineSettings::loadDefaults()
 
 	debug = false;
 	
+	globalVolume = 100;
 	soundVolume = 100;
 	musicVolume = 100;
+	anbientVolume = 100;
 
 	backgroundObjectLimit = 50;
 	mapObjectLimit = 100;
@@ -84,11 +86,17 @@ void EngineSettings::loadFromFile()
 			else if (tempS == "Smooth_textures:"){
 				file >> smoothTextures;
 			}
+			else if (tempS == "Global_volume:"){
+				file >> globalVolume;
+			}
 			else if (tempS == "Music_volume:"){
 				file >> musicVolume;
 			}
 			else if (tempS == "Sound_volume:"){
 				file >> soundVolume;
+			}
+			else if (tempS == "Anbient_volume:"){
+				file >> anbientVolume;
 			}
 			else if (tempS == "Background_object_limit:"){
 				file >> backgroundObjectLimit;
@@ -142,10 +150,14 @@ void EngineSettings::writeToFile()
 	file << s << antiAliasing << std::endl;
 	s = "Smooth_textures: ";
 	file << s << smoothTextures << std::endl;
+	s = "Global_volume: ";
+	file << s << globalVolume << std::endl;
 	s = "Music_volume: ";
 	file << s << musicVolume << std::endl;
 	s = "Sound_volume: ";
 	file << s << soundVolume << std::endl;
+	s = "Anbient_volume: ";
+	file << s << anbientVolume << std::endl;
 	s = "Background_object_limit: ";
 	file << s << backgroundObjectLimit << std::endl;
 	s = "Map_object_limit: ";
@@ -196,6 +208,15 @@ std::string EngineSettings::getAAString()
 	return ss.str();
 }
 
+std::string EngineSettings::getGVolumeString()
+{
+	std::stringstream ss;
+
+	ss << globalVolume;
+
+	return ss.str();
+}
+
 std::string EngineSettings::getMVolumeString()
 {
 	std::stringstream ss;
@@ -210,6 +231,15 @@ std::string EngineSettings::getSVolumeString()
 	std::stringstream ss;
 
 	ss << soundVolume;
+
+	return ss.str();
+}
+
+std::string EngineSettings::getAVolumeString()
+{
+	std::stringstream ss;
+
+	ss << anbientVolume;
 
 	return ss.str();
 }

@@ -24,8 +24,10 @@ public:
 
 	std::string getResolutionString();
 	std::string getAAString();
+	std::string getGVolumeString();
 	std::string getMVolumeString();
 	std::string getSVolumeString();
+	std::string getAVolumeString();
 	bool usingCustomRes();
 
 	int resVectorNumber;
@@ -39,8 +41,10 @@ public:
 
 	bool debug;
 
+	int globalVolume;
 	int soundVolume;
 	int musicVolume;
+	int anbientVolume;
 
 	unsigned int backgroundObjectLimit;
 	unsigned int mapObjectLimit;
