@@ -1,9 +1,11 @@
 #include "Map.h"
 
+
 //Map
 //Public
 Map::Map(void) : _window(nullptr),
-				 _world(nullptr)
+				 _world(nullptr),
+				 _debug(false)
 {}
 
 Map::~Map(void)
@@ -11,32 +13,45 @@ Map::~Map(void)
 	_backGroundObject.clear();
 	_mapObject.clear();
 	_foregroundObject.clear();
+	_triggerObject.clear();
 }
 
 void Map::load(b2World* world,
+			   ContactListener* listener,
 			   sf::RenderWindow* window,
-			   std::string campaign,
-			   std::string level,
+			   LoadSettings& lsettings,
 			   EngineSettings& esettings)
 {
 	_world = world;
+	_cListener = listener;
 	_window = window;
 
-	_campaign = campaign;
-	_level = level;
+	_campaign = lsettings._campaignVector[lsettings._campaign];
+	_level = lsettings._levelVector[lsettings._level];
 
+	_debug = esettings.debug;
 
 	_backGroundObject.clear();
 	_mapObject.clear();
 	_foregroundObject.clear();
+	_triggerObject.clear();
 	_backGroundObject.reserve(esettings.backgroundObjectLimit);
 	_mapObject.reserve(esettings.mapObjectLimit);
 	_foregroundObject.reserve(esettings.foregroundObjectLimit);
+	_triggerObject.reserve(esettings.triggerObjectLimit);
 	
 
 	createBackgrounds();
 	createStatics();
 	createForeground();
+	createTriggers();
+
+
+	sManager.loadSounds(lsettings, esettings);
+	sManager.loadStreams(lsettings, esettings);
+
+	sManager.playStreams();
+	sManager.playSound();
 }
 
 
@@ -49,6 +64,18 @@ void Map::update()
 	for (unsigned int i = 0; i < _foregroundObject.size(); i++){
 		_foregroundObject[i].update();
 	}
+
+	for (unsigned int i = 0; i < _triggerObject.size(); i++){
+		if (_cListener->inContact((void*)MAINFIX_P1) && _cListener->inContact(_triggerObject[i]._body->GetUserData())){
+			if (_triggerObject[i]._type == RT_SOUND){
+				sManager.playSound((unsigned int)_triggerObject[i]._data);
+			}
+		}
+
+		else{
+			sManager.resetSounds();
+		}
+	}
 }
 
 
@@ -60,6 +87,12 @@ void Map::draw()
 
 	for (unsigned int i = 0; i < _mapObject.size(); i++){
 		_window->draw(_mapObject[i]);
+	}
+
+	if (_debug){
+		for (unsigned int i = 0; i < _triggerObject.size(); i++){
+			_window->draw(_triggerObject[i]);
+		}
 	}
 }
 
@@ -84,7 +117,7 @@ void Map::createBackgrounds()
 
 	std::ifstream file(path, std::ifstream::in);
 
-	if (file.good()){
+	if (file.good() && file.peek() != file.eof()){
 		while (!file.eof()){
 			bool t_bottom = 0;
 			int t_sizeX = 0, t_sizeY = 0, t_posX = 0;
@@ -119,7 +152,7 @@ void Map::createStatics()
 
 	std::ifstream file(path, std::ifstream::in);
 
-	if (file.good()){
+	if (file.good() && file.peek() != file.eof()){
 		while (!file.eof()){
 			int t_sizeX = 0,
 				t_sizeY = 0,
@@ -170,7 +203,7 @@ void Map::createForeground()
 
 	std::ifstream file(path, std::ifstream::in);
 
-	if (file.good()){
+	if (file.good() && file.peek() != file.eof()){
 		while (!file.eof()){
 			int t_sizeX = 0,
 				t_sizeY = 0,
@@ -216,7 +249,7 @@ void Map::createTriggers()
 
 	std::ifstream file(path, std::ifstream::in);
 
-	if (file.good()){
+	if (file.good() && file.peek() != file.eof()){
 		while (!file.eof()){
 			float t_sizeX = 0, t_sizeY = 0, t_posX = 0, t_posY = 0;
 			unsigned int t_data = 0, t_rType = 0, t_rData = 0;
@@ -233,6 +266,12 @@ void Map::createTriggers()
 
 			_triggerObject.emplace_back(Trigger());
 			_triggerObject.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, (void*)t_data, t_rType, t_rData);
+		}
+	}
+
+	for (unsigned int i = 0; i < _triggerObject.size(); i++){
+		if (_triggerObject[i]._body->GetUserData() != (void*)0){
+			_cListener->addData(_triggerObject[i]._body->GetUserData());
 		}
 	}
 }

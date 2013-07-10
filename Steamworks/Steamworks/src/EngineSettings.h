@@ -49,6 +49,7 @@ public:
 	unsigned int backgroundObjectLimit;
 	unsigned int mapObjectLimit;
 	unsigned int foregroundObjectLimit;
+	unsigned int triggerObjectLimit;
 	unsigned int soundSourceLimit;
 	unsigned int soundStreamLimit;
 

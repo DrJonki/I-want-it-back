@@ -37,4 +37,11 @@ void Trigger::load(b2World* world,
     _body->CreateFixture(&fixtureDef);
 
 	_data = resourceData;
+
+	setSize(sf::Vector2f(sizeX, sizeY));
+	setOrigin(sizeX / 2, sizeY / 2);
+	setPosition(posX, posY);
+	if (resourceType == RT_ANIMATION) setFillColor(sf::Color::Color(0, 0, 255, 150));
+	else if (resourceType == RT_SOUND) setFillColor(sf::Color::Color(0, 255, 0, 150));
+	else setFillColor(sf::Color::Color(255, 255, 255, 150));
 }

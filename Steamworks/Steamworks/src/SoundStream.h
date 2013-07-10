@@ -2,6 +2,8 @@
 
 #include <SFML\Audio.hpp>
 
+#include <Windows.h>
+
 class SoundStream
 {
 public:
@@ -15,7 +17,9 @@ public:
 			  const float attenuation = 0.f,
 			  const bool loop = false);
 
+
 	unsigned int _data;
+	unsigned int _level;
 
 	std::shared_ptr<sf::Music> _stream;
 };

@@ -327,6 +327,7 @@ void Mainmenu::init()
 	titleMusic.openFromFile("Resources/Common/Audio/Music/junakulkee.ogg");
 	titleMusic.setLoop(true);
 	titleMusic.setVolume(_engineSettings.musicVolume);
+	titleMusic.setRelativeToListener(true);
 
 	loaded = true;
 }

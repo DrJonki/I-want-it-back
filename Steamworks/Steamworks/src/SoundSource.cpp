@@ -2,7 +2,9 @@
 
 
 SoundSource::SoundSource(void)
-	: _data(0)
+	: _data(0),
+	  _level(0),
+	  played(false)
 {}
 
 SoundSource::~SoundSource(void)
@@ -21,7 +23,7 @@ void SoundSource::load(const std::string soundDir,
 	_buffer.loadFromFile(soundDir);
 	setBuffer(_buffer);
 
-	setPosition(posX, posY, 0.f);
+	setPosition(posX, 0.f, posY);
 	setMinDistance(minDistance);
 	setAttenuation(attenuation);
 	if (posX == 0.f && posY == 0.f) setRelativeToListener(true);

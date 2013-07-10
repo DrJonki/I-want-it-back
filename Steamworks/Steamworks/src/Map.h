@@ -13,8 +13,11 @@
 #include "MapObject.h"
 #include "BackgroundObject.h"
 #include "ForegroundObject.h"
+#include "LoadSettings.h"
 #include "EngineSettings.h"
 #include "Trigger.h"
+#include "ContactListener.h"
+#include "SoundManager.h"
 
 class Map
 {
@@ -29,12 +32,12 @@ public:
 	/// @param name of the campaign to load.
 	/// @param name of the level to load.
 	void load(b2World* world,
+			  ContactListener* listener,
 			  sf::RenderWindow* window,
-			  std::string campaign,
-			  std::string level,
+			  LoadSettings& lsettigns,
 			  EngineSettings& esettings);
 	
-	/// Updates the animation states
+	/// Updates the animation states & triggers
 	void update();
 
 	/// Draws all the objects in the map.
@@ -42,6 +45,9 @@ public:
 	void drawForeground();
 
 private:
+
+	/// A local variable for debug mode
+	bool _debug;
 
 	/// A local function to load the data from backgrounds.dat and generate the backgrounds.
 	void createBackgrounds();
@@ -71,11 +77,17 @@ private:
 	// A container for the trigger objects.
 	std::vector<Trigger> _triggerObject;
 
+	/// A sound manager for both levels
+	SoundManager sManager;
+
 	/// A local pointer to the main window.
 	sf::RenderWindow* _window;
 
 	/// A local pointer to the main world.
 	b2World* _world;
+
+	/// A local pointer to the contact listener.
+	ContactListener* _cListener;
 
 	/// Locally stored name of the currently loaded campaign.
 	std::string _campaign;

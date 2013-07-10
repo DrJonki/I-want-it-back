@@ -2,30 +2,32 @@
 
 
 SoundStream::SoundStream(void)
-	: _data(0)
-{}
+	: _data(0),
+	  _level(0)
+{
+	_stream = std::shared_ptr<sf::Music>(new sf::Music);
+}
 
 
 SoundStream::~SoundStream(void)
 {
 	_stream->stop();
+	_stream.reset();
 }
 
 
-void SoundStream::load(const std::string soundDir,
+void SoundStream::load(std::string soundDir,
 					   const float posX,
 					   const float posY,
 				   	   const float minDistance,
 					   const float attenuation,
 					   const bool loop)
 {
-	_stream = std::shared_ptr<sf::Music>(new sf::Music);
+	_stream.get()->openFromFile(soundDir);
 
-	_stream->openFromFile(soundDir);
-
-	_stream->setPosition(posX, posY, 0.f);
-	_stream->setMinDistance(minDistance);
-	_stream->setAttenuation(attenuation);
-	if (posX == 0.f && posY == 0.f) _stream->setRelativeToListener(true);
-	_stream->setLoop(loop);
+	_stream.get()->setPosition(posX, posY, 0.f);
+	_stream.get()->setMinDistance(minDistance);
+	_stream.get()->setAttenuation(attenuation);
+	if (posX == 0.f && posY == 0.f) _stream.get()->setRelativeToListener(true);
+	_stream.get()->setLoop(loop);
 }

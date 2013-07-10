@@ -15,7 +15,10 @@ public:
 			  const float attenuation = 0.f,
 			  const bool loop = false);
 	
+	unsigned int _level;
 	unsigned int _data;
+
+	bool played;
 private:
 	sf::SoundBuffer _buffer;
 };

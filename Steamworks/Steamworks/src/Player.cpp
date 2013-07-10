@@ -170,6 +170,16 @@ void Player::createSensors()
 	t_fixtureDef.isSensor = true;
 
 
+	//Main fixture, used for triggers
+	t_shape.SetAsBox((getLocalBounds().width / 2) / ns::g_P2MScale, (getLocalBounds().height / 2) / ns::g_P2MScale);
+	t_fixtureDef.shape = &t_shape;
+	if (_playerNumber == 1)
+		t_fixtureDef.userData = (void*)MAINFIX_P1;
+	else if (_playerNumber == 2)
+		t_fixtureDef.userData = (void*)MAINFIX_P2;
+	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
+
+
 	//Top sensor
 	t_shape.SetAsBox((getLocalBounds().width / 8) / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2(0, (-getLocalBounds().height / 2) / ns::g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;

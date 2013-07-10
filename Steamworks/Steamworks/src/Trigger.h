@@ -1,10 +1,11 @@
 #pragma once
 
 #include <Box2D\Box2D.h>
+#include <SFML\Graphics.hpp>
 
 #include "Globals.h"
 
-class Trigger
+class Trigger : public sf::RectangleShape
 {
 public:
 	Trigger(void);
@@ -19,7 +20,7 @@ public:
 			  const unsigned int resourceType = 0,
 			  const unsigned int resourceData = 0);
 
-private:
+
 	b2Body* _body;
 
 	unsigned int _type;

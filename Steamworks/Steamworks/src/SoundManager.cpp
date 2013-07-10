@@ -2,6 +2,7 @@
 
 
 SoundManager::SoundManager(void)
+	: managerNumber(0)
 {}
 
 SoundManager::~SoundManager(void)
@@ -24,8 +25,12 @@ void SoundManager::loadSounds(LoadSettings& lsettings, EngineSettings& esettings
 
 	std::ifstream file(path, std::ifstream::in);
 
-	if (file.good()){
+	if (file.good() && file.peek() != file.eof()){
 		while (!file.eof()){
+			unsigned int t_level = 0;
+			file >> t_level;
+
+			
 			std::string t_soundDir;
 			float t_posX = 0, t_posY = 0, t_minDistance = 1.f, t_attenuation = 0;
 			bool t_loop = false;
@@ -43,7 +48,8 @@ void SoundManager::loadSounds(LoadSettings& lsettings, EngineSettings& esettings
 			_sound.emplace_back(SoundSource());
 			_sound.back().load(t_soundDir, t_posX, t_posY, t_minDistance, t_attenuation, t_loop);
 			_sound.back()._data = t_data;
-		}
+			_sound.back()._level = t_level;
+		}	
 	}
 }
 
@@ -60,8 +66,11 @@ void SoundManager::loadStreams(LoadSettings& lsettings, EngineSettings& esetting
 
 	std::ifstream file(path, std::ifstream::in);
 
-	if (file.good()){
+	if (file.good() && file.peek() != file.eof()){
 		while (!file.eof()){
+			unsigned int t_level = 0;
+			file >> t_level;
+
 			std::string t_soundDir;
 			float t_posX = 0, t_posY = 0, t_minDistance = 1.f, t_attenuation = 0;
 			bool t_loop = true;
@@ -82,6 +91,7 @@ void SoundManager::loadStreams(LoadSettings& lsettings, EngineSettings& esetting
 			_stream.emplace_back(SoundStream());
 			_stream.back().load(t_soundDir, t_posX, t_posY, t_minDistance, t_attenuation, t_loop);
 			_stream.back()._data = t_data;
+			_stream.back()._level = t_level;
 		}
 	}
 }
@@ -90,8 +100,9 @@ void SoundManager::loadStreams(LoadSettings& lsettings, EngineSettings& esetting
 void SoundManager::playSound(const unsigned int data)
 {
 	for (unsigned int i = 0; i < _sound.size(); i++){
-		if (_sound[i]._data == data){
+		if (_sound[i]._data == data && !_sound[i].played){
 			_sound[i].play();
+			_sound[i].played = true;
 		}
 	}
 }
@@ -99,6 +110,14 @@ void SoundManager::playSound(const unsigned int data)
 void SoundManager::playStreams()
 {
 	for (unsigned int i = 0; i < _stream.size(); i++){
-		_stream[i]._stream->play();
+		_stream[i]._stream.get()->play();
+	}
+}
+
+
+void SoundManager::resetSounds()
+{
+	for (unsigned int i = 0; i < _sound.size(); i++){
+		_sound[i].played = false;
 	}
 }

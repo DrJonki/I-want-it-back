@@ -1,5 +1,12 @@
 #include "Game.h"
 
+namespace ns
+{
+	bool deathState = false;
+
+	unsigned int soundState = 0;
+}
+
 namespace
 {
 	bool runningState = false;
@@ -98,7 +105,8 @@ void Game::update()
 	if (player[0]->getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player[0]->getPosition().x, view[0].getCenter().y));
 	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
 
-	sf::Listener::setPosition(sf::Vector3f(view[soundSelection - 1].getCenter().x, view[soundSelection - 1].getCenter().y, 0.f));
+	sf::Listener::setDirection(sf::Vector3f(1.f, 0.f, 0.f));
+	sf::Listener::setPosition(view[0].getCenter().x, 0.f, 0.f);
 	sf::Listener::setGlobalVolume(mainMenu.getEngineSettings().globalVolume);
 	//End of update loop
 
@@ -167,7 +175,7 @@ void Game::init()
 	player[0] = new Player(1, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
 	player[1] = new Player(2, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
 
-	worldManager.loadWorld(mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
+	worldManager.loadWorld(cListener, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
 	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
 	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
 	runningState = true;

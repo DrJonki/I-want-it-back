@@ -9,6 +9,7 @@
 #include "LoadSettings.h"
 #include "EngineSettings.h"
 #include "Player.h"
+#include "ContactListener.h"
 
 class WorldManager
 {
@@ -16,7 +17,7 @@ public:
 	WorldManager(sf::RenderWindow* window);
 	~WorldManager(void);
 
-	void loadWorld(LoadSettings&, EngineSettings&);
+	void loadWorld(ContactListener* listener, LoadSettings&, EngineSettings&);
 	void deleteWorld();
 
 	void stepWorldPhysics();
@@ -29,6 +30,7 @@ private:
 
 	sf::RenderWindow* _window;
 	b2World* _gameWorld;
+	ContactListener* _cListener;
 
 	/// A map object which contains all the objects in the world.
 	Map* _gameMap;

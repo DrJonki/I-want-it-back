@@ -35,6 +35,7 @@ void EngineSettings::loadDefaults()
 	backgroundObjectLimit = 50;
 	mapObjectLimit = 100;
 	foregroundObjectLimit = 50;
+	triggerObjectLimit = 50;
 	soundSourceLimit = 50;
 	soundStreamLimit = 50;
 
@@ -107,6 +108,9 @@ void EngineSettings::loadFromFile()
 			else if (tempS == "Foreground_object_limit:"){
 				file >> foregroundObjectLimit;
 			}
+			else if (tempS == "Trigger_object_limit:"){
+				file >> triggerObjectLimit;
+			}
 			else if (tempS == "Sound_source_limit:"){
 				file >> soundSourceLimit;
 			}
@@ -164,6 +168,8 @@ void EngineSettings::writeToFile()
 	file << s << mapObjectLimit << std::endl;
 	s = "Foreground_object_limit: ";
 	file << s << foregroundObjectLimit << std::endl;
+	s = "Trigger_object_limit: ";
+	file << s << triggerObjectLimit << std::endl;
 	s = "Sound_source_limit: ";
 	file << s << soundSourceLimit << std::endl;
 	s = "Sound_stream_limit: ";
