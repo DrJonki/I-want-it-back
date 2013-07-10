@@ -1,6 +1,11 @@
 #include "EngineSettings.h"
 
 
+namespace ns
+{
+	unsigned int soundState = 0;
+}
+
 EngineSettings::EngineSettings(void)
 {
 	loadDefaults();
@@ -120,6 +125,9 @@ void EngineSettings::loadFromFile()
 			else if (tempS == "Camera_speed:"){
 				file >> cameraSpeed;
 			}
+			else if (tempS == "Default_sound_preference:"){
+				file >> ns::soundState;
+			}
 		}
 		writeToFile();
 	}
@@ -175,7 +183,9 @@ void EngineSettings::writeToFile()
 	s = "Sound_stream_limit: ";
 	file << s << soundStreamLimit << std::endl;
 	s = "Camera_speed: ";
-	file << s << cameraSpeed;
+	file << s << cameraSpeed << std::endl;
+	s = "Default_sound_preference: ";
+	file << s << ns::soundState;
 
 
 

@@ -1,6 +1,11 @@
 #include "SoundManager.h"
 
 
+namespace ns
+{
+	unsigned int soundState;
+}
+
 SoundManager::SoundManager(void)
 	: managerNumber(0)
 {}
@@ -83,7 +88,6 @@ void SoundManager::loadStreams(LoadSettings& lsettings, EngineSettings& esetting
 				file >> t_minDistance;
 				file >> t_attenuation;
 				file >> t_loop;
-
 				if (file.peek() != '\n') file >> t_data;
 			}
 

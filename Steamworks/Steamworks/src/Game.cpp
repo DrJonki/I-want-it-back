@@ -4,7 +4,7 @@ namespace ns
 {
 	bool deathState = false;
 
-	unsigned int soundState = 0;
+	unsigned int soundState;
 }
 
 namespace
@@ -161,8 +161,13 @@ void Game::pollEvents()
 	while (gameWindow.pollEvent(e)){
 		if (e.type == sf::Event::KeyPressed){
 			if (e.key.code == sf::Keyboard::Escape){
-				while (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
 				runningState = false;
+			}
+			else if (e.key.code == sf::Keyboard::Up && ns::soundState > 0){
+				ns::soundState++;
+			}
+			else if (e.key.code == sf::Keyboard::Down && ns::soundState < 2){
+				ns::soundState--;
 			}
 		}
 	}

@@ -9,6 +9,7 @@
 #include <direct.h>
 
 #include "Misc.h"
+#include "Globals.h"
 
 class EngineSettings
 {
@@ -28,6 +29,7 @@ public:
 	std::string getMVolumeString();
 	std::string getSVolumeString();
 	std::string getAVolumeString();
+	std::string getSPrefString();
 	bool usingCustomRes();
 
 	int resVectorNumber;
