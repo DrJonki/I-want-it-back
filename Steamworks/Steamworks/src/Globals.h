@@ -50,3 +50,10 @@ static const enum  // Resource types
 	RT_ANIMATION,
 	RT_SOUND
 };
+
+static const enum //Sound types
+{
+	ST_SOUND,
+	ST_MUSIC,
+	ST_ANBIENT
+};

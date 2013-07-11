@@ -2,7 +2,9 @@
 
 
 MapObject::MapObject(void)
-	: _data(0)
+	: _trigData(0),
+	  _loop(false),
+	  _playing(false)
 {}
 
 
@@ -62,5 +64,10 @@ void MapObject::load(b2World* world,
 		}
 
 		_body->CreateFixture(&fixtureDef);
+
+		hbShape.setSize(sf::Vector2f(sizeX * bBoxModX, sizeY * bBoxModY));
+		hbShape.setOrigin(hbShape.getSize().x / 2, hbShape.getSize().y / 2);
+		hbShape.setPosition(posX, posY);
+		hbShape.setFillColor(sf::Color::White);
 	}
 }

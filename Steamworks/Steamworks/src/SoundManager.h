@@ -19,14 +19,16 @@ public:
 	void loadStreams(LoadSettings& lsettings, EngineSettings& esettings);
 
 	void playSound(const unsigned int data = 0);
-	void playStreams();
+	void playStream(const unsigned int data = 0);
 
 	void resetSounds();
+
+	void updateVolumes();
 
 private:
 	std::vector<SoundSource> _sound;
 	std::vector<SoundStream> _stream;
 
-	const unsigned int managerNumber;
+	EngineSettings _esettings;
 };
 

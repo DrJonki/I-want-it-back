@@ -23,9 +23,18 @@ public:
 			  const unsigned int frames = 1);
 
 	void update(){
-		stepForward();
-		if (frameChanged()) setTexture(&getCurrentTexture());
+		if (_trigData == 0){
+			stepForward();
+			if (frameChanged()) setTexture(&getCurrentTexture());
+		}
+		else if (_trigData != 0 && _playing && (_loop || !lastFrame())){
+			stepForward();
+			if (frameChanged()) setTexture(&getCurrentTexture());
+		}
 	};
 
-	unsigned int _data;
+	unsigned int _trigData;
+
+	bool _loop;
+	bool _playing;
 };

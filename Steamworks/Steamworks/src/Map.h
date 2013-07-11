@@ -94,4 +94,7 @@ private:
 
 	/// Locally stored name of the currently loaded level.
 	std::string _level;
+
+	
+	EngineSettings* _esettings;
 };

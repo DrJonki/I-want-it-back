@@ -2,7 +2,9 @@
 
 
 ForegroundObject::ForegroundObject(void)
-	: _data(0)
+	: _trigData(0),
+	  _loop(false),
+	  _playing(false)
 {}
 
 ForegroundObject::~ForegroundObject(void)

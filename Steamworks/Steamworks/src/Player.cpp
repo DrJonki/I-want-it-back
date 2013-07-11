@@ -8,14 +8,17 @@ Player::Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSet
 {
 	unloadPlayer();
 
-	_sensorData[SEN_TOP] = (void*)(playerNo * 1);
-	_sensorData[SEN_RIGHT] = (void*)(playerNo * 2);
+	_sensorData[SEN_MIDDLE] = (void*)(playerNo * 1);
+	_sensorData[SEN_TOP] = (void*)(playerNo * 2);
 	_sensorData[SEN_BOTTOM] = (void*)(playerNo * 3);
-	_sensorData[SEN_LEFT] = (void*)(playerNo * 4);
-	_sensorData[SEN_TOPLEFT] = (void*)(playerNo * 5);
-	_sensorData[SEN_TOPRIGHT] = (void*)(playerNo * 6);
-	_sensorData[SEN_BOTTOMRIGHT] = (void*)(playerNo * 7);
-	_sensorData[SEN_BOTTOMLEFT] = (void*)(playerNo * 8);
+	_sensorData[SEN_TOPRIGHT] = (void*)(playerNo * 4);
+	_sensorData[SEN_BOTTOMRIGHT] = (void*)(playerNo * 5);
+	_sensorData[SEN_BOTTOMLEFT] = (void*)(playerNo * 6);
+	_sensorData[SEN_TOPLEFT] = (void*)(playerNo * 7);
+	_sensorData[SEN_TOPLEFT_CORNER] = (void*)(playerNo * 8);
+	_sensorData[SEN_TOPRIGHT_CORNER] = (void*)(playerNo * 9);
+	_sensorData[SEN_BOTTOMRIGHT_CORNER] = (void*)(playerNo * 10);
+	_sensorData[SEN_BOTTOMLEFT_CORNER] = (void*)(playerNo * 11);
 
 	loadProperties(lsettings);
 	loadAnimations(lsettings, esettings);
@@ -39,14 +42,17 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 
 	createPhysBody(1.f, 0.f, 0.f, _playerNumber);
 
+	_cListener->addData(_sensorData[SEN_MIDDLE]);
 	_cListener->addData(_sensorData[SEN_TOP]);
-	_cListener->addData(_sensorData[SEN_RIGHT]);
 	_cListener->addData(_sensorData[SEN_BOTTOM]);
-	_cListener->addData(_sensorData[SEN_LEFT]);
-	_cListener->addData(_sensorData[SEN_TOPLEFT]);
 	_cListener->addData(_sensorData[SEN_TOPRIGHT]);
 	_cListener->addData(_sensorData[SEN_BOTTOMRIGHT]);
 	_cListener->addData(_sensorData[SEN_BOTTOMLEFT]);
+	_cListener->addData(_sensorData[SEN_TOPLEFT]);
+	_cListener->addData(_sensorData[SEN_TOPLEFT_CORNER]);
+	_cListener->addData(_sensorData[SEN_TOPRIGHT_CORNER]);
+	_cListener->addData(_sensorData[SEN_BOTTOMRIGHT_CORNER]);
+	_cListener->addData(_sensorData[SEN_BOTTOMLEFT_CORNER]);
 	
 	createSensors();
 }
@@ -75,7 +81,7 @@ void Player::update()
 			b2Vec2 impulse(0, -_playerProps.jumpForce);
 			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
 		}
-		else if (_cListener->inContact(_sensorData[SEN_RIGHT])){
+		else if (_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
 			b2Vec2 impulse(0, -_playerProps.jumpForce / 4);
 			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
 		}

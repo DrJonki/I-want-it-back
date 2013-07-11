@@ -6,5 +6,5 @@ namespace ns
 
 	unsigned int soundState = 0;
 
-	DebugConsole* debug = new DebugConsole;
+	DebugConsole* debug = nullptr;
 }

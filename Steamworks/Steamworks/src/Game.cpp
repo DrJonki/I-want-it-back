@@ -37,7 +37,7 @@ Game::~Game(void)
 bool Game::runAndDontCrashPls()
 {
 	if (mainMenu.getEngineSettings().debug){
-	//	ns::debug = new DebugConsole;
+		ns::debug = new DebugConsole;
 		ns::debug->draw();
 	}
 	
@@ -98,7 +98,10 @@ void Game::update()
 	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
 
 	sf::Listener::setDirection(sf::Vector3f(1.f, 0.f, 0.f));
-	sf::Listener::setPosition(view[0].getCenter().x, 0.f, 0.f);
+	if (ns::soundState == 2)
+		sf::Listener::setPosition(view[1].getCenter().x, 0.f, 0.f);
+	else
+		sf::Listener::setPosition(view[0].getCenter().x, 0.f, 0.f);
 	sf::Listener::setGlobalVolume(mainMenu.getEngineSettings().globalVolume);
 	//End of update loop
 
@@ -155,10 +158,10 @@ void Game::pollEvents()
 			if (e.key.code == sf::Keyboard::Escape){
 				runningState = false;
 			}
-			else if (e.key.code == sf::Keyboard::Up && ns::soundState > 0){
+			else if (e.key.code == sf::Keyboard::Up && ns::soundState < 2){
 				ns::soundState++;
 			}
-			else if (e.key.code == sf::Keyboard::Down && ns::soundState < 2){
+			else if (e.key.code == sf::Keyboard::Down && ns::soundState > 0){
 				ns::soundState--;
 			}
 		}

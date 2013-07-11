@@ -26,7 +26,7 @@ public:
 	void update();
 private:
 	const unsigned short _playerNumber;
-	void* _sensorData[8];
+	void* _sensorData[11];
 
 	void loadAnimations(LoadSettings& lsettings, EngineSettings& esettings);
 	void loadProperties(LoadSettings& settings);
@@ -50,15 +50,19 @@ private:
 	//Anumeration for the sensors
 	static const enum
 	{
-		SEN_TOP,
-		SEN_RIGHT,
-		SEN_BOTTOM,
-		SEN_LEFT,
+		SEN_MIDDLE,
 
-		SEN_TOPLEFT,
+		SEN_TOP,
+		SEN_BOTTOM,
 		SEN_TOPRIGHT,
 		SEN_BOTTOMRIGHT,
-		SEN_BOTTOMLEFT
+		SEN_BOTTOMLEFT,
+		SEN_TOPLEFT,
+
+		SEN_TOPLEFT_CORNER,
+		SEN_TOPRIGHT_CORNER,
+		SEN_BOTTOMRIGHT_CORNER,
+		SEN_BOTTOMLEFT_CORNER
 	};
 
 	//Enumeration for the different animation states

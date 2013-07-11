@@ -5,6 +5,7 @@
 //Public
 Map::Map(void) : _window(nullptr),
 				 _world(nullptr),
+				 _esettings(nullptr),
 				 _debug(false)
 {}
 
@@ -31,6 +32,8 @@ void Map::load(b2World* world,
 
 	_debug = esettings.debug;
 
+	_esettings = &esettings;
+
 	_backGroundObject.clear();
 	_mapObject.clear();
 	_foregroundObject.clear();
@@ -50,7 +53,7 @@ void Map::load(b2World* world,
 	sManager.loadSounds(lsettings, esettings);
 	sManager.loadStreams(lsettings, esettings);
 
-	sManager.playStreams();
+	sManager.playStream();
 	sManager.playSound();
 }
 
@@ -68,14 +71,35 @@ void Map::update()
 	for (unsigned int i = 0; i < _triggerObject.size(); i++){
 		if (_cListener->inContact((void*)MAINFIX_P1) && _cListener->inContact(_triggerObject[i]._body->GetUserData())){
 			if (_triggerObject[i]._type == RT_SOUND){
-				sManager.playSound((unsigned int)_triggerObject[i]._data);
+				sManager.playSound(_triggerObject[i]._data);
+				sManager.playStream(_triggerObject[i]._data);
+			}
+			if (_triggerObject[i]._type == RT_ANIMATION){
+				for (unsigned int i = 0; i < _mapObject.size(); i++){
+					if (_mapObject[i]._trigData == _triggerObject[i]._data){
+						_mapObject[i]._playing = true;
+					}
+				}
+				for (unsigned int i = 0; i < _foregroundObject.size(); i++){
+					if (_foregroundObject[i]._trigData == _triggerObject[i]._data){
+						_foregroundObject[i]._playing = true;
+					}
+				}
 			}
 		}
 
 		else{
 			sManager.resetSounds();
+			for (unsigned int i = 0; i < _mapObject.size(); i++){
+				if (!_mapObject[i]._loop && !_mapObject[i].lastFrame()) _mapObject[i]._playing = false;
+			}
+			for (unsigned int i = 0; i < _foregroundObject.size(); i++){
+				if (!_foregroundObject[i]._loop && !_foregroundObject[i].lastFrame()) _foregroundObject[i]._playing = false;
+			}
 		}
 	}
+
+	sManager.updateVolumes();
 }
 
 
@@ -90,6 +114,9 @@ void Map::draw()
 	}
 
 	if (_debug){
+		for (unsigned int i = 0; i < _mapObject.size(); i++){
+			_window->draw(_mapObject[i].hbShape);
+		}
 		for (unsigned int i = 0; i < _triggerObject.size(); i++){
 			_window->draw(_triggerObject[i]);
 		}
@@ -164,9 +191,10 @@ void Map::createStatics()
 				t_startY = 0,
 				t_interval = 1,
 				t_frames = 1;
+			unsigned int t_data = 0;
 
 			float t_bBoxModX = 0, t_bBoxModY = 0;
-			bool hasPhys = true;
+			bool hasPhys = true, t_loop = false;
 			std::string t_textureDir;
 
 			file >> t_sizeX;
@@ -185,10 +213,16 @@ void Map::createStatics()
 				file >> t_startY;
 				file >> t_interval;
 				file >> t_frames;
+				if (file.peek() != '\n'){
+					file >> t_data;
+					file >> t_loop;
+				}
 			}
 
 			_mapObject.emplace_back(MapObject());
 			_mapObject.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, hasPhys, t_textureDir, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames, t_bBoxModX, t_bBoxModY);
+			_mapObject.back()._trigData = t_data;
+			_mapObject.back()._loop = t_loop;
 		}
 	}
 }
@@ -215,7 +249,9 @@ void Map::createForeground()
 				t_startY = 0,
 				t_interval = 1,
 				t_frames = 1;
+			unsigned int t_data = 0;
 
+			bool t_loop = false;
 			std::string t_textureDir;
 
 			file >> t_sizeX;
@@ -231,10 +267,16 @@ void Map::createForeground()
 				file >> t_startY;
 				file >> t_interval;
 				file >> t_frames;
+				if (file.peek() != '\n'){
+					file >> t_data;
+					file >> t_loop;
+				}
 			}
 
 			_foregroundObject.emplace_back(ForegroundObject());
 			_foregroundObject.back().load(t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames);
+			_foregroundObject.back()._trigData = t_data;
+			_foregroundObject.back()._loop = t_loop;
 		}
 	}
 }
