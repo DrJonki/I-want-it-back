@@ -4,6 +4,8 @@
 ContactListener::ContactListener(void)
 {
 	_timeoutClock.restart();
+
+	_contactData.reserve(1000);
 }
 
 ContactListener::~ContactListener(void)

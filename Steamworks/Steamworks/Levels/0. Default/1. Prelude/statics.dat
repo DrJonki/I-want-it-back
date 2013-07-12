@@ -1,10 +1,28 @@
-2000 10 1000 500 1.0 1.0 Resources/Default/1/Graphics/blahblah.png 1
-2000 10 2000 500 1.0 1.0 Resources/Default/1/Graphics/blahblah.png 1
-2000 10 3000 500 1.0 1.0 Resources/Default/1/Graphics/blahblah.png 1
-2000 10 4000 500 1.0 1.0 Resources/Default/1/Graphics/blahblah.png 1
-2000 10 1000 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah.png 1
-2000 10 2000 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah.png 1
-2000 10 3000 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah.png 1
-2000 10 4000 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah.png 1
-100 100 2000 400 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
-100 100 2500 300 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+14800 10 5000 550 1.0 1.0 Resources/Default/1/Graphics/invisible.png 1
+14800 10 5000 1150 1.0 1.0 Resources/Default/1/Graphics/invisible.png 1
+14800 10 20000 550 1.0 1.0 Resources/Default/1/Graphics/invisible.png 1
+14800 10 20075 1150 1.0 1.0 Resources/Default/1/Graphics/invisible.png 1
+100 100 2000 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 4700 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 6540 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+450 200 7760 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 150 9160 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+300 150 10780 400 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+50 100 11860 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 14300 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 12790 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+150 100 16660 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+450 200 20200 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+150 100 21300 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+300 300 25000 500 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+300 20 25600 150 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 2850 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 4700 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 7900 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 9550 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 10660 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 12900 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 18000 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 19700 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+400 100 22500 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2
+100 100 25360 1100 1.0 1.0 Resources/Default/1/Graphics/blahblah2.png 1 128 128 0 0 60 2

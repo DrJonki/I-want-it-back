@@ -5,6 +5,8 @@
 
 #include <vector>
 
+#include "Globals.h"
+
 class ContactListener : public b2ContactListener
 {
 public:

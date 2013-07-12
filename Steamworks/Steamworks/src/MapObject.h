@@ -30,13 +30,15 @@ public:
 			  const float bBoxModY = 1.0f);
 
 	void update(){
-		if (_trigData == 0){
-			stepForward();
-			if (frameChanged()) setTexture(&getCurrentTexture());
-		}
-		else if (_trigData != 0 && _playing && (_loop || !lastFrame())){
-			stepForward();
-			if (frameChanged()) setTexture(&getCurrentTexture());
+		if (getFillColor() != sf::Color::Transparent){
+			if (_trigData == 0){
+				stepForward();
+				if (frameChanged()) setTexture(&getCurrentTexture());
+			}
+			else if (_trigData != 0 && _playing && (_loop || !lastFrame())){
+				stepForward();
+				if (frameChanged()) setTexture(&getCurrentTexture());
+			}
 		}
 	};
 

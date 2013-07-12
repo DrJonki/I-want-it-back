@@ -126,6 +126,12 @@ void Game::render()
 
 	worldManager.draw();
 	gameWindow.draw(*player[0]);
+	if (mainMenu.getEngineSettings().debug){
+		for (unsigned int i = 0; i < player[0]->sensorShape.size(); i++){
+			gameWindow.draw(player[0]->sensorShape[i]);
+		}
+	}
+
 	worldManager.drawForeground();
 
 
@@ -134,6 +140,12 @@ void Game::render()
 
 	worldManager.draw();
 	gameWindow.draw(*player[1]);
+	if (mainMenu.getEngineSettings().debug){
+		for (unsigned int i = 0; i < player[1]->sensorShape.size(); i++){
+			gameWindow.draw(player[1]->sensorShape[i]);
+		}
+	}
+
 	worldManager.drawForeground();
 
 

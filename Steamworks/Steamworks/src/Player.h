@@ -24,6 +24,8 @@ public:
 	void createSensors();
 
 	void update();
+
+	std::vector<sf::RectangleShape> sensorShape;
 private:
 	const unsigned short _playerNumber;
 	void* _sensorData[11];
@@ -62,7 +64,9 @@ private:
 		SEN_TOPLEFT_CORNER,
 		SEN_TOPRIGHT_CORNER,
 		SEN_BOTTOMRIGHT_CORNER,
-		SEN_BOTTOMLEFT_CORNER
+		SEN_BOTTOMLEFT_CORNER,
+
+		SEN_LAST
 	};
 
 	//Enumeration for the different animation states
@@ -71,7 +75,10 @@ private:
 		ANIM_RUNNING,
 		ANIM_JUMPING,
 		ANIM_SOMERSAULT,
+		ANIM_LEDGEGRAB,
 		ETC
 	};
+
+	unsigned int animationState;
 };
 

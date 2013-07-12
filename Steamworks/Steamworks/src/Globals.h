@@ -18,6 +18,8 @@ namespace ns
 
 
 	extern bool deathState;
+	extern bool endOfLevelState;
+	extern float spawnPoint;
 
 	extern unsigned int soundState;
 
@@ -26,8 +28,15 @@ namespace ns
 
 static const enum
 {
-	MAINFIX_P1 = 0x20,
+	MAINFIX_P1 = 0x22,
 	MAINFIX_P2
+};
+
+static const enum
+{
+	TRIG_LETHAL = 90,
+	TRIG_CHECKPOINT,
+	TRIG_ENDOFLEVEL
 };
 
 static const enum // Filter data
