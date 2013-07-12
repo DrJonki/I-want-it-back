@@ -8,5 +8,7 @@ namespace ns
 
 	unsigned int soundState = 0;
 
+	float cameraSpeed = 0.f;
+
 	DebugConsole* debug = nullptr;
 }

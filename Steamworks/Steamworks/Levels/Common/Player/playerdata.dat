@@ -4,3 +4,4 @@ baseSpeed: 5.175f
 catchingSpeed: 6.5f
 jumpForce: 30.f
 airDrag: 0.01f
+cameraSpeed: 5.f

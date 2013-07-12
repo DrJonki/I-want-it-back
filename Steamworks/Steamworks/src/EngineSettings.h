@@ -54,7 +54,5 @@ public:
 	unsigned int triggerObjectLimit;
 	unsigned int soundSourceLimit;
 	unsigned int soundStreamLimit;
-
-	float cameraSpeed;
 };
 

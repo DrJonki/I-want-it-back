@@ -91,8 +91,8 @@ void Game::update()
 	worldManager.stepWorldPhysics();
 
 	
-	view[0].move(mainMenu.getEngineSettings().cameraSpeed, 0);
-	view[1].move(mainMenu.getEngineSettings().cameraSpeed, 0);
+	view[0].move(ns::cameraSpeed, 0);
+	view[1].move(ns::cameraSpeed, 0);
 
 	if (player[0]->getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player[0]->getPosition().x, view[0].getCenter().y));
 	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));

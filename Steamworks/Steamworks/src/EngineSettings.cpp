@@ -39,8 +39,6 @@ void EngineSettings::loadDefaults()
 	triggerObjectLimit = 50;
 	soundSourceLimit = 50;
 	soundStreamLimit = 50;
-
-	cameraSpeed = 5.f;
 }
 
 void EngineSettings::loadFromFile()
@@ -118,9 +116,6 @@ void EngineSettings::loadFromFile()
 			else if (tempS == "Sound_stream_limit:"){
 				file >> soundStreamLimit;
 			}
-			else if (tempS == "Camera_speed:"){
-				file >> cameraSpeed;
-			}
 			else if (tempS == "Default_sound_preference:"){
 				file >> ns::soundState;
 			}
@@ -178,8 +173,6 @@ void EngineSettings::writeToFile()
 	file << s << soundSourceLimit << std::endl;
 	s = "Sound_stream_limit: ";
 	file << s << soundStreamLimit << std::endl;
-	s = "Camera_speed: ";
-	file << s << cameraSpeed << std::endl;
 	s = "Default_sound_preference: ";
 	file << s << ns::soundState;
 

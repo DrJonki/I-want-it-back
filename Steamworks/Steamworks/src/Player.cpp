@@ -404,6 +404,10 @@ void Player::loadProperties(LoadSettings& settings)
 				file >> tempF;
 				_playerProps.airDrag = tempF;
 			}
+			else if (tempS == "cameraSpeed:"){
+				file >> tempF;
+				ns::cameraSpeed = tempF;
+			}
 		}
 	}
 

@@ -23,6 +23,8 @@ namespace ns
 
 	extern unsigned int soundState;
 
+	extern float cameraSpeed;
+
 	extern DebugConsole* debug;
 }
 
