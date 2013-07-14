@@ -68,6 +68,6 @@ void MapObject::load(b2World* world,
 		hbShape.setSize(sf::Vector2f(sizeX * bBoxModX, sizeY * bBoxModY));
 		hbShape.setOrigin(hbShape.getSize().x / 2, hbShape.getSize().y / 2);
 		hbShape.setPosition(posX, posY);
-		hbShape.setFillColor(sf::Color::White);
+		hbShape.setFillColor(sf::Color::Color(255, 255, 255, 128));
 	}
 }

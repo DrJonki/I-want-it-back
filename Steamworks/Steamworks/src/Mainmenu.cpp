@@ -90,6 +90,7 @@ void Mainmenu::init()
 		else
 			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
 	}
+	_window->setFramerateLimit(60);
 	_window->setVerticalSyncEnabled(_engineSettings.vSync);
 
 	mainButton.reserve(BUT_LAST);
@@ -501,6 +502,9 @@ void Mainmenu::update()
 				lockMouse = true;
 			}
 			else if (_e->key.code == sf::Keyboard::Escape){
+				if (menuState == BUT_CAMPAIGN){
+					_loadSettings.loadLevels();
+				}
 				menuState = 0;
 				subSelectionState = 0;
 				subSelectionMax = 0;
