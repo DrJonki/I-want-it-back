@@ -6,6 +6,7 @@
 
 #include <sstream>
 #include <fstream>
+#include <cmath>
 
 #include "Sprite.h"
 #include "ContactListener.h"
@@ -36,7 +37,6 @@ private:
 	void updateAnimation();
 
 	sf::Clock hangTime;
-	bool hitGround;
 
 	struct
 	{
@@ -76,8 +76,10 @@ private:
 		ANIM_JUMPING,
 		ANIM_SOMERSAULT,
 		ANIM_LEDGEGRAB,
-		ETC
+		ANIM_LAST
 	};
+
+	int animState;
 
 	unsigned int animationState;
 };

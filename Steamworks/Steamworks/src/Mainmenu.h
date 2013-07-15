@@ -58,6 +58,8 @@ private:
 	SpriteAnimation titleAnimation;
 	sf::Music titleMusic;
 
+	sf::Clock updateClock;
+
 	static const enum
 	{
 		BUT_START,

@@ -4,7 +4,6 @@
 
 Player::Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSettings& esettings)
 	: _playerNumber(playerNo),
-	  hitGround(false),
 	  animationState(0)
 {
 	unloadPlayer();
@@ -37,8 +36,8 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 	setSize(sf::Vector2f(_playerProps.sizeX, _playerProps.sizeY));
 	setTexture(&animations[ANIM_RUNNING].getCurrentTexture());
 	setOrigin(getLocalBounds().width / 2, getLocalBounds().height / 2);
-	if (_playerNumber == 1) setPosition(ns::spawnPoint, 250);
-	else if (_playerNumber == 2) setPosition(ns::spawnPoint, 850);
+	if (_playerNumber == 1) setPosition(ns::spawnPoint, 350);
+	else if (_playerNumber == 2) setPosition(ns::spawnPoint, 950);
 
 
 	createPhysBody(1.f, 0.f, 0.f, _playerNumber);
@@ -56,6 +55,8 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 	_cListener->addData(_sensorData[SEN_BOTTOMLEFT_CORNER]);
 	
 	createSensors();
+
+	hangTime.restart();
 }
 
 void Player::unloadPlayer()
@@ -64,6 +65,8 @@ void Player::unloadPlayer()
 	_body = nullptr;
 	_cListener = nullptr;
 	_window = nullptr;
+
+	animState = ANIM_RUNNING;
 
 	_playerProps.sizeX = 0.f;
 	_playerProps.sizeY = 0.f;
@@ -76,19 +79,88 @@ void Player::unloadPlayer()
 
 void Player::update()
 {
+	//Forward movement
+	b2Vec2 vel = _body->GetLinearVelocity();
+	float desiredVel = 0, maxSpeed = _playerProps.baseSpeed;
+
+	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || _cListener->inContact(_sensorData[SEN_BOTTOMLEFT_CORNER])){
+		if (_window->getView().getCenter().x > getPosition().x){
+			animations[ANIM_RUNNING].setStepInterval(animations[ANIM_RUNNING].getStepInterval() - 1);
+			maxSpeed = _playerProps.catchingSpeed;
+			desiredVel = b2Min(vel.x + 0.5f, maxSpeed);
+		}
+		desiredVel = b2Min(vel.x + 0.3f, maxSpeed);
+
+		if (animState != ANIM_SOMERSAULT && animState != ANIM_LEDGEGRAB)
+			animState = ANIM_RUNNING;
+	}
+	else{
+		desiredVel = vel.x * (1.f - _playerProps.airDrag);
+	}
+
 	//Jumping
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && animState != ANIM_LEDGEGRAB){
 		if (_cListener->inContact(_sensorData[SEN_BOTTOM])){
 			b2Vec2 impulse(0, -_playerProps.jumpForce);
 			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
-		}
-		else if (_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
-			b2Vec2 impulse(0, -_playerProps.jumpForce / 4);
-			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+
+			animState = ANIM_JUMPING;
 		}
 	}
+	if (_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT_CORNER]) && !_cListener->inContact(_sensorData[SEN_BOTTOM]) && animState != ANIM_LEDGEGRAB){
+		b2Vec2 impulse(2, 0);
+		_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+
+		animState = ANIM_RUNNING;
+	}
+
+
+	//Ledge grabbing
+	if ((_cListener->inContact(_sensorData[SEN_TOPRIGHT_CORNER]) || _cListener->inContact(_sensorData[SEN_TOPRIGHT])) && _cListener->inContact(_sensorData[SEN_BOTTOM]) && animations[ANIM_LEDGEGRAB].getCurrentFrame() <= 2){
+		animState = ANIM_LEDGEGRAB;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || animations[ANIM_LEDGEGRAB].getCurrentFrame() > 1 || animations[ANIM_LEDGEGRAB].getTempSteps() > 1){
+			animations[ANIM_LEDGEGRAB].stepForward();
+		}
+		else animations[ANIM_LEDGEGRAB].setCurrentFrame(1);
+	}
+
+	else if (_cListener->inContact(_sensorData[SEN_BOTTOM]) && hangTime.getElapsedTime().asMilliseconds() > 100){
+		animations[ANIM_LEDGEGRAB].setCurrentFrame(1);
+	}
+
+	if (animState == ANIM_LEDGEGRAB && animations[ANIM_LEDGEGRAB].getCurrentFrame() > 2){
+		if (_cListener->inContact(_sensorData[SEN_TOPRIGHT_CORNER])){
+			animations[ANIM_LEDGEGRAB].setCurrentFrame(3);
+
+			if (_cListener->inContact(_sensorData[SEN_BOTTOM])){
+				b2Vec2 impulse(0, -_playerProps.jumpForce);
+				_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+			}
+		}
+		else if (_cListener->inContact(_sensorData[SEN_TOPRIGHT])){
+			//b2Vec2 impulse(0, -4);
+			//_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+			b2Vec2 impulse(0, -6);
+			_body->SetLinearVelocity(impulse);
+		}
+		else if (_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
+			//b2Vec2 impulse(3, -3);
+			//_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+			b2Vec2 impulse(3, -5);
+			_body->SetLinearVelocity(impulse);
+		}
+		else if (_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT_CORNER])){
+			b2Vec2 impulse(6, std::fabs(_body->GetLinearVelocity().y * 0.6));
+			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
+			//b2Vec2 impulse(_body->GetLinearVelocity().x, 0);
+			//_body->SetLinearVelocity(impulse);
+		}
+	}
+
+
 	//Crouching
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || hitGround){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || animState == ANIM_SOMERSAULT || _cListener->inContact(_sensorData[SEN_MIDDLE])){
 		b2Filter filter = topFixture->GetFilterData();
 
 		filter.maskBits = FIL_NULL;
@@ -106,62 +178,56 @@ void Player::update()
 
 
 
-	//Forward movement
-	b2Vec2 vel = _body->GetLinearVelocity();
-	float desiredVel = 0, maxSpeed = _playerProps.baseSpeed;
-
-	if (_cListener->inContact(_sensorData[SEN_BOTTOM])){
-		if (_window->getView().getCenter().x > getPosition().x){
-			animations[ANIM_RUNNING].setStepInterval(animations[ANIM_RUNNING].getStepInterval() - 1);
-			maxSpeed = _playerProps.catchingSpeed;
-			desiredVel = b2Min(vel.x + 0.5f, maxSpeed);
-		}
-		desiredVel = b2Min(vel.x + 0.3f, maxSpeed);
-	}
-	else{
-		desiredVel = vel.x * (1.f - _playerProps.airDrag);
-	}
-	
-
-
     float velChange = desiredVel - vel.x;
     float impulse = _body->GetMass() * velChange; //disregard time factor
     _body->ApplyLinearImpulse(b2Vec2(impulse, 0), _body->GetWorldCenter());
 
-	setPosition(_body->GetPosition().x * ns::g_P2MScale, _body->GetPosition().y * ns::g_P2MScale);
+	if (hangTime.getElapsedTime().asMilliseconds() > 1200 && _cListener->inContact(_sensorData[SEN_BOTTOM])){
+		animState = ANIM_SOMERSAULT;
+	}
+	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || (animState == ANIM_LEDGEGRAB && animations[ANIM_LEDGEGRAB].getCurrentFrame() > 3)){
+		hangTime.restart();
+	}
 
 	updateAnimation();
-
-	if (_cListener->inContact(_sensorData[SEN_BOTTOM])) hangTime.restart();
 }
 
 void Player::updateAnimation()
 {
-	if ((hangTime.getElapsedTime().asMilliseconds() > 1000 || hitGround) && _cListener->inContact(_sensorData[SEN_BOTTOM])){
+	if (animState == ANIM_SOMERSAULT){ //Somersault
 		resetAnimations(ANIM_SOMERSAULT);
+
 		if (!animations[ANIM_SOMERSAULT].lastFrame()){
 			animations[ANIM_SOMERSAULT].stepForward();
 			if (animations[ANIM_SOMERSAULT].frameChanged()) setTexture(&animations[ANIM_SOMERSAULT].getCurrentTexture());
-			hitGround = true;
+			//animState = ANIM_SOMERSAULT;
 		}
-		else hitGround = false;
+		else animState = ANIM_RUNNING;
 	}
 
-	else if (!_cListener->inContact(_sensorData[SEN_BOTTOM]) && !_cListener->inContact(_sensorData[SEN_BOTTOMLEFT]) && !_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT])){
+	else if (animState == ANIM_JUMPING){ //Jumping
 		resetAnimations(ANIM_JUMPING);
+
 		if (animations[ANIM_JUMPING].frameChanged()) setTexture(&animations[ANIM_JUMPING].getCurrentTexture());
 		if (!animations[ANIM_JUMPING].lastFrame()) animations[ANIM_JUMPING].stepForward();
-
-		hitGround = false;
 	}
 
-	else{
+	else if (animState == ANIM_LEDGEGRAB){ //Ledge grab
+		resetAnimations(ANIM_LEDGEGRAB);
+
+		if (!animations[ANIM_LEDGEGRAB].lastFrame()){
+			if (animations[ANIM_LEDGEGRAB].getCurrentFrame() > 2) animations[ANIM_LEDGEGRAB].stepForward();
+			if (animations[ANIM_LEDGEGRAB].frameChanged()) setTexture(&animations[ANIM_LEDGEGRAB].getCurrentTexture());
+		}
+		else if (animations[ANIM_LEDGEGRAB].getStepInterval() <= animations[ANIM_LEDGEGRAB].getTempSteps()) animations[ANIM_LEDGEGRAB].stepForward();
+		else animState = ANIM_RUNNING;
+	}
+
+	else{ //Running
 		resetAnimations(ANIM_RUNNING);
 		if (animations[ANIM_RUNNING].frameChanged()) setTexture(&animations[ANIM_RUNNING].getCurrentTexture());
 		animations[ANIM_RUNNING].stepForward();
 		animations[ANIM_RUNNING].setStepInterval(5);
-
-		hitGround = false;
 	}
 
 
@@ -172,7 +238,9 @@ void Player::updateAnimation()
 		else sensorShape[i].setFillColor(sf::Color::Cyan);
 	}
 
-	sensorShape[0].setPosition(getPosition().x, getPosition().y);
+	setPosition(_body->GetPosition().x * ns::g_P2MScale, _body->GetPosition().y * ns::g_P2MScale);
+
+	sensorShape[0].setPosition(getPosition().x, getPosition().y - (getLocalBounds().height / 5));
 	sensorShape[1].setPosition(getPosition().x, getPosition().y - (getLocalBounds().height / 2));
 	sensorShape[2].setPosition(getPosition().x, getPosition().y + (getLocalBounds().height / 2));
 	sensorShape[3].setPosition(getPosition().x + (getLocalBounds().height / 4), getPosition().y - (getLocalBounds().height / 4));
@@ -214,13 +282,13 @@ void Player::createSensors()
 
 
 	//Middle sensor
-	t_shape.SetAsBox((getLocalBounds().height / 8) / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2(0, 0), 0);
+	t_shape.SetAsBox((getLocalBounds().height / 8) / ns::g_P2MScale, (getLocalBounds().height / 2) / ns::g_P2MScale, b2Vec2(0, (-getLocalBounds().height / 4) / ns::g_P2MScale), 0);
 	t_fixtureDef.shape = &t_shape;
 	t_fixtureDef.userData = _sensorData[0];
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
-	sensorShape[0].setSize(sf::Vector2f(getLocalBounds().height / 8, 6));
+	sensorShape[0].setSize(sf::Vector2f(getLocalBounds().height / 8, getLocalBounds().height / 2));
 	sensorShape[0].setOrigin(sensorShape[0].getSize().x / 2, sensorShape[0].getSize().y / 2);
-	sensorShape[0].setPosition(getPosition().x, getPosition().y);
+	sensorShape[0].setPosition(getPosition().x, getPosition().y - (getLocalBounds().height / 5));
 
 	//Top sensor
 	t_shape.SetAsBox((getLocalBounds().width / 8) / ns::g_P2MScale, 6 / ns::g_P2MScale, b2Vec2(0, (-getLocalBounds().height / 2) / ns::g_P2MScale), 0);
@@ -317,7 +385,7 @@ void Player::createSensors()
 
 void Player::loadAnimations(LoadSettings& lsettings, EngineSettings& esettings)
 {
-	animations.reserve(6);
+	animations.reserve(ANIM_LAST);
 
 	std::string path("Levels/");
 	path += (char)lsettings._campaign;
@@ -410,5 +478,4 @@ void Player::loadProperties(LoadSettings& settings)
 			}
 		}
 	}
-
 }

@@ -2,6 +2,7 @@
 
 namespace ns
 {
+	bool runningState = false;
 	bool deathState = false;
 	bool endOfLevelState = false;
 	float spawnPoint = 1000.f;

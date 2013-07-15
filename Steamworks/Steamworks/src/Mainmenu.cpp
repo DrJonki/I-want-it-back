@@ -72,9 +72,18 @@ bool Mainmenu::showMenu()
 			return false;
 		}
 
-		
-		update();
-		draw();
+		if (_engineSettings.vSync){
+			if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
+				update();
+				draw();
+			}
+		}
+		else {
+			if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
+				update();
+			}
+			draw();
+		}
 	}
 }
 
@@ -90,7 +99,6 @@ void Mainmenu::init()
 		else
 			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
 	}
-	_window->setFramerateLimit(60);
 	_window->setVerticalSyncEnabled(_engineSettings.vSync);
 
 	mainButton.reserve(BUT_LAST);
@@ -335,6 +343,8 @@ void Mainmenu::init()
 
 void Mainmenu::update()
 {
+	updateClock.restart();
+
 	switch (menuState)
 	{
 		case BUT_CAMPAIGN:

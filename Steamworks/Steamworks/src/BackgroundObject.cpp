@@ -16,6 +16,7 @@ void BackgroundObject::load(const bool bottom,
 	if (!bottom) setOrigin(0, sizeY);
 	setPosition(posX, 600);
 
-	if (!_texture.loadFromFile(textureDir)) throw;
-	setTexture(&_texture);
+	if (_texture.loadFromFile(textureDir))
+		setTexture(&_texture);
+	else setFillColor(sf::Color::Transparent);
 }

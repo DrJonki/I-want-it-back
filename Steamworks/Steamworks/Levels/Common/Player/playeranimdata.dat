@@ -1,6 +1,8 @@
 1 Resources/Common/Graphics/Actor/Player/player1running.png 256 256 0 0 5 10
 1 Resources/Common/Graphics/Actor/Player/player1jumping.png 256 256 0 0 5 8
 1 Resources/Common/Graphics/Actor/Player/player1somersault.png 256 256 0 0 4 10
+1 Resources/Common/Graphics/Actor/Player/player1ledgegrab.png 256 256 0 0 5 12
 2 Resources/Common/Graphics/Actor/Player/player2running.png 256 256 0 0 5 10
 2 Resources/Common/Graphics/Actor/Player/player2jumping.png 256 256 0 0 5 8
 2 Resources/Common/Graphics/Actor/Player/player2somersault.png 256 256 0 0 4 10
+2 Resources/Common/Graphics/Actor/Player/player2ledgegrab.png 256 256 0 0 5 12

@@ -3,8 +3,6 @@
 
 namespace
 {
-	bool runningState = false;
-
 	sf::RenderWindow gameWindow;
 	sf::Event e;
 	sf::Clock debugUpdateClock;
@@ -44,7 +42,7 @@ bool Game::runAndDontCrashPls()
 	while (mainMenu.showMenu()){
 		init();
 
-		while (runningState){
+		while (ns::runningState){
 			if (mainMenu.getEngineSettings().vSync){
 				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
 					update();
@@ -86,7 +84,7 @@ void Game::update()
 	//Border checks
 	if ((player[1]->getPosition().y > 1200 + player[1]->getLocalBounds().height || player[1]->getPosition().x + (player[1]->getLocalBounds().width / 2) < (view[1].getCenter().x - (view[1].getSize().x / 2))) ||
 		(player[0]->getPosition().y > 600 + player[0]->getLocalBounds().height || player[0]->getPosition().x + (player[0]->getLocalBounds().width / 2) < (view[0].getCenter().x - (view[0].getSize().x / 2))))
-		runningState = false;
+		ns::runningState = false;
 	
 	worldManager.stepWorldPhysics();
 
@@ -168,7 +166,7 @@ void Game::pollEvents()
 	while (gameWindow.pollEvent(e)){
 		if (e.type == sf::Event::KeyPressed){
 			if (e.key.code == sf::Keyboard::Escape){
-				runningState = false;
+				ns::runningState = false;
 			}
 			else if (e.key.code == sf::Keyboard::Up && ns::soundState < 2){
 				ns::soundState++;
@@ -190,7 +188,6 @@ void Game::init()
 	worldManager.loadWorld(cListener, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
 	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
 	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
-	runningState = true;
 
 	worldManager.getWorldPtr()->SetContactListener(cListener);
 
@@ -225,6 +222,8 @@ void Game::init()
 
 	updateClock.restart();
 	SetForegroundWindow(gameWindow.getSystemHandle());
+
+	ns::runningState = true;
 }
 
 void Game::deInit()
@@ -235,7 +234,7 @@ void Game::deInit()
 	delete player[0];
 	delete player[1];
 	delete cListener;
-	runningState = false;
+	ns::runningState = false;
 
 	if (mainMenu.getEngineSettings().debug){
 		ns::debug->clear();

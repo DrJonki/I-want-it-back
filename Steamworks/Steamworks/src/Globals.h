@@ -16,7 +16,7 @@ namespace ns
 	//Fonts
 	#define RES_FONTS "Resources/Common/Fonts/"
 
-
+	extern bool runningState;
 	extern bool deathState;
 	extern bool endOfLevelState;
 	extern float spawnPoint;
