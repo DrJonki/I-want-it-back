@@ -26,11 +26,10 @@ void Trigger::load(b2World* world,
     _body = world->CreateBody(&bodyDef);
 	
 	b2PolygonShape physShape;
-	physShape.SetAsBox(sizeX / ns::g_P2MScale, sizeY / ns::g_P2MScale);
+	physShape.SetAsBox((sizeX / 2) / ns::g_P2MScale, (sizeY / 2) / ns::g_P2MScale);
 
     b2FixtureDef fixtureDef;
 	fixtureDef.isSensor = true;
-	fixtureDef.userData = data;
     fixtureDef.shape = &physShape;
 
 	if (posY < 600){
@@ -39,10 +38,12 @@ void Trigger::load(b2World* world,
 	else{
 		fixtureDef.filter.categoryBits = FIL_TRIGGERS_BOTTOM;
 	}
-
+	
 	_body->SetFixedRotation(true);
     _body->CreateFixture(&fixtureDef);
+	//_body->SetGravityScale(0);
 
+	_type = resourceType;
 	_data = resourceData;
 
 	setSize(sf::Vector2f(sizeX, sizeY));
@@ -52,3 +53,8 @@ void Trigger::load(b2World* world,
 	else if (resourceType == RT_SOUND) setFillColor(sf::Color::Color(0, 255, 0, 150));
 	else setFillColor(sf::Color::Color(255, 255, 255, 150));
 }
+
+//void Trigger::update()
+//{
+//	setPosition(_body->GetPosition().x * ns::g_P2MScale, _body->GetPosition().y * ns::g_P2MScale);
+//}

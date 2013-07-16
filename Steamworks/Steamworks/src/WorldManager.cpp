@@ -17,7 +17,7 @@ void WorldManager::loadWorld(ContactListener* listener, LoadSettings& lsettings,
 
 	b2Vec2 gravity(0.f, esettings.worldGravity);
 	_gameWorld = new b2World(gravity);
-	_gameWorld->SetAllowSleeping(true);
+	_gameWorld->SetAllowSleeping(false);
 
 	_gameMap = new Map;
 	_gameMap->load(_gameWorld, listener, _window, lsettings, esettings);

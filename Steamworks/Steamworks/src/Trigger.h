@@ -4,6 +4,7 @@
 #include <SFML\Graphics.hpp>
 
 #include "Globals.h"
+#include "ContactListener.h"
 
 class Trigger : public sf::RectangleShape
 {
@@ -19,6 +20,8 @@ public:
 			  void* sensorData,
 			  const unsigned int resourceType = 0,
 			  const unsigned int resourceData = 0);
+
+	//void update();
 
 
 	b2Body* _body;

@@ -35,7 +35,7 @@ void Sprite::createPhysBody(const float density,
 
 	b2CircleShape physShape;
 	physShape.m_radius = (getLocalBounds().height / 4) / ns::g_P2MScale;
-
+	
 	b2FixtureDef fixtureDef;
 	fixtureDef.density = density;
 	fixtureDef.friction = friction;

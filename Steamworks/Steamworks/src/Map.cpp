@@ -68,8 +68,11 @@ void Map::update()
 		_foregroundObject[i].update();
 	}
 
-	for (unsigned int i = 0; i < _triggerObject.size(); i++){
-		if (_cListener->inContact((void*)MAINFIX_P1) && _cListener->inContact(_triggerObject[i]._body->GetUserData())){
+	if (_cListener->inContact((void*)MAINFIX_P1)){
+		for (unsigned int i = 0; i < _triggerObject.size(); i++){
+			//_triggerObject[i].update();
+
+		
 			if (_triggerObject[i]._type == RT_SOUND){
 				sManager.playSound(_triggerObject[i]._data);
 				sManager.playStream(_triggerObject[i]._data);
@@ -91,18 +94,19 @@ void Map::update()
 			else if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_CHECKPOINT) ns::spawnPoint = _triggerObject[i].getPosition().x;
 			else if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_ENDOFLEVEL) ns::endOfLevelState = true;
 		}
+	}
+		
 
-		else{
-			sManager.resetSounds();
-			for (unsigned int i = 0; i < _mapObject.size(); i++){
-				if (!_mapObject[i]._loop && !_mapObject[i].lastFrame()) _mapObject[i]._playing = false;
-			}
-			for (unsigned int i = 0; i < _foregroundObject.size(); i++){
-				if (!_foregroundObject[i]._loop && !_foregroundObject[i].lastFrame()) _foregroundObject[i]._playing = false;
-			}
+	else{
+		sManager.resetSounds();
+		for (unsigned int i = 0; i < _mapObject.size(); i++){
+			if (!_mapObject[i]._loop && !_mapObject[i].lastFrame()) _mapObject[i]._playing = false;
+		}
+		for (unsigned int i = 0; i < _foregroundObject.size(); i++){
+			if (!_foregroundObject[i]._loop && !_foregroundObject[i].lastFrame()) _foregroundObject[i]._playing = false;
 		}
 	}
-
+	
 	sManager.updateVolumes();
 }
 
