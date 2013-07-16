@@ -44,24 +44,24 @@ void Sprite::createPhysBody(const float density,
 
 	//Bottom
 	if (playerNumber == 1){
-		fixtureDef.filter.categoryBits = FIL_BOTTOMPLAYER1;
-		fixtureDef.filter.maskBits = FIL_TOPLEVEL;
+		fixtureDef.filter.categoryBits = FIL_PLAYERBOTTOM_TOP;
+		fixtureDef.filter.maskBits = FIL_LEVEL_TOP;
 	}
 	else if (playerNumber == 2){
-		fixtureDef.filter.categoryBits = FIL_BOTTOMPLAYER2;
-		fixtureDef.filter.maskBits = FIL_BOTTOMLEVEL;
+		fixtureDef.filter.categoryBits = FIL_PLAYERBOTTOM_BOTTOM;
+		fixtureDef.filter.maskBits = FIL_LEVEL_BOTTOM;
 	}
 	physShape.m_p = b2Vec2(0, (getLocalBounds().height * 0.25) / ns::g_P2MScale);
 	bottomFixture = _body->CreateFixture(&fixtureDef);
     
 	//Top
 	if (playerNumber == 1){
-		fixtureDef.filter.categoryBits = FIL_TOPPLAYER1;
-		fixtureDef.filter.maskBits = FIL_TOPLEVEL;
+		fixtureDef.filter.categoryBits = FIL_PLAYERTOP_TOP;
+		fixtureDef.filter.maskBits = FIL_LEVEL_TOP;
 	}
 	else if (playerNumber == 2){
-		fixtureDef.filter.categoryBits = FIL_TOPPLAYER2;
-		fixtureDef.filter.maskBits = FIL_BOTTOMLEVEL;
+		fixtureDef.filter.categoryBits = FIL_PLAYERTOP_BOTTOM;
+		fixtureDef.filter.maskBits = FIL_LEVEL_BOTTOM;
 	}
 	physShape.m_p = b2Vec2(0, -(getLocalBounds().height * 0.25) / ns::g_P2MScale);
 	topFixture = _body->CreateFixture(&fixtureDef);

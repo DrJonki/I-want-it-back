@@ -33,6 +33,13 @@ void Trigger::load(b2World* world,
 	fixtureDef.userData = data;
     fixtureDef.shape = &physShape;
 
+	if (posY < 600){
+		fixtureDef.filter.categoryBits = FIL_TRIGGERS_TOP;
+	}
+	else{
+		fixtureDef.filter.categoryBits = FIL_TRIGGERS_BOTTOM;
+	}
+
 	_body->SetFixedRotation(true);
     _body->CreateFixture(&fixtureDef);
 

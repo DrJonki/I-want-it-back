@@ -170,8 +170,8 @@ void Player::update()
 	else{
 		b2Filter filter = topFixture->GetFilterData();
 
-		if (_playerNumber == 1) filter.maskBits = FIL_TOPLEVEL;
-		else if (_playerNumber == 2) filter.maskBits = FIL_BOTTOMLEVEL;
+		if (_playerNumber == 1) filter.maskBits = FIL_LEVEL_TOP;
+		else if (_playerNumber == 2) filter.maskBits = FIL_LEVEL_BOTTOM;
 
 		topFixture->SetFilterData(filter);
 	}
@@ -266,13 +266,22 @@ void Player::createSensors()
 	b2FixtureDef t_fixtureDef;
 	b2PolygonShape t_shape;
 	b2Fixture* t_sensorFixture;
+	
 
 	//Common properties
 	t_fixtureDef.isSensor = true;
+	if (_playerNumber == 1){
+		t_fixtureDef.filter.categoryBits = FIL_PLAYERMAINFIX_TOP;
+		t_fixtureDef.filter.maskBits = FIL_TRIGGERS_TOP;
+	}
+	else if (_playerNumber == 2){
+		t_fixtureDef.filter.categoryBits = FIL_PLAYERMAINFIX_BOTTOM;
+		t_fixtureDef.filter.maskBits = FIL_TRIGGERS_BOTTOM;
+	}
 
 
 	//Main fixture, used for triggers
-	t_shape.SetAsBox((getLocalBounds().width / 3) / ns::g_P2MScale, (getLocalBounds().height / 3) / ns::g_P2MScale);
+	t_shape.SetAsBox((getLocalBounds().width / 2) / ns::g_P2MScale, (getLocalBounds().height / 2) / ns::g_P2MScale);
 	t_fixtureDef.shape = &t_shape;
 	if (_playerNumber == 1)
 		t_fixtureDef.userData = (void*)MAINFIX_P1;
@@ -280,6 +289,15 @@ void Player::createSensors()
 		t_fixtureDef.userData = (void*)MAINFIX_P2;
 	t_sensorFixture = _body->CreateFixture(&t_fixtureDef);
 
+
+	if (_playerNumber == 1){
+		t_fixtureDef.filter.categoryBits = FIL_PLAYERBOTTOM_TOP;
+		t_fixtureDef.filter.maskBits = FIL_LEVEL_TOP;
+	}
+	else if (_playerNumber == 2){
+		t_fixtureDef.filter.categoryBits = FIL_PLAYERBOTTOM_BOTTOM;
+		t_fixtureDef.filter.maskBits = FIL_LEVEL_BOTTOM;
+	}
 
 	//Middle sensor
 	t_shape.SetAsBox((getLocalBounds().height / 8) / ns::g_P2MScale, (getLocalBounds().height / 2) / ns::g_P2MScale, b2Vec2(0, (-getLocalBounds().height / 4) / ns::g_P2MScale), 0);
