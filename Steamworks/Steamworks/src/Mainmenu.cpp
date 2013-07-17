@@ -493,7 +493,6 @@ void Mainmenu::update()
 			if (_e->key.code == sf::Keyboard::Up && selectionState > 0){
 				selectionState--;
 				lockMouse = true;
-
 			}
 			else if (_e->key.code == sf::Keyboard::Down && selectionState < BUT_LAST - 1){
 				selectionState++;
@@ -507,7 +506,7 @@ void Mainmenu::update()
 				subSelectionState--;
 				lockMouse = true;
 			}
-			else if (_e->key.code == sf::Keyboard::Down && subSelectionState < subSelectionMax){
+			else if (_e->key.code == sf::Keyboard::Up && subSelectionState < subSelectionMax){
 				subSelectionState++;
 				lockMouse = true;
 			}

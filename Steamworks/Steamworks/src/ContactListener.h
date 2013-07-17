@@ -19,7 +19,6 @@ public:
 	void addData(void* data, const int timeout = 0);
 
 	bool inContact(void* data);
-	std::vector<void*>& getOtherData(void* data);
 	
 private:
 	sf::Clock _timeoutClock;
@@ -29,11 +28,8 @@ private:
 		int _contacts;
 		void* _data;
 		int _timeout;
-
-		std::vector<void*> _otherData;
 	};
 
 	std::vector<_contactDataStruct> _contactData;
-	std::vector<void*> dummyVector;
 };
 

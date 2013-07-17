@@ -3,6 +3,8 @@
 
 namespace
 {
+	bool paused = false;
+
 	sf::RenderWindow gameWindow;
 	sf::Event e;
 	sf::Clock debugUpdateClock;
@@ -41,21 +43,38 @@ bool Game::runAndDontCrashPls()
 	
 	while (mainMenu.showMenu()){
 		init();
+		Pausemenu pauseMenu(&gameWindow, &e);
 
 		while (ns::runningState){
 			if (mainMenu.getEngineSettings().vSync){
 				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
-					update();
+					if (!paused){
+						update();
+						pollEvents();
+					}
 					render();
-					pollEvents();
+					if (paused){
+						player[0]->resetClocks();
+						player[1]->resetClocks();
+
+						if (pauseMenu.update())
+							paused = false;
+					}
 				}
 			}
 			else {
-				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
+				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue && !paused){
 					update();
 					pollEvents();
 				}
 				render();
+				if (paused){
+					player[0]->resetClocks();
+					player[1]->resetClocks();
+
+					if (pauseMenu.update())
+						paused = false;
+				}
 			}
 		}
 		deInit();
@@ -166,7 +185,7 @@ void Game::pollEvents()
 	while (gameWindow.pollEvent(e)){
 		if (e.type == sf::Event::KeyPressed){
 			if (e.key.code == sf::Keyboard::Escape){
-				ns::runningState = false;
+				if (!paused) paused = true;
 			}
 			else if (e.key.code == sf::Keyboard::Up && ns::soundState < 2){
 				ns::soundState++;
@@ -180,6 +199,8 @@ void Game::pollEvents()
 
 void Game::init()
 {
+	paused = false;
+
 	cListener = new ContactListener;
 
 	player[0] = new Player(1, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());

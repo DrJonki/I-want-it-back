@@ -56,7 +56,7 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 	
 	createSensors();
 
-	hangTime.restart();
+	resetClocks();
 }
 
 void Player::unloadPlayer()
@@ -76,9 +76,41 @@ void Player::unloadPlayer()
 	_playerProps.airDrag = 0.f;
 }
 
+void Player::resetClocks()
+{
+	hangTime.restart();
+	somersaultTime.restart();
+}
+
 
 void Player::update()
 {
+	if (hangTime.getElapsedTime().asMilliseconds() > 1000 && _cListener->inContact(_sensorData[SEN_BOTTOM])){
+		animState = ANIM_SOMERSAULT;
+	}
+	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || (animState == ANIM_LEDGEGRAB && animations[ANIM_LEDGEGRAB].getCurrentFrame() > 3)){
+		hangTime.restart();
+	}
+
+	//Crouching
+	if (((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && somersaultTime.getElapsedTime().asMilliseconds() > 1100) || animState == ANIM_SOMERSAULT || _cListener->inContact(_sensorData[SEN_MIDDLE]) || _cListener->inContact(_sensorData[SEN_TOP]))){
+		b2Filter filter = topFixture->GetFilterData();
+		filter.maskBits = FIL_NULL;
+		topFixture->SetFilterData(filter);
+
+		animState = ANIM_SOMERSAULT;
+
+		somersaultTime.restart();
+	}
+	else{
+		b2Filter filter = topFixture->GetFilterData();
+
+		if (_playerNumber == 1) filter.maskBits = FIL_LEVEL_TOP;
+		else if (_playerNumber == 2) filter.maskBits = FIL_LEVEL_BOTTOM;
+
+		topFixture->SetFilterData(filter);
+	}
+
 	//Forward movement
 	b2Vec2 vel = _body->GetLinearVelocity();
 	float desiredVel = 0, maxSpeed = _playerProps.baseSpeed;
@@ -91,7 +123,7 @@ void Player::update()
 		}
 		desiredVel = b2Min(vel.x + 0.3f, maxSpeed);
 
-		if (animState != ANIM_SOMERSAULT && animState != ANIM_LEDGEGRAB)
+		if ((animations[ANIM_SOMERSAULT].lastFrame() || animState != ANIM_SOMERSAULT) && animState != ANIM_LEDGEGRAB)
 			animState = ANIM_RUNNING;
 	}
 	else{
@@ -116,7 +148,7 @@ void Player::update()
 
 
 	//Ledge grabbing
-	if ((_cListener->inContact(_sensorData[SEN_TOPRIGHT]) || (_cListener->inContact(_sensorData[SEN_TOPRIGHT_CORNER]) &&  _cListener->inContact(_sensorData[SEN_TOPRIGHT]))) && _cListener->inContact(_sensorData[SEN_BOTTOM]) && animations[ANIM_LEDGEGRAB].getCurrentFrame() <= 2){
+	if (_cListener->inContact(_sensorData[SEN_TOPRIGHT]) && _cListener->inContact(_sensorData[SEN_BOTTOM]) && animations[ANIM_LEDGEGRAB].getCurrentFrame() <= 2){
 		animState = ANIM_LEDGEGRAB;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || animations[ANIM_LEDGEGRAB].getCurrentFrame() > 1 || animations[ANIM_LEDGEGRAB].getTempSteps() > 1){
@@ -159,35 +191,10 @@ void Player::update()
 	}
 
 
-	//Crouching
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || animState == ANIM_SOMERSAULT || _cListener->inContact(_sensorData[SEN_MIDDLE]) || _cListener->inContact(_sensorData[SEN_TOP])){
-		b2Filter filter = topFixture->GetFilterData();
-
-		filter.maskBits = FIL_NULL;
-
-		topFixture->SetFilterData(filter);
-	}
-	else{
-		b2Filter filter = topFixture->GetFilterData();
-
-		if (_playerNumber == 1) filter.maskBits = FIL_LEVEL_TOP;
-		else if (_playerNumber == 2) filter.maskBits = FIL_LEVEL_BOTTOM;
-
-		topFixture->SetFilterData(filter);
-	}
-
-
 
     float velChange = desiredVel - vel.x;
     float impulse = _body->GetMass() * velChange; //disregard time factor
     _body->ApplyLinearImpulse(b2Vec2(impulse, 0), _body->GetWorldCenter());
-
-	if (hangTime.getElapsedTime().asMilliseconds() > 1000 && _cListener->inContact(_sensorData[SEN_BOTTOM])){
-		animState = ANIM_SOMERSAULT;
-	}
-	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || (animState == ANIM_LEDGEGRAB && animations[ANIM_LEDGEGRAB].getCurrentFrame() > 3)){
-		hangTime.restart();
-	}
 
 
 	updateAnimation();

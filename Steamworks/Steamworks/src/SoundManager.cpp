@@ -34,7 +34,7 @@ void SoundManager::loadSounds(LoadSettings& lsettings, EngineSettings& esettings
 
 			
 			std::string t_soundDir;
-			float t_posX = 0, t_posY = 0, t_minDistance = 1.f, t_attenuation = 0;
+			float t_posX = 0, t_posY = 0, t_minDistance = 1.f, t_attenuation = 1.f;
 			bool t_loop = false;
 			unsigned int t_data = 0;
 

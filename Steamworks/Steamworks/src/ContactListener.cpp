@@ -25,17 +25,6 @@ bool ContactListener::inContact(void* data)
 	return false;
 }
 
-std::vector<void*>& ContactListener::getOtherData(void* data)
-{
-	for (unsigned int i = 0; i < _contactData.size(); i++){
-		if (data == _contactData[i]._data){
-			return _contactData[i]._otherData;
-		}
-	}
-
-	return dummyVector;
-}
-
 
 void ContactListener::addData(void* data, const int timeout)
 {
@@ -50,39 +39,27 @@ void ContactListener::addData(void* data, const int timeout)
 void ContactListener::BeginContact(b2Contact* contact){
     //check if fixture A was the sensor
 	for (unsigned int i = 0; i < _contactData.size(); i++){
-		if (contact->GetFixtureA()->GetUserData() == _contactData[i]._data) _contactData[i]._contacts++;
-		//else _contactData[i]._otherData.emplace_back(contact->GetFixtureA()->GetUserData());
+		if (contact->GetFixtureA()->GetUserData() == _contactData[i]._data)
+			_contactData[i]._contacts++;
 	}
 	
     //check if fixture B was the sensor
 	for (unsigned int i = 0; i < _contactData.size(); i++){
-		if (contact->GetFixtureB()->GetUserData() == _contactData[i]._data) _contactData[i]._contacts++;
-		//else _contactData[i]._otherData.emplace_back(contact->GetFixtureB()->GetUserData());
+		if (contact->GetFixtureB()->GetUserData() == _contactData[i]._data)
+			_contactData[i]._contacts++;
 	}
 }
 
 void ContactListener::EndContact(b2Contact* contact){
     //check if fixture A was the sensor
     for (unsigned int i = 0; i < _contactData.size(); i++){
-		if (contact->GetFixtureA()->GetUserData() == _contactData[i]._data){
+		if (contact->GetFixtureA()->GetUserData() == _contactData[i]._data)
 			_contactData[i]._contacts--;
-			/*for (unsigned int j = 0; j < _contactData[i]._otherData.size(); j++){
-				if (_contactData[i]._otherData[j] == contact->GetFixtureA()->GetUserData()){
-					_contactData[i]._otherData.erase(_contactData[i]._otherData.begin() + j);
-				}
-			}*/
-		}
 	}
 
     //check if fixture B was the sensor
     for (unsigned int i = 0; i < _contactData.size(); i++){
-		if (contact->GetFixtureB()->GetUserData() == _contactData[i]._data){
+		if (contact->GetFixtureB()->GetUserData() == _contactData[i]._data)
 			_contactData[i]._contacts--;
-			/*for (unsigned int j = 0; j < _contactData[i]._otherData.size(); j++){
-				if (_contactData[i]._otherData[j] == contact->GetFixtureB()->GetUserData()){
-					_contactData[i]._otherData.erase(_contactData[i]._otherData.begin() + j);
-				}
-			}*/
-		}
 	}
 }

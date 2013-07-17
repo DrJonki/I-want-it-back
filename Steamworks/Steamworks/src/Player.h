@@ -26,6 +26,8 @@ public:
 
 	void update();
 
+	void resetClocks();
+
 	std::vector<sf::RectangleShape> sensorShape;
 private:
 	const unsigned short _playerNumber;
@@ -37,6 +39,7 @@ private:
 	void updateAnimation();
 
 	sf::Clock hangTime;
+	sf::Clock somersaultTime;
 
 	struct
 	{
