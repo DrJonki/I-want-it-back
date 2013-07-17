@@ -270,17 +270,32 @@ void Player::createSensors()
 
 	//Common properties
 	t_fixtureDef.isSensor = true;
-	
+
+	//Main fixture. Used for sensors
+	if (_playerNumber == 1){
+		t_fixtureDef.filter.categoryBits = FIL_PLAYERMAINFIX_TOP;
+		t_fixtureDef.userData = (void*)MAINFIX_P1;
+	}
+	else if (_playerNumber == 2){
+		t_fixtureDef.filter.categoryBits = FIL_PLAYERMAINFIX_BOTTOM;
+		t_fixtureDef.userData = (void*)MAINFIX_P2;
+	}
+	t_shape.SetAsBox((getLocalBounds().width / 4) / ns::g_P2MScale, (getLocalBounds().height / 2) / ns::g_P2MScale);
+	t_fixtureDef.shape = &t_shape;
+	_body->CreateFixture(&t_fixtureDef);
+
+
+
+	//Common properties
+	t_fixtureDef.isSensor = true;
 
 	if (_playerNumber == 1){
 		t_fixtureDef.filter.categoryBits = FIL_PLAYERBOTTOM_TOP;
 		t_fixtureDef.filter.maskBits = FIL_LEVEL_TOP;
-		t_fixtureDef.filter.groupIndex = 0;
 	}
 	else if (_playerNumber == 2){
 		t_fixtureDef.filter.categoryBits = FIL_PLAYERBOTTOM_BOTTOM;
 		t_fixtureDef.filter.maskBits = FIL_LEVEL_BOTTOM;
-		t_fixtureDef.filter.groupIndex = 0;
 	}
 
 	//Middle sensor

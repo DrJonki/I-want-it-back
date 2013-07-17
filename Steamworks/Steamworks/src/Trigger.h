@@ -21,8 +21,6 @@ public:
 			  const unsigned int resourceType = 0,
 			  const unsigned int resourceData = 0);
 
-	//void update();
-
 
 	b2Body* _body;
 

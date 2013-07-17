@@ -68,24 +68,21 @@ void Map::update()
 		_foregroundObject[i].update();
 	}
 
-	if (_cListener->inContact((void*)MAINFIX_P1)){
-		for (unsigned int i = 0; i < _triggerObject.size(); i++){
-			//_triggerObject[i].update();
-
-		
+	for (unsigned int i = 0; i < _triggerObject.size(); i++){
+		if (_cListener->inContact(_triggerObject[i]._body->GetFixtureList()[0].GetUserData())){
 			if (_triggerObject[i]._type == RT_SOUND){
 				sManager.playSound(_triggerObject[i]._data);
 				sManager.playStream(_triggerObject[i]._data);
 			}
 			if (_triggerObject[i]._type == RT_ANIMATION){
-				for (unsigned int i = 0; i < _mapObject.size(); i++){
-					if (_mapObject[i]._trigData == _triggerObject[i]._data){
-						_mapObject[i]._playing = true;
+				for (unsigned int j = 0; j < _mapObject.size(); j++){
+					if (_mapObject[j]._trigData == _triggerObject[i]._data){
+						_mapObject[j]._playing = true;
 					}
 				}
-				for (unsigned int i = 0; i < _foregroundObject.size(); i++){
-					if (_foregroundObject[i]._trigData == _triggerObject[i]._data){
-						_foregroundObject[i]._playing = true;
+				for (unsigned int j = 0; j < _foregroundObject.size(); j++){
+					if (_foregroundObject[j]._trigData == _triggerObject[i]._data){
+						_foregroundObject[j]._playing = true;
 					}
 				}
 			}
@@ -94,10 +91,58 @@ void Map::update()
 			else if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_CHECKPOINT) ns::spawnPoint = _triggerObject[i].getPosition().x;
 			else if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_ENDOFLEVEL) ns::endOfLevelState = true;
 		}
+
+		else{
+			sManager.resetSounds();
+			for (unsigned int i = 0; i < _mapObject.size(); i++){
+				if (!_mapObject[i]._loop && !_mapObject[i].lastFrame()) _mapObject[i]._playing = false;
+			}
+			for (unsigned int i = 0; i < _foregroundObject.size(); i++){
+				if (!_foregroundObject[i]._loop && !_foregroundObject[i].lastFrame()) _foregroundObject[i]._playing = false;
+			}
+		}
 	}
+
+
+	/*if (_cListener->inContact((void*)MAINFIX_P1) || _cListener->inContact((void*)MAINFIX_P2)){
+		void* t_fix;
+		std::vector<void*> t_data;
+		if (_cListener->inContact((void*)MAINFIX_P1)) t_fix = (void*)MAINFIX_P1;
+		else if (_cListener->inContact((void*)MAINFIX_P2)) t_fix = (void*)MAINFIX_P2;
+		t_data = _cListener->getOtherData((void*)MAINFIX_P1);
+
+
+		for (unsigned int i = 0; i < _triggerObject.size(); i++){
+			for (unsigned int d = 0; d < _cListener->getOtherData(t_fix).size(); d++){
+				if ((void*)_triggerObject[i]._data == t_data[d]){
+					if (_triggerObject[i]._type == RT_SOUND){
+						sManager.playSound(_triggerObject[i]._data);
+						sManager.playStream(_triggerObject[i]._data);
+					}
+					if (_triggerObject[i]._type == RT_ANIMATION){
+						for (unsigned int j = 0; j < _mapObject.size(); j++){
+							if (_mapObject[j]._trigData == _triggerObject[i]._data){
+								_mapObject[j]._playing = true;
+							}
+						}
+						for (unsigned int j = 0; j < _foregroundObject.size(); j++){
+							if (_foregroundObject[j]._trigData == _triggerObject[i]._data){
+								_foregroundObject[j]._playing = true;
+							}
+						}
+					}
+
+					if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_LETHAL) ns::deathState = true;
+					else if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_CHECKPOINT) ns::spawnPoint = _triggerObject[i].getPosition().x;
+					else if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_ENDOFLEVEL) ns::endOfLevelState = true;
+				}
+			}
+		}*/
+	sManager.updateVolumes();
+}
 		
 
-	else{
+	/*else{
 		sManager.resetSounds();
 		for (unsigned int i = 0; i < _mapObject.size(); i++){
 			if (!_mapObject[i]._loop && !_mapObject[i].lastFrame()) _mapObject[i]._playing = false;
@@ -105,10 +150,10 @@ void Map::update()
 		for (unsigned int i = 0; i < _foregroundObject.size(); i++){
 			if (!_foregroundObject[i]._loop && !_foregroundObject[i].lastFrame()) _foregroundObject[i]._playing = false;
 		}
-	}
+	}*/
 	
-	sManager.updateVolumes();
-}
+	
+
 
 
 void Map::draw()
@@ -320,8 +365,8 @@ void Map::createTriggers()
 	}
 
 	for (unsigned int i = 0; i < _triggerObject.size(); i++){
-		if (_triggerObject[i]._body->GetUserData() != (void*)0){
-			_cListener->addData(_triggerObject[i]._body->GetUserData());
+		if (_triggerObject[i]._body->GetFixtureList()[0].GetUserData() != (void*)0){
+			_cListener->addData(_triggerObject[i]._body->GetFixtureList()[0].GetUserData());
 		}
 	}
 }
