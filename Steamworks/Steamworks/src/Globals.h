@@ -17,6 +17,7 @@ namespace ns
 	#define RES_FONTS "Resources/Common/Fonts/"
 
 	extern bool runningState;
+	extern bool exitState;
 	extern bool deathState;
 	extern bool endOfLevelState;
 	extern float spawnPoint;
@@ -75,4 +76,11 @@ static const enum //Sound types
 	ST_SOUND,
 	ST_MUSIC,
 	ST_ANBIENT
+};
+
+static const enum //Window views
+{
+	VIEW_TOP,
+	VIEW_BOTTOM,
+	VIEW_WHOLE
 };

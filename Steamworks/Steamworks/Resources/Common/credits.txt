@@ -30,7 +30,7 @@ Character & UI art
 #
 ____________________________________
 #
-Sound design
+Sound design & original score
 #
 #
 - Susanna Nurmi

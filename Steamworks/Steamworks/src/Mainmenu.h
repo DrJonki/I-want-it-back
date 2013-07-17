@@ -28,6 +28,7 @@ private:
 	void draw();
 
 	void initLevels();
+	void restartVideo();
 
 	sf::RenderWindow* _window;
 	sf::Event* _e;
@@ -53,10 +54,17 @@ private:
 
 	sf::CircleShape selectionShape;
 	std::vector<GameButton> confirmButton;
+	static const enum
+	{
+		CON_APPLY,
+		CON_BACK
+	};
 
+
+	sf::Texture titleTexture;
 	sf::RectangleShape titleBackground;
-	SpriteAnimation titleAnimation;
 	sf::Music titleMusic;
+	const int titleMinAlpha;
 
 	sf::Clock updateClock;
 

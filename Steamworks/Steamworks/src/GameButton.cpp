@@ -38,7 +38,7 @@ bool GameButton::isPressed()
 //Private
 void GameButton::update(const bool selected)
 {
-	if (selected && (sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return))){
+	if (selected && ((mouseOnButton() && sf::Mouse::isButtonPressed(sf::Mouse::Left)) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return))){
 		setCurrentFrame(3);
 		wasPressed = true;
 	}

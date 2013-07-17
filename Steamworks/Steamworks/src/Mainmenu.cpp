@@ -2,29 +2,23 @@
 
 namespace
 {
-	int selectionState;
-	int subSelectionState;
-	int subSelectionMax;
-	int menuState;
+	int selectionState = 0;
+	int subSelectionState = 0;
+	int subSelectionMax = 0;
+	int menuState = 0;
 
-	bool lockMouse;
+	bool lockMouse = true;
 
-	bool loaded;
+	bool loaded = false;
+	
+	bool exitState = false;
 }
 
 Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event* e)
 	: _window(window),
-	  _e(e)
-{
-	selectionState = 0;
-	subSelectionState = 0;
-	subSelectionMax = 0;
-	menuState = 0;
-
-	lockMouse = true;
-
-	loaded = false;
-}
+	  _e(e),
+	  titleMinAlpha(70)
+{}
 
 Mainmenu::~Mainmenu(void)
 {
@@ -34,11 +28,20 @@ Mainmenu::~Mainmenu(void)
 
 bool Mainmenu::showMenu()
 {
+	selectionState = 0;
+	subSelectionState = 0;
+	subSelectionMax = 0;
+	menuState = 0;
+	lockMouse = true;
+	loaded = false;
+	exitState = false;
+
 	if (!loaded) init();
 	sf::View view;
 	view.setCenter(sf::Vector2f(1920 / 2, 1200 / 2));
 	view.setSize(sf::Vector2f(1920, 1200));
 	_window->setView(view);
+	titleMusic.setVolume(0);
 	titleMusic.play();
 	titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
 	
@@ -68,7 +71,7 @@ bool Mainmenu::showMenu()
 			creditsText[0].setPosition(1000, 1200);
 			creditsText[1].setPosition(creditsText[0].getPosition().x, creditsText[0].getPosition().y + 150);
 		}
-		else if (mainButton[BUT_EXIT].isPressed() && menuState == 0){
+		else if ((mainButton[BUT_EXIT].isPressed() && menuState == 0) || exitState){
 			return false;
 		}
 
@@ -112,41 +115,57 @@ void Mainmenu::init()
 	//Main buttons
 	/////////////////////////////////////////////////////////
 	//Start
-	mainButton[BUT_START].load(250, 150, 200, 200, image);
+	mainButton[BUT_START].load(250, 150, 100, 200, image);
 	mainButton[BUT_START]._text.setFont(_font);
 	mainButton[BUT_START]._text.setCharacterSize(40);
 	mainButton[BUT_START]._text.setString("Start");
 	mainButton[BUT_START]._text.setColor(sf::Color::Black);
 	//Campaign
-	mainButton[BUT_CAMPAIGN].load(200, 100, 200, mainButton[BUT_START].getPosition().y + 200, image);
+	mainButton[BUT_CAMPAIGN].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 200, image);
 	mainButton[BUT_CAMPAIGN]._text.setFont(_font);
 	mainButton[BUT_CAMPAIGN]._text.setCharacterSize(30);
 	mainButton[BUT_CAMPAIGN]._text.setString("Select\ncampaign");
 	mainButton[BUT_CAMPAIGN]._text.setColor(sf::Color::Black);
 	//Level
-	mainButton[BUT_LEVEL].load(200, 100, 200, mainButton[BUT_CAMPAIGN].getPosition().y + 125, image);
+	mainButton[BUT_LEVEL].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_CAMPAIGN].getPosition().y + 125, image);
 	mainButton[BUT_LEVEL]._text.setFont(_font);
 	mainButton[BUT_LEVEL]._text.setCharacterSize(30);
 	mainButton[BUT_LEVEL]._text.setString("Select\nlevel");
 	mainButton[BUT_LEVEL]._text.setColor(sf::Color::Black);
 	//Settings
-	mainButton[BUT_SETTINGS].load(200, 100, 200, mainButton[BUT_LEVEL].getPosition().y + 125, image);
+	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_LEVEL].getPosition().y + 125, image);
 	mainButton[BUT_SETTINGS]._text.setFont(_font);
 	mainButton[BUT_SETTINGS]._text.setCharacterSize(30);
 	mainButton[BUT_SETTINGS]._text.setString("Settings");
 	mainButton[BUT_SETTINGS]._text.setColor(sf::Color::Black);
 	//Credits
-	mainButton[BUT_CREDITS].load(150, 75, 200, mainButton[BUT_SETTINGS].getPosition().y + 150, image);
+	mainButton[BUT_CREDITS].load(150, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_SETTINGS].getPosition().y + 150, image);
 	mainButton[BUT_CREDITS]._text.setFont(_font);
 	mainButton[BUT_CREDITS]._text.setCharacterSize(26);
 	mainButton[BUT_CREDITS]._text.setString("Credits");
 	mainButton[BUT_CREDITS]._text.setColor(sf::Color::Black);
 	//Exit
-	mainButton[BUT_EXIT].load(150, 75, 200, mainButton[BUT_CREDITS].getPosition().y + 100, image);
+	mainButton[BUT_EXIT].load(150, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_CREDITS].getPosition().y + 100, image);
 	mainButton[BUT_EXIT]._text.setFont(_font);
 	mainButton[BUT_EXIT]._text.setCharacterSize(26);
 	mainButton[BUT_EXIT]._text.setString("Exit");
 	mainButton[BUT_EXIT]._text.setColor(sf::Color::Black);
+
+	//Confirmation buttons
+	confirmButton.emplace_back(GameButton(_window));
+	confirmButton.emplace_back(GameButton(_window));
+
+	confirmButton[CON_APPLY].load(100, 65, 600, 500, image);
+	confirmButton[CON_APPLY]._text.setFont(_font);
+	confirmButton[CON_APPLY]._text.setCharacterSize(22);
+	confirmButton[CON_APPLY]._text.setString("Apply >>");
+	confirmButton[CON_APPLY]._text.setColor(sf::Color::Black);
+
+	confirmButton[CON_BACK].load(100, 65, confirmButton[CON_APPLY].getPosition().x, confirmButton[CON_APPLY].getPosition().y + 100, image);
+	confirmButton[CON_BACK]._text.setFont(_font);
+	confirmButton[CON_BACK]._text.setCharacterSize(24);
+	confirmButton[CON_BACK]._text.setString("<< Back");
+	confirmButton[CON_BACK]._text.setColor(sf::Color::Black);
 
 	//Sub menu buttons
 	/////////////////////////////////////////////////////////
@@ -173,7 +192,7 @@ void Mainmenu::init()
 	}
 
 	//Resolution
-	settingButton[SET_RESOLUTION].load(250, 50, 800, 200, image);
+	settingButton[SET_RESOLUTION].load(250, 50, 1000, 200, image);
 	settingButton[SET_RESOLUTION]._text.setFont(_font);
 	settingButton[SET_RESOLUTION]._text.setCharacterSize(28);
 	settingButton[SET_RESOLUTION]._text.setString("Resolution");
@@ -186,7 +205,7 @@ void Mainmenu::init()
 	settingText[SET_RESOLUTION].setOrigin(0, settingText[SET_RESOLUTION].getGlobalBounds().height / 2);
 	settingText[SET_RESOLUTION].setPosition(settingButton[SET_RESOLUTION].getPosition().x + settingButton[SET_RESOLUTION].getSize().x + 25, settingButton[SET_RESOLUTION].getPosition().y + (settingButton[SET_RESOLUTION].getSize().y / 3));
 	//Vsync
-	settingButton[SET_VSYNC].load(200, 50, 800, settingButton[SET_RESOLUTION].getPosition().y + 100, image);
+	settingButton[SET_VSYNC].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_RESOLUTION].getPosition().y + 100, image);
 	settingButton[SET_VSYNC]._text.setFont(_font);
 	settingButton[SET_VSYNC]._text.setCharacterSize(28);
 	settingButton[SET_VSYNC]._text.setString("V-Sync");
@@ -201,7 +220,7 @@ void Mainmenu::init()
 	settingText[SET_VSYNC].setPosition(settingButton[SET_VSYNC].getPosition().x + settingButton[SET_VSYNC].getSize().x + 25, settingButton[SET_VSYNC].getPosition().y + (settingButton[SET_VSYNC].getSize().y / 3));
 
 	//Full screen
-	settingButton[SET_FULLSCREEN].load(200, 50, 800, settingButton[SET_VSYNC].getPosition().y + 75, image);
+	settingButton[SET_FULLSCREEN].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_VSYNC].getPosition().y + 75, image);
 	settingButton[SET_FULLSCREEN]._text.setFont(_font);
 	settingButton[SET_FULLSCREEN]._text.setCharacterSize(28);
 	settingButton[SET_FULLSCREEN]._text.setString("Fullscreen");
@@ -216,7 +235,7 @@ void Mainmenu::init()
 	settingText[SET_FULLSCREEN].setPosition(settingButton[SET_FULLSCREEN].getPosition().x + settingButton[SET_FULLSCREEN].getSize().x + 25, settingButton[SET_FULLSCREEN].getPosition().y + (settingButton[SET_FULLSCREEN].getSize().y / 3));
 
 	//AA
-	settingButton[SET_AA].load(200, 50, 800, settingButton[SET_FULLSCREEN].getPosition().y + 75, image);
+	settingButton[SET_AA].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_FULLSCREEN].getPosition().y + 75, image);
 	settingButton[SET_AA]._text.setFont(_font);
 	settingButton[SET_AA]._text.setCharacterSize(28);
 	settingButton[SET_AA]._text.setString("Anti-aliasing");
@@ -230,7 +249,7 @@ void Mainmenu::init()
 	settingText[SET_AA].setPosition(settingButton[SET_AA].getPosition().x + settingButton[SET_AA].getSize().x + 25, settingButton[SET_AA].getPosition().y + (settingButton[SET_AA].getSize().y / 3));
 
 	//Smooth
-	settingButton[SET_SMOOTH].load(200, 50, 800, settingButton[SET_AA].getPosition().y + 75, image);
+	settingButton[SET_SMOOTH].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_AA].getPosition().y + 75, image);
 	settingButton[SET_SMOOTH]._text.setFont(_font);
 	settingButton[SET_SMOOTH]._text.setCharacterSize(24);
 	settingButton[SET_SMOOTH]._text.setString("Smooth textures");
@@ -246,7 +265,7 @@ void Mainmenu::init()
 
 
 	//Global volume
-	settingButton[SET_GVOLUME].load(200, 50, 800, settingButton[SET_SMOOTH].getPosition().y + 100, image);
+	settingButton[SET_GVOLUME].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_SMOOTH].getPosition().y + 100, image);
 	settingButton[SET_GVOLUME]._text.setFont(_font);
 	settingButton[SET_GVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_GVOLUME]._text.setString("Global volume");
@@ -260,7 +279,7 @@ void Mainmenu::init()
 	settingText[SET_GVOLUME].setPosition(settingButton[SET_GVOLUME].getPosition().x + settingButton[SET_GVOLUME].getSize().x + 25, settingButton[SET_GVOLUME].getPosition().y + (settingButton[SET_GVOLUME].getSize().y / 3));
 
 	//Music volume
-	settingButton[SET_MVOLUME].load(200, 50, 800, settingButton[SET_GVOLUME].getPosition().y + 75, image);
+	settingButton[SET_MVOLUME].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_GVOLUME].getPosition().y + 75, image);
 	settingButton[SET_MVOLUME]._text.setFont(_font);
 	settingButton[SET_MVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_MVOLUME]._text.setString("Music volume");
@@ -274,7 +293,7 @@ void Mainmenu::init()
 	settingText[SET_MVOLUME].setPosition(settingButton[SET_MVOLUME].getPosition().x + settingButton[SET_MVOLUME].getSize().x + 25, settingButton[SET_MVOLUME].getPosition().y + (settingButton[SET_MVOLUME].getSize().y / 3));
 
 	//Sound volume
-	settingButton[SET_SVOLUME].load(200, 50, 800, settingButton[SET_MVOLUME].getPosition().y + 75, image);
+	settingButton[SET_SVOLUME].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_MVOLUME].getPosition().y + 75, image);
 	settingButton[SET_SVOLUME]._text.setFont(_font);
 	settingButton[SET_SVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_SVOLUME]._text.setString("Sound volume");
@@ -288,7 +307,7 @@ void Mainmenu::init()
 	settingText[SET_SVOLUME].setPosition(settingButton[SET_SVOLUME].getPosition().x + settingButton[SET_SVOLUME].getSize().x + 25, settingButton[SET_SVOLUME].getPosition().y + (settingButton[SET_SVOLUME].getSize().y / 3));
 
 	//Anbient volume
-	settingButton[SET_AVOLUME].load(200, 50, 800, settingButton[SET_SVOLUME].getPosition().y + 75, image);
+	settingButton[SET_AVOLUME].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_SVOLUME].getPosition().y + 75, image);
 	settingButton[SET_AVOLUME]._text.setFont(_font);
 	settingButton[SET_AVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_AVOLUME]._text.setString("Anbient volume");
@@ -324,18 +343,16 @@ void Mainmenu::init()
 	selectionShape.setOrigin(selectionShape.getRadius(), selectionShape.getRadius());
 	selectionShape.setPosition(mainButton[BUT_START].getPosition().x - 25, mainButton[BUT_START].getPosition().y + (mainButton[BUT_START].getGlobalBounds().height / 2));
 
-	image.loadFromFile("Resources/Common/Graphics/UI/sheet_tsuge.png");
-	titleAnimation.loadSheet(image, 0, 0, 1000, 1000, 8, true);
-	titleAnimation.setStepInterval(6);
 
-	titleBackground.setSize(sf::Vector2f(1200, 1200));
-	titleBackground.setTexture(&titleAnimation.getCurrentTexture());
+	titleTexture.loadFromFile("Resources/Common/Graphics/UI/TitleScreen.png");
+	titleBackground.setSize(sf::Vector2f(1600, 1200));
+	titleBackground.setTexture(&titleTexture);
 	titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
-	titleBackground.setPosition(720, 0);
+	titleBackground.setPosition(320, 0);
 
-	titleMusic.openFromFile("Resources/Common/Audio/Music/junakulkee.ogg");
+	titleMusic.openFromFile("Resources/Common/Audio/Music/titlemusic.ogg");
 	titleMusic.setLoop(true);
-	titleMusic.setVolume(_engineSettings.musicVolume);
+	titleMusic.setVolume(0);
 	titleMusic.setRelativeToListener(true);
 
 	loaded = true;
@@ -352,6 +369,8 @@ void Mainmenu::update()
 			subSelectionMax = _loadSettings._campaignVector.size() - 1;
 
 			_loadSettings._campaign = subSelectionState;
+
+			confirmButton[CON_BACK].setPosition(600, 505);
 
 			if (campaignText[0].getPosition().y < 500 - (subSelectionState * 60)) campaignText[0].move(0, 4);
 			else if (campaignText[0].getPosition().y > 500 - (subSelectionState * 60)) campaignText[0].move(0, -4);
@@ -371,6 +390,8 @@ void Mainmenu::update()
 			subSelectionMax = _loadSettings._levelVector.size() - 1;
 
 			_loadSettings._level = subSelectionState;
+
+			confirmButton[CON_BACK].setPosition(600, 505);
 
 			if (levelText[0].getPosition().y < 500 - (subSelectionState * 60)) levelText[0].move(0, 4);
 			else if (levelText[0].getPosition().y > 500 - (subSelectionState * 60)) levelText[0].move(0, -4);
@@ -396,6 +417,9 @@ void Mainmenu::update()
 					settingButton[i].update(i == subSelectionState);
 			}
 
+			confirmButton[CON_APPLY].setPosition(600, 500);
+			confirmButton[CON_BACK].setPosition(600, confirmButton[CON_APPLY].getPosition().y + 100);
+
 			settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
 			if (_engineSettings.vSync) settingText[SET_VSYNC].setString("Enabled");
 			else settingText[SET_VSYNC].setString("Disabled");
@@ -413,15 +437,17 @@ void Mainmenu::update()
 			}
 		case BUT_CREDITS:
 			{
-				if (creditsText[1].getPosition().y + creditsText[1].getGlobalBounds().height > 0){
-					creditsText[0].move(0, -1.5);
-					creditsText[1].setPosition(creditsText[0].getPosition().x, creditsText[0].getPosition().y + 150);
-				}
-				else{
-					menuState = 0;
-					subSelectionState = 0;
-					subSelectionMax = 0;
-				}
+			confirmButton[CON_BACK].setPosition(600, 505);
+
+			if (creditsText[1].getPosition().y + creditsText[1].getGlobalBounds().height > 0){
+				creditsText[0].move(0, -1.5);
+				creditsText[1].setPosition(creditsText[0].getPosition().x, creditsText[0].getPosition().y + 150);
+			}
+			else{
+				menuState = 0;
+				subSelectionState = 0;
+				subSelectionMax = 0;
+			}
 			break;
 			}
 		default:
@@ -445,7 +471,7 @@ void Mainmenu::update()
 		case BUT_CAMPAIGN: //Campaign
 			{
 			if (campaignText.size() <= 1){
-				selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + (campaignText[subSelectionState].getLocalBounds().height / 1.5));
+				selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + (campaignText[subSelectionState].getLocalBounds().height));
 			}
 			else{
 				selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + campaignText[subSelectionState].getLocalBounds().height);
@@ -455,7 +481,7 @@ void Mainmenu::update()
 		case BUT_LEVEL: //Level
 			{
 			if (levelText.size() <= 1){
-				selectionShape.setPosition(levelText[subSelectionState].getPosition().x - 25, levelText[subSelectionState].getPosition().y + (levelText[subSelectionState].getLocalBounds().height / 1.5));
+				selectionShape.setPosition(levelText[subSelectionState].getPosition().x - 25, levelText[subSelectionState].getPosition().y + (levelText[subSelectionState].getLocalBounds().height));
 			}
 			else{
 				selectionShape.setPosition(levelText[subSelectionState].getPosition().x - 25, levelText[subSelectionState].getPosition().y + levelText[subSelectionState].getLocalBounds().height);
@@ -470,19 +496,39 @@ void Mainmenu::update()
 	}
 	
 
-	if (menuState <= 0){
-		if (titleBackground.getFillColor().a < 255)
-			titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, titleBackground.getFillColor().a + 1));
-		if (titleAnimation.frameChanged()) titleBackground.setTexture(&titleAnimation.getCurrentTexture());
-		titleAnimation.stepForward();
-	}
-	else{
-		titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
-	}
+	if (menuState <= 0 && titleBackground.getFillColor().a < 254)
+		titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, titleBackground.getFillColor().a + 2));
+	else if (menuState > 0 && titleBackground.getFillColor().a > titleMinAlpha)
+		titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, titleBackground.getFillColor().a - 6));
 	
+	for (unsigned int i = 0; i < mainButton.size(); i++){
+		mainButton[i].setFillColor(sf::Color::Color(mainButton[i].getFillColor().r, mainButton[i].getFillColor().g, mainButton[i].getFillColor().b, titleBackground.getFillColor().a));
+	}
 
 	//Volume updates
-	titleMusic.setVolume(_engineSettings.musicVolume);
+	if ((titleMusic.getPlayingOffset().asMilliseconds() > titleMusic.getDuration().asMilliseconds() - 5000 && titleMusic.getVolume() > 1) || titleMusic.getVolume() > _engineSettings.musicVolume)
+		titleMusic.setVolume(titleMusic.getVolume() - 0.5f);
+	else if (titleMusic.getPlayingOffset().asMilliseconds() < titleMusic.getDuration().asMilliseconds() && titleMusic.getVolume() < _engineSettings.musicVolume)
+		titleMusic.setVolume(titleMusic.getVolume() + 0.5f);
+
+
+	if (menuState > 0){
+		confirmButton[CON_APPLY].update(confirmButton[CON_APPLY].isOver());
+		confirmButton[CON_BACK].update(confirmButton[CON_BACK].isOver());
+
+		if (confirmButton[CON_BACK].isPressed()){
+			if (menuState == BUT_CAMPAIGN){
+				_loadSettings.loadLevels();
+			}
+			menuState = 0;
+			subSelectionState = 0;
+			subSelectionMax = 0;
+			_engineSettings.loadFromFile();
+		}
+		else if (confirmButton[CON_APPLY].isPressed() && menuState == BUT_SETTINGS && confirmButton[CON_APPLY].isOver()){
+			restartVideo();
+		}
+	}
 
 
 	//Events
@@ -498,6 +544,9 @@ void Mainmenu::update()
 				selectionState++;
 				lockMouse = true;
 			}
+			else if (_e->key.code == sf::Keyboard::Escape){
+				exitState = true;
+			}
 		}
 
 		//In sub menu
@@ -506,7 +555,7 @@ void Mainmenu::update()
 				subSelectionState--;
 				lockMouse = true;
 			}
-			else if (_e->key.code == sf::Keyboard::Up && subSelectionState < subSelectionMax){
+			else if (_e->key.code == sf::Keyboard::Down && subSelectionState < subSelectionMax){
 				subSelectionState++;
 				lockMouse = true;
 			}
@@ -594,21 +643,7 @@ void Mainmenu::update()
 
 
 				if (_e->key.code == sf::Keyboard::Return){
-					_engineSettings.writeToFile();
-
-
-					_window->close();
-
-					if (_engineSettings.fullScreen)
-						_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Fullscreen, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
-					else
-						_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
-						
-					_window->setVerticalSyncEnabled(_engineSettings.vSync);
-					sf::View view;
-					view.setCenter(sf::Vector2f(1920 / 2, 1200 / 2));
-					view.setSize(sf::Vector2f(1920, 1200));
-					_window->setView(view);
+					restartVideo();
 				}
 			}
 		}
@@ -622,16 +657,26 @@ void Mainmenu::draw()
 {
 	_window->clear();
 
+	_window->draw(titleBackground);
+
 	switch (menuState)
 	{
 		case BUT_CAMPAIGN:
+			{
 			for (unsigned int i = 0; i < campaignText.size(); i++)
 				_window->draw(campaignText[i]);
+			_window->draw(confirmButton[CON_BACK]);
+			_window->draw(confirmButton[CON_BACK]._text);
 			break;
+			}
 		case BUT_LEVEL:
+			{
 			for (unsigned int i = 0; i < levelText.size(); i++)
 				_window->draw(levelText[i]);
+			_window->draw(confirmButton[CON_BACK]);
+			_window->draw(confirmButton[CON_BACK]._text);
 			break;
+			}
 		case BUT_SETTINGS:
 			{
 			for (unsigned int i = 0; i < settingButton.size(); i++){
@@ -639,25 +684,26 @@ void Mainmenu::draw()
 				_window->draw(settingButton[i]._text);
 				_window->draw(settingText[i]);
 			}
+			_window->draw(confirmButton[CON_APPLY]);
+			_window->draw(confirmButton[CON_APPLY]._text);
+			_window->draw(confirmButton[CON_BACK]);
+			_window->draw(confirmButton[CON_BACK]._text);
 			break;
 			}
 		case BUT_CREDITS:
 			{
 			_window->draw(creditsText[0]);
 			_window->draw(creditsText[1]);
+
+			_window->draw(confirmButton[CON_BACK]);
+			_window->draw(confirmButton[CON_BACK]._text);
 			break;
 			}
-		default:
-			_window->draw(titleBackground);
 	}
 
 	for (unsigned int i = 0; i < mainButton.size(); i++){
 		_window->draw(mainButton[i]);
 		_window->draw(mainButton[i]._text);
-	}
-
-	if (menuState != 0){
-		//_window->draw(
 	}
 
 	if (menuState != BUT_CREDITS) _window->draw(selectionShape);
@@ -678,4 +724,23 @@ void Mainmenu::initLevels()
 		levelText.back().setString(_loadSettings._levelVector[i]);
 	}
 	levelText[0].setPosition(800, 500 - (subSelectionState * 60));
+}
+
+void Mainmenu::restartVideo()
+{
+	_engineSettings.writeToFile();
+
+
+	_window->close();
+	
+	if (_engineSettings.fullScreen)
+		_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Fullscreen, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
+	else
+		_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
+						
+	_window->setVerticalSyncEnabled(_engineSettings.vSync);
+	sf::View view;
+	view.setCenter(sf::Vector2f(1920 / 2, 1200 / 2));
+	view.setSize(sf::Vector2f(1920, 1200));
+	_window->setView(view);
 }

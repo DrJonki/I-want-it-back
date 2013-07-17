@@ -1,6 +1,8 @@
 #include "Game.h"
 
 
+void loadingScreen();
+
 namespace
 {
 	bool paused = false;
@@ -15,7 +17,9 @@ namespace
 	int d_updateTime = 0.f;
 	int d_renderTime = 0.f;
 
-	sf::View view[3];
+	//View centers
+	float viewCenterTop = 0.f;
+	float viewCenterBottom = 0.f;
 	
 	sf::RectangleShape sShape;
 
@@ -26,6 +30,8 @@ namespace
 	unsigned int soundSelection = 1;
 
 	ContactListener* cListener;
+
+	Pausemenu* pauseMenu;
 }
 
 Game::Game(void)
@@ -41,9 +47,8 @@ bool Game::runAndDontCrashPls()
 		ns::debug->draw();
 	}
 	
-	while (mainMenu.showMenu()){
+	while (mainMenu.showMenu() && !ns::exitState){
 		init();
-		Pausemenu pauseMenu(&gameWindow, &e);
 
 		while (ns::runningState){
 			if (mainMenu.getEngineSettings().vSync){
@@ -56,10 +61,9 @@ bool Game::runAndDontCrashPls()
 					if (paused){
 						player[0]->resetClocks();
 						player[1]->resetClocks();
-
-						if (pauseMenu.update())
-							paused = false;
 					}
+					if (pauseMenu->showMenu(paused))
+						paused = false;
 				}
 			}
 			else {
@@ -71,10 +75,9 @@ bool Game::runAndDontCrashPls()
 				if (paused){
 					player[0]->resetClocks();
 					player[1]->resetClocks();
-
-					if (pauseMenu.update())
-						paused = false;
 				}
+				if (pauseMenu->showMenu(paused))
+					paused = false;
 			}
 		}
 		deInit();
@@ -91,34 +94,39 @@ void Game::update()
 {
 	updateClock.restart();
 
+	pauseMenu->getView(VIEW_TOP).setCenter(sf::Vector2f(viewCenterTop, 300));
+	pauseMenu->getView(VIEW_BOTTOM).setCenter(sf::Vector2f(viewCenterBottom, 900));
+
 	//Update loop here
 	//Player 1
-	gameWindow.setView(view[0]);
+	gameWindow.setView(pauseMenu->getView(VIEW_TOP));
 	player[0]->update();
 
 	//Player 2
-	gameWindow.setView(view[1]);
+	gameWindow.setView(pauseMenu->getView(VIEW_BOTTOM));
 	player[1]->update();
 
 	//Border checks
-	if ((player[1]->getPosition().y > 1200 + player[1]->getLocalBounds().height || player[1]->getPosition().x + (player[1]->getLocalBounds().width / 2) < (view[1].getCenter().x - (view[1].getSize().x / 2))) ||
-		(player[0]->getPosition().y > 600 + player[0]->getLocalBounds().height || player[0]->getPosition().x + (player[0]->getLocalBounds().width / 2) < (view[0].getCenter().x - (view[0].getSize().x / 2))))
+	if ((player[1]->getPosition().y > 1200 + player[1]->getLocalBounds().height || player[1]->getPosition().x + (player[1]->getLocalBounds().width / 2) < (pauseMenu->getView(VIEW_BOTTOM).getCenter().x - (pauseMenu->getView(VIEW_BOTTOM).getSize().x / 2))) ||
+		(player[0]->getPosition().y > 600 + player[0]->getLocalBounds().height || player[0]->getPosition().x + (player[0]->getLocalBounds().width / 2) < (pauseMenu->getView(VIEW_TOP).getCenter().x - (pauseMenu->getView(VIEW_TOP).getSize().x / 2))))
 		ns::runningState = false;
 	
 	worldManager.stepWorldPhysics();
-
 	
-	view[0].move(ns::cameraSpeed, 0);
-	view[1].move(ns::cameraSpeed, 0);
+	pauseMenu->getView(VIEW_TOP).move(ns::cameraSpeed, 0);
+	pauseMenu->getView(VIEW_BOTTOM).move(ns::cameraSpeed, 0);
 
-	if (player[0]->getPosition().x > view[0].getCenter().x) view[0].setCenter(sf::Vector2f(player[0]->getPosition().x, view[0].getCenter().y));
-	if (player[1]->getPosition().x > view[1].getCenter().x) view[1].setCenter(sf::Vector2f(player[1]->getPosition().x, view[1].getCenter().y));
+	if (player[0]->getPosition().x > pauseMenu->getView(VIEW_TOP).getCenter().x) pauseMenu->getView(VIEW_TOP).setCenter(sf::Vector2f(player[0]->getPosition().x, pauseMenu->getView(VIEW_TOP).getCenter().y));
+	if (player[1]->getPosition().x > pauseMenu->getView(VIEW_BOTTOM).getCenter().x) pauseMenu->getView(VIEW_BOTTOM).setCenter(sf::Vector2f(player[1]->getPosition().x, pauseMenu->getView(VIEW_BOTTOM).getCenter().y));
+
+	viewCenterTop = pauseMenu->getView(VIEW_TOP).getCenter().x;
+	viewCenterBottom = pauseMenu->getView(VIEW_BOTTOM).getCenter().x;
 
 	sf::Listener::setDirection(sf::Vector3f(1.f, 0.f, 0.f));
 	if (ns::soundState == 2)
-		sf::Listener::setPosition(view[1].getCenter().x, 0.f, 0.f);
+		sf::Listener::setPosition(pauseMenu->getView(VIEW_BOTTOM).getCenter().x, 0.f, 0.f);
 	else
-		sf::Listener::setPosition(view[0].getCenter().x, 0.f, 0.f);
+		sf::Listener::setPosition(pauseMenu->getView(VIEW_TOP).getCenter().x, 0.f, 0.f);
 	sf::Listener::setGlobalVolume(mainMenu.getEngineSettings().globalVolume);
 	//End of update loop
 
@@ -138,8 +146,13 @@ void Game::render()
 	renderClock.restart();
 	gameWindow.clear();
 
+	if (paused){
+		pauseMenu->getView(VIEW_TOP).setCenter(sf::Vector2f(viewCenterTop, 300));
+		pauseMenu->getView(VIEW_BOTTOM).setCenter(sf::Vector2f(viewCenterBottom, 900));
+	}
+
 	//Rendering for top view
-	gameWindow.setView(view[0]);
+	gameWindow.setView(pauseMenu->getView(VIEW_TOP));
 
 	worldManager.draw();
 	gameWindow.draw(*player[0]);
@@ -153,7 +166,7 @@ void Game::render()
 
 
 	//Rendering for bottom view
-	gameWindow.setView(view[1]);
+	gameWindow.setView(pauseMenu->getView(VIEW_BOTTOM));
 
 	worldManager.draw();
 	gameWindow.draw(*player[1]);
@@ -167,9 +180,14 @@ void Game::render()
 
 
 	//UI rendering
-	gameWindow.setView(view[2]);
-
+	gameWindow.setView(pauseMenu->getView(VIEW_WHOLE));
+	
+	sShape.setSize(sf::Vector2f(pauseMenu->getView(VIEW_WHOLE).getSize().x, 11));
+	sShape.setOrigin(0, 6);
+	sShape.setPosition(0, pauseMenu->getView(VIEW_WHOLE).getCenter().y);
 	gameWindow.draw(sShape);
+
+	pauseMenu->draw();
 
 	//End of render loop
 	glFlush();
@@ -194,12 +212,25 @@ void Game::pollEvents()
 				ns::soundState--;
 			}
 		}
+		if (e.type == sf::Event::LostFocus){
+			paused = true;
+		}
 	}
 }
 
 void Game::init()
 {
 	paused = false;
+	
+	pauseMenu = new Pausemenu(&gameWindow, &e, mainMenu.getEngineSettings());
+
+	gameWindow.setActive(false);
+
+	viewCenterTop = pauseMenu->getView(VIEW_TOP).getCenter().x;
+	viewCenterBottom = pauseMenu->getView(VIEW_BOTTOM).getCenter().x;
+
+	sf::Thread loadingScreenThread(&loadingScreen);
+	loadingScreenThread.launch();
 
 	cListener = new ContactListener;
 
@@ -217,34 +248,19 @@ void Game::init()
 		ns::debug->assignPtr(&d_renderTime, "Render time(us): ");
 	}
 
-	EngineSettings engineSettings = mainMenu.getEngineSettings();
-	float s_scale =  ((float)engineSettings.resolution.x / (float)engineSettings.resolution.y) / (1920.f / 1200.f);
-	//Top view
-	view[0].setCenter(sf::Vector2f((1920 * s_scale) / 2, 300));
-	view[0].setSize(sf::Vector2f(1920 * s_scale, 600));
-	view[0].setViewport(sf::FloatRect(0, 0, 1.f, 0.5f));
-
-	//Bottom view
-	view[1].setCenter(sf::Vector2f((1920 * s_scale) / 2, 900));
-	view[1].setSize(sf::Vector2f(1920 * s_scale, 600));
-	view[1].setViewport(sf::FloatRect(0, 0.5f, 1.f, 0.5f));
-
-	//Whole view
-	view[2].setCenter(sf::Vector2f(engineSettings.resolution.x / 2, engineSettings.resolution.y / 2));
-	view[2].setSize(sf::Vector2f((float)engineSettings.resolution.x, (float)engineSettings.resolution.y));
-	view[2].setViewport(sf::FloatRect(0, 0, 1.f, 1.f));
-
 	sShape.setFillColor(sf::Color::Black);
 	sShape.setOutlineThickness(2);
 	sShape.setOutlineColor(sf::Color::Yellow);
-	sShape.setSize(sf::Vector2f((float)engineSettings.resolution.x, 11));
+	sShape.setSize(sf::Vector2f((float)mainMenu.getEngineSettings().resolution.x, 11));
 	sShape.setOrigin(0, 6);
-	sShape.setPosition(0, engineSettings.resolution.y / 2);
+	sShape.setPosition(0, mainMenu.getEngineSettings().resolution.y / 2);
 
 	updateClock.restart();
 	SetForegroundWindow(gameWindow.getSystemHandle());
 
 	ns::runningState = true;
+	loadingScreenThread.wait();
+	gameWindow.setActive(true);
 }
 
 void Game::deInit()
@@ -255,10 +271,32 @@ void Game::deInit()
 	delete player[0];
 	delete player[1];
 	delete cListener;
+	delete pauseMenu;
 	ns::runningState = false;
 
 	if (mainMenu.getEngineSettings().debug){
 		ns::debug->clear();
 		ns::debug->draw();
 	}
+}
+
+void loadingScreen()
+{
+	gameWindow.setActive(true);
+
+	sf::Font font;
+	font.loadFromFile("Resources/Common/Fonts/Amble-Bold.ttf");
+	sf::Text text;
+	text.setFont(font);
+	text.setCharacterSize(100);
+	text.setPosition(300, 300);
+	text.setString("Loading...");
+
+	while (!ns::runningState){
+		gameWindow.clear(sf::Color::Black);
+		gameWindow.draw(text);
+		gameWindow.display();
+	}
+
+	gameWindow.setActive(false);
 }
