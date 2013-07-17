@@ -285,10 +285,6 @@ void Player::createSensors()
 	_body->CreateFixture(&t_fixtureDef);
 
 
-
-	//Common properties
-	t_fixtureDef.isSensor = true;
-
 	if (_playerNumber == 1){
 		t_fixtureDef.filter.categoryBits = FIL_PLAYERBOTTOM_TOP;
 		t_fixtureDef.filter.maskBits = FIL_LEVEL_TOP;
