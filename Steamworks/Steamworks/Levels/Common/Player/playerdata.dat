@@ -1,7 +1,7 @@
-sizeX: 256.f
-sizeY: 256.f
+sizeX: 300.f
+sizeY: 300.f
 baseSpeed: 5.175f
 catchingSpeed: 6.5f
-jumpForce: 25.f
+jumpForce: 40.f
 airDrag: 0.01f
 cameraSpeed: 5.f

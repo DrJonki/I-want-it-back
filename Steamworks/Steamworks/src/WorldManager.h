@@ -24,6 +24,8 @@ public:
 	void draw();
 	void drawForeground();
 
+	void resetMap() {};
+
 	b2World* getWorldPtr() { return _gameWorld; };
 
 private:

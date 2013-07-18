@@ -53,6 +53,7 @@ private:
 	static const enum
 	{
 		BUT_START,
+		BUT_RESTART,
 		BUT_SETTINGS,
 		BUT_EXIT,
 		BUT_EXITTOWIN,

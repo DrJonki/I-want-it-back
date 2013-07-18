@@ -2,6 +2,7 @@
 
 #include <SFML\Graphics.hpp>
 #include <SFML\Window\Keyboard.hpp>
+#include <SFML\Audio.hpp>
 #include <Box2D\Box2D.h>
 
 #include <sstream>
@@ -40,6 +41,10 @@ private:
 
 	sf::Clock hangTime;
 	sf::Clock somersaultTime;
+
+	//Sounds
+	sf::SoundBuffer _stepSoundBuffer;
+	sf::Sound _stepSound;
 
 	struct
 	{

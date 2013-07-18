@@ -186,6 +186,9 @@ void EngineSettings::updateResolution()
 	resolution.x = sf::VideoMode::getFullscreenModes()[resVectorNumber].width;
 	resolution.y = sf::VideoMode::getFullscreenModes()[resVectorNumber].height;
 
+	/*if (resolution.x > sf::VideoMode::getDesktopMode().width) resolution.x = sf::VideoMode::getDesktopMode().width;
+	if (resolution.y > sf::VideoMode::getDesktopMode().height) resolution.y = sf::VideoMode::getDesktopMode().height;*/
+
 	usingCustomRes();
 }
 

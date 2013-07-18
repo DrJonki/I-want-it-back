@@ -13,6 +13,7 @@
 #include "Pausemenu.h"
 #include "WorldManager.h"
 #include "Player.h"
+#include "Gui.h"
 
 
 class Game

@@ -7,6 +7,8 @@
 #include <vector>
 #include <memory>
 
+#include "Globals.h"
+
 class SpriteAnimation
 {
 public:
@@ -80,7 +82,7 @@ public:
 	/// The sound needs to be alive outside this class.
 	/// @param A reference to the sound to be assigned.
 	/// @param Frame into which the sound shall be assigned.
-	void assignSound(sf::Sound& sound, const unsigned int frame);
+	void assignSound(sf::Sound* sound, const unsigned int frameNo, const unsigned int levelNo);
 	
 
 	/// Releases the sound hook for the specified frame.
@@ -94,6 +96,8 @@ public:
 	sf::Texture& getCurrentTexture() { return frameTexture[_currentFrame - 1]; };
 
 private:
+	void checkSounds();
+
 	/// The current animation frame.
 	unsigned int _currentFrame;
 
@@ -113,5 +117,12 @@ private:
 	/// A container for the textures.
 	std::vector<sf::Texture> frameTexture; 
 
-	//std::vector<> assignedSounds;
+	/// A structure for the assigned sounds
+	struct assignedSound
+	{
+		sf::Sound* _sound;
+		unsigned int _frame;
+		unsigned int _level;
+	};
+	std::vector<assignedSound> _assignedSounds;
 };

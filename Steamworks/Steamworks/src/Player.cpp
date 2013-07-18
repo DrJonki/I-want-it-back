@@ -447,6 +447,21 @@ void Player::loadAnimations(LoadSettings& lsettings, EngineSettings& esettings)
 			else file.ignore(256, '\n');
 		}
 	}
+
+	//Sounds
+	if (_stepSoundBuffer.loadFromFile("Resources/Common/Audio/Sound/step.ogg")){
+		_stepSound.setBuffer(_stepSoundBuffer);
+		_stepSound.setRelativeToListener(true);
+
+		if (_playerNumber == 1){
+			animations[ANIM_RUNNING].assignSound(&_stepSound, 2, 1);
+			animations[ANIM_RUNNING].assignSound(&_stepSound, 7, 1);
+		}
+		else if (_playerNumber == 2){
+			animations[ANIM_RUNNING].assignSound(&_stepSound, 2, 2);
+			animations[ANIM_RUNNING].assignSound(&_stepSound, 7, 2);
+		}
+	}
 }
 
 void Player::loadProperties(LoadSettings& settings)

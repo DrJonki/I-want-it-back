@@ -33,7 +33,6 @@ bool Mainmenu::showMenu()
 	subSelectionMax = 0;
 	menuState = 0;
 	lockMouse = true;
-	loaded = false;
 	exitState = false;
 
 	if (!loaded) init();
@@ -45,7 +44,7 @@ bool Mainmenu::showMenu()
 	titleMusic.play();
 	titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
 	
-	while (1){
+	while (!ns::exitState && !ns::deathState){
 		if (mainButton[BUT_START].isPressed()){
 			titleMusic.stop();
 			menuState = BUT_START;
@@ -88,6 +87,8 @@ bool Mainmenu::showMenu()
 			draw();
 		}
 	}
+
+	return false;
 }
 
 

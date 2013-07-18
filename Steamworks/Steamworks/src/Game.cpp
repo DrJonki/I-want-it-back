@@ -32,6 +32,8 @@ namespace
 	ContactListener* cListener;
 
 	Pausemenu* pauseMenu;
+
+	Gui* gui;
 }
 
 Game::Game(void)
@@ -47,10 +49,10 @@ bool Game::runAndDontCrashPls()
 		ns::debug->draw();
 	}
 	
-	while (mainMenu.showMenu() && !ns::exitState){
+	while (ns::deathState || (mainMenu.showMenu() && !ns::exitState)){
 		init();
 
-		while (ns::runningState){
+		while (ns::runningState && !ns::deathState){
 			if (mainMenu.getEngineSettings().vSync){
 				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
 					if (!paused){
@@ -109,7 +111,7 @@ void Game::update()
 	//Border checks
 	if ((player[1]->getPosition().y > 1200 + player[1]->getLocalBounds().height || player[1]->getPosition().x + (player[1]->getLocalBounds().width / 2) < (pauseMenu->getView(VIEW_BOTTOM).getCenter().x - (pauseMenu->getView(VIEW_BOTTOM).getSize().x / 2))) ||
 		(player[0]->getPosition().y > 600 + player[0]->getLocalBounds().height || player[0]->getPosition().x + (player[0]->getLocalBounds().width / 2) < (pauseMenu->getView(VIEW_TOP).getCenter().x - (pauseMenu->getView(VIEW_TOP).getSize().x / 2))))
-		ns::runningState = false;
+		ns::deathState = true;
 	
 	worldManager.stepWorldPhysics();
 	
@@ -128,6 +130,8 @@ void Game::update()
 	else
 		sf::Listener::setPosition(pauseMenu->getView(VIEW_TOP).getCenter().x, 0.f, 0.f);
 	sf::Listener::setGlobalVolume(mainMenu.getEngineSettings().globalVolume);
+
+	gui->update();
 	//End of update loop
 
 	if (mainMenu.getEngineSettings().debug){
@@ -187,6 +191,7 @@ void Game::render()
 	sShape.setPosition(0, pauseMenu->getView(VIEW_WHOLE).getCenter().y);
 	gameWindow.draw(sShape);
 
+	gui->draw();
 	pauseMenu->draw();
 
 	//End of render loop
@@ -221,6 +226,7 @@ void Game::pollEvents()
 void Game::init()
 {
 	paused = false;
+	ns::deathState = false;
 	
 	pauseMenu = new Pausemenu(&gameWindow, &e, mainMenu.getEngineSettings());
 
@@ -232,6 +238,7 @@ void Game::init()
 	sf::Thread loadingScreenThread(&loadingScreen);
 	loadingScreenThread.launch();
 
+	gui = new Gui(&gameWindow);
 	cListener = new ContactListener;
 
 	player[0] = new Player(1, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
@@ -291,6 +298,11 @@ void loadingScreen()
 	text.setCharacterSize(100);
 	text.setPosition(300, 300);
 	text.setString("Loading...");
+
+	sf::View view;
+	view.setCenter(sf::Vector2f(1920 / 2, 1200 / 2));
+	view.setSize(sf::Vector2f(1920, 1200));
+	gameWindow.setView(view);
 
 	while (!ns::runningState){
 		gameWindow.clear(sf::Color::Black);

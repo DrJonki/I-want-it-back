@@ -40,15 +40,23 @@ bool Pausemenu::showMenu(bool paused)
 			menuState = BUT_START;
 			return true;
 		}
+		else if (mainButton[BUT_RESTART].isPressed()){
+			ns::deathState = true;
+			return false;
+		}
 		else if (mainButton[BUT_SETTINGS].isPressed() && menuState == 0){
 			menuState = BUT_SETTINGS;
 		}
 		else if (((mainButton[BUT_EXIT].isPressed()) && menuState == 0)){
+			ns::deathState = false;
 			ns::runningState = false;
+			return false;
 		}
 		else if (mainButton[BUT_EXITTOWIN].isPressed() && menuState == 0){
+			ns::deathState = false;
 			ns::runningState = false;
 			ns::exitState = true;
+			return false;
 		}
 		update();
 	}
@@ -326,8 +334,14 @@ void Pausemenu::init()
 	mainButton[BUT_START]._text.setCharacterSize(40);
 	mainButton[BUT_START]._text.setString("Continue");
 	mainButton[BUT_START]._text.setColor(sf::Color::Black);
+	//Restart
+	mainButton[BUT_RESTART].load(225, 125, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 175, image);
+	mainButton[BUT_RESTART]._text.setFont(_font);
+	mainButton[BUT_RESTART]._text.setCharacterSize(32);
+	mainButton[BUT_RESTART]._text.setString("Restart from\ncheckpoint");
+	mainButton[BUT_RESTART]._text.setColor(sf::Color::Black);
 	//Settings
-	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 200, image);
+	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_RESTART].getPosition().x, mainButton[BUT_RESTART].getPosition().y + 150, image);
 	mainButton[BUT_SETTINGS]._text.setFont(_font);
 	mainButton[BUT_SETTINGS]._text.setCharacterSize(30);
 	mainButton[BUT_SETTINGS]._text.setString("Settings");

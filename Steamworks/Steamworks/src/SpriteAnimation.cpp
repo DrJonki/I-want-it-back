@@ -13,6 +13,7 @@ SpriteAnimation::SpriteAnimation(void)
 
 SpriteAnimation::~SpriteAnimation(void)
 {
+	_assignedSounds.clear();
 	frameTexture.clear();
 }
 
@@ -59,6 +60,8 @@ void SpriteAnimation::stepForward(const bool force)
 		_tempSteps++;
 		if (_tempSteps > _stepInterval) _tempSteps = 1;
 	}
+
+	checkSounds();
 }
 void SpriteAnimation::stepBack(const bool force)
 {
@@ -80,6 +83,8 @@ void SpriteAnimation::stepBack(const bool force)
 		_tempSteps--;
 		if (_tempSteps < 1) _tempSteps = _stepInterval;
 	}
+
+	checkSounds();
 }
 
 void SpriteAnimation::setCurrentFrame(const unsigned int currentFrame)
@@ -87,6 +92,8 @@ void SpriteAnimation::setCurrentFrame(const unsigned int currentFrame)
 	_currentFrame = currentFrame;
 	_tempSteps = 1;
 	_frameChanged = true;
+
+	checkSounds();
 }
 
 bool SpriteAnimation::lastFrame()
@@ -102,4 +109,20 @@ bool SpriteAnimation::frameChanged()
 		return true;
 	}
 	else return false;
+}
+
+void SpriteAnimation::assignSound(sf::Sound* sound, const unsigned int frameNo, const unsigned int levelNo)
+{
+	_assignedSounds.emplace_back(assignedSound());
+
+	_assignedSounds.back()._sound = sound;
+	_assignedSounds.back()._frame = frameNo;
+	_assignedSounds.back()._level = levelNo;
+}
+
+void SpriteAnimation::checkSounds()
+{
+	for (unsigned int i = 0; i < _assignedSounds.size(); i++){
+		if (_currentFrame == _assignedSounds[i]._frame && (_assignedSounds[i]._level == ns::soundState || ns::soundState == 0)) _assignedSounds[i]._sound->play();
+	}
 }
