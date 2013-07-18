@@ -47,12 +47,12 @@ void EngineSettings::loadFromFile()
 	std::string path(std::getenv("USERPROFILE"));
 	path += "\\Documents\\my games";
 	_mkdir(path.c_str());
-	path += "\\uhh";
+	path += "\\I want it back";
 	_mkdir(path.c_str());
 
 	//Load values
 	path = (std::getenv("USERPROFILE"));
-	path += "/Documents/my games/uhh/settings.txt";
+	path += "/Documents/my games/I want it back/settings.txt";
 
 	std::ifstream file(path, std::ifstream::in);
 
@@ -130,7 +130,7 @@ void EngineSettings::loadFromFile()
 void EngineSettings::writeToFile()
 {
 	std::string path = (std::getenv("USERPROFILE"));
-	path += "/Documents/my games/uhh/settings.txt";
+	path += "/Documents/my games/I want it back/settings.txt";
 
 	std::string s;
 

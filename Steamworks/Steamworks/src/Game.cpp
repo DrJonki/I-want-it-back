@@ -48,6 +48,10 @@ bool Game::runAndDontCrashPls()
 		ns::debug = new DebugConsole;
 		ns::debug->draw();
 	}
+	else{
+		HWND hwnd = GetConsoleWindow();
+		ShowWindow(hwnd, SW_HIDE);
+	}
 	
 	while (ns::deathState || (mainMenu.showMenu() && !ns::exitState)){
 		init();
