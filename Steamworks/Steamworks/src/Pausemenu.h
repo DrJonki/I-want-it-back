@@ -1,8 +1,10 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\View.hpp>
+#include <SFML\Graphics\CircleShape.hpp>
+#include <SFML\Window\Event.hpp>
 
-#include "Globals.h"
 #include "EngineSettings.h"
 #include "GameButton.h"
 

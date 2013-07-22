@@ -1,10 +1,6 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
-#include <sstream>
-#include <string>
-
-//#include "Globals.h"
+#include <SFML\Graphics\Text.hpp>
 
 class DebugObject : public sf::Text
 {

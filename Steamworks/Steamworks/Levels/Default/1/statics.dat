@@ -3,12 +3,18 @@
 15656 10 19628 550 1.0 1.0 Resources/Default/1/Graphics/k.png 1
 15656 10 19628 1150 1.0 1.0 Resources/Default/1/Graphics/k.png 1
 150 150 2000 475 0.6 0.95 Resources/Default/1/Graphics/Props/Prop_hydrant_past.png 1 250 250 0 0 60 1
-250 250 3900 475 0.3 1.0 Resources/Default/1/Graphics/Props/Prop_Clothing_rack_past.png 1 512 512 0 0 60 1
-250 250 4700 450 0.3 1.0 Resources/Default/1/Graphics/Props/Prop_Clothing_rack_past.png 1 512 512 0 0 60 1
-150 150 6220 500 0.6 1.0 Resources/Default/1/Graphics/Props/Prop_hydrant_past.png 1 250 250 0 0 60 1
+230 230 4300 475 0.3 1.0 Resources/Default/1/Graphics/Props/Prop_Clothing_rack_past.png 1 512 512 0 0 60 1
+250 250 5600 450 0.3 0.65 Resources/Default/1/Graphics/Props/TrashCan_Past.png 1 1024 1024 0 0 60 1
+150 150 6320 500 0.6 1.0 Resources/Default/1/Graphics/Props/Prop_hydrant_past.png 1 250 250 0 0 60 1
 150 150 9160 500 1.0 1.0 Resources/Default/1/Graphics/Props/Prop_hydrant_past.png 1 250 250 0 0 60 1
+250 250 12750 500 0.4 0.8 Resources/Default/1/Graphics/Props/Prop_Mail_Box_Past.png 1 1024 1024 0 0 60 1
+250 250 16750 500 0.4 0.8 Resources/Default/1/Graphics/Props/Prop_Mail_Box_Past.png 1 1024 1024 0 0 60 1
 150 150 2100 1075 0.6 0.95 Resources/Default/1/Graphics/Props/Prop_hydrant_now.png 1 250 250 0 0 60 1
 160 160 3040 1100 1.0 1.0 Resources/Default/1/Graphics/k.png 1 128 128 0 0 60 1
-250 250 4700 1150 1.0 0.3 Resources/Default/1/Graphics/Props/Prop_Clothing_rack_now.png 1 512 512 0 0 60 1
-150 150 6220 1100 1.0 1.0 Resources/Default/1/Graphics/Props/Prop_hydrant_now.png 1 250 250 0 0 60 1
+250 250 4700 1100 1.0 0.3 Resources/Default/1/Graphics/Props/Prop_Clothing_rack_now.png 1 512 512 0 0 60 1
+250 250 5600 1050 0.3 0.65 Resources/Default/1/Graphics/Props/TrashCan_Now.png 1 1024 1024 0 0 60 1
+150 150 6320 1100 1.0 1.0 Resources/Default/1/Graphics/Props/Prop_hydrant_now.png 1 250 250 0 0 60 1
+50 150 7000 800 1.0 1.0 Resources/Default/1/Graphics/Props/k.png 1 250 250 0 0 60 1
 150 150 9160 1100 1.0 1.0 Resources/Default/1/Graphics/Props/Prop_hydrant_now.png 1 250 250 0 0 60 1
+250 250 12750 1100 0.4 0.8 Resources/Default/1/Graphics/Props/Prop_Mail_Box_Now.png 1 1024 1024 0 0 60 1
+250 250 16750 1100 0.4 0.8 Resources/Default/1/Graphics/Props/Prop_Mail_Box_Now.png 1 1024 1024 0 0 60 1

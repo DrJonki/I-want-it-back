@@ -1,5 +1,10 @@
 #include "Mainmenu.h"
 
+#include <sstream>
+#include <cmath>
+
+#include "Globals.h"
+
 namespace
 {
 	int selectionState = 0;
@@ -45,7 +50,7 @@ bool Mainmenu::showMenu()
 	titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
 	
 	while (!ns::exitState && !ns::deathState){
-		if (mainButton[BUT_START].isPressed()){
+		if (mainButton[BUT_START].isPressed() && !ns::endOfLevelState){
 			titleMusic.stop();
 			menuState = BUT_START;
 			return true;
@@ -548,6 +553,10 @@ void Mainmenu::update()
 			else if (_e->key.code == sf::Keyboard::Escape){
 				exitState = true;
 			}
+		}
+
+		else if (_e->type == sf::Event::KeyReleased){
+			if (_e->key.code == sf::Keyboard::Return) ns::endOfLevelState = false;
 		}
 
 		//In sub menu

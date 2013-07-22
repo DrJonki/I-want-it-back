@@ -1,9 +1,9 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
-#include <Box2D\Box2D.h>
+#include <SFML\Graphics\RectangleShape.hpp>
+#include <Box2D\Dynamics\b2World.h>
+#include <Box2D\Dynamics\b2Body.h>
 
-#include "Globals.h"
 #include "SpriteAnimation.h"
 
 class MapObject : public sf::RectangleShape, public SpriteAnimation

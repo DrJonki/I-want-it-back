@@ -1,19 +1,12 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
-#include <SFML\Window\Keyboard.hpp>
-#include <SFML\Audio.hpp>
-#include <Box2D\Box2D.h>
-
-#include <sstream>
-#include <fstream>
-#include <cmath>
+#include <SFML\Audio\SoundBuffer.hpp>
+#include <SFML\Audio\Sound.hpp>
+#include <SFML\System\Clock.hpp>
 
 #include "Sprite.h"
-#include "ContactListener.h"
 #include "EngineSettings.h"
 #include "LoadSettings.h"
-#include "Globals.h"
 
 class Player : public Sprite
 {
@@ -21,7 +14,7 @@ public:
 	Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSettings& esettings);
 	~Player(void);
 
-	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis, EngineSettings& settings);
+	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis);
 	void unloadPlayer();
 	void createSensors();
 
@@ -91,4 +84,3 @@ private:
 
 	unsigned int animationState;
 };
-

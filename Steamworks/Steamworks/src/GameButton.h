@@ -1,9 +1,10 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\RectangleShape.hpp>
+#include <SFML\Graphics\Text.hpp>
 
 #include "SpriteAnimation.h"
-#include "RichText.hpp"
 
 class GameButton : public SpriteAnimation, public sf::RectangleShape
 {

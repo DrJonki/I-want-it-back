@@ -1,5 +1,6 @@
 #include "Map.h"
 
+#include <fstream>
 
 //Map
 //Public
@@ -87,9 +88,9 @@ void Map::update()
 				}
 			}
 
-			if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_LETHAL) ns::deathState = true;
-			else if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_CHECKPOINT) ns::spawnPoint = _triggerObject[i].getPosition().x;
-			else if (_triggerObject[i]._body->GetUserData() == (void*)TRIG_ENDOFLEVEL) ns::endOfLevelState = true;
+			if (_triggerObject[i]._body->GetFixtureList()[0].GetUserData() == (void*)TRIG_LETHAL) ns::deathState = true;
+			else if (_triggerObject[i]._body->GetFixtureList()[0].GetUserData() == (void*)TRIG_CHECKPOINT) ns::spawnPoint = _triggerObject[i].getPosition().x;
+			else if (_triggerObject[i]._body->GetFixtureList()[0].GetUserData() == (void*)TRIG_ENDOFLEVEL) ns::endOfLevelState = true;
 		}
 
 		else{

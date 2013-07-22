@@ -1,5 +1,8 @@
 #include "Player.h"
 
+#include <fstream>
+
+#include "Globals.h"
 
 
 Player::Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSettings& esettings)
@@ -27,7 +30,7 @@ Player::Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSet
 Player::~Player(void)
 {}
 
-void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis, EngineSettings& settings)
+void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis)
 {
 	_world = world;
 	_cListener = lis;
@@ -93,7 +96,7 @@ void Player::update()
 	}
 
 	//Crouching
-	if (((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && somersaultTime.getElapsedTime().asMilliseconds() > 1100) || animState == ANIM_SOMERSAULT || _cListener->inContact(_sensorData[SEN_MIDDLE]) || _cListener->inContact(_sensorData[SEN_TOP]))){
+	if (((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && somersaultTime.getElapsedTime().asMilliseconds() > 1000) || animState == ANIM_SOMERSAULT || _cListener->inContact(_sensorData[SEN_MIDDLE]) || _cListener->inContact(_sensorData[SEN_TOP]))){
 		b2Filter filter = topFixture->GetFilterData();
 		filter.maskBits = FIL_NULL;
 		topFixture->SetFilterData(filter);

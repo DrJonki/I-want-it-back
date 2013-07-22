@@ -1,21 +1,5 @@
 #pragma once
 
-#include <SFML\System.hpp>
-#include <SFML\Graphics.hpp>
-#include <SFML\Audio.hpp>
-#include <SFML\OpenGL.hpp>
-
-#include <Windows.h>
-
-#include "Globals.h"
-#include "DebugConsole.h"
-#include "Mainmenu.h"
-#include "Pausemenu.h"
-#include "WorldManager.h"
-#include "Player.h"
-#include "Gui.h"
-
-
 class Game
 {
 public:

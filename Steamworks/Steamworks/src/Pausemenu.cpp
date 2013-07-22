@@ -1,5 +1,6 @@
 #include "Pausemenu.h"
 
+#include "Globals.h"
 
 namespace
 {
@@ -41,7 +42,8 @@ bool Pausemenu::showMenu(bool paused)
 			return true;
 		}
 		else if (mainButton[BUT_RESTART].isPressed()){
-			ns::deathState = true;
+			ns::runningState = false;
+			ns::restartState = true;
 			return false;
 		}
 		else if (mainButton[BUT_SETTINGS].isPressed() && menuState == 0){

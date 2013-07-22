@@ -1,15 +1,7 @@
 #pragma once
 
-#include <string>
-#include <sstream>
-#include <fstream>
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
 #include <vector>
-#include <Windows.h>
-
-#include "dirent.h"
+#include <string>
 
 class LoadSettings
 {

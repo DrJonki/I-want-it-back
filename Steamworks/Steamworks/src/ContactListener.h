@@ -1,11 +1,9 @@
 #pragma once
 
-#include <Box2D\Box2D.h>
 #include <SFML\System\Clock.hpp>
+#include <Box2D\Box2D.h>
 
 #include <vector>
-
-#include "Globals.h"
 
 class ContactListener : public b2ContactListener
 {

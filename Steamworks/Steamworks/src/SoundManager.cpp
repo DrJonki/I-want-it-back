@@ -1,5 +1,6 @@
 #include "SoundManager.h"
 
+#include <fstream>
 
 SoundManager::SoundManager(void)
 {}

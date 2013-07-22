@@ -1,10 +1,7 @@
 #pragma once
 
-#include <Box2D\Box2D.h>
-#include <SFML\Graphics.hpp>
-
-#include "Globals.h"
-#include "ContactListener.h"
+#include <SFML\Graphics\RectangleShape.hpp>
+#include <Box2D\Dynamics\b2Body.h>
 
 class Trigger : public sf::RectangleShape
 {

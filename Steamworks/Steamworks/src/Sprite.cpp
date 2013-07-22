@@ -1,5 +1,7 @@
 #include "Sprite.h"
 
+#include "Globals.h"
+
 
 Sprite::Sprite(void)
 {}
@@ -23,8 +25,6 @@ void Sprite::createPhysBody(const float density,
 							const float friction,
 							const float restitution,
 							const unsigned int playerNumber,
-							const float bBoxModX,
-							const float bBoxModY,
 							const bool fixedAngle)
 {
 	b2BodyDef bodyDef;

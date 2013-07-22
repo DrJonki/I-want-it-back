@@ -1,11 +1,5 @@
 #pragma once
 
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
-
-
-
 class Randomizer
 {
 public:

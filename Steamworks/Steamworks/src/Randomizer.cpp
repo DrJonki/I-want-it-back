@@ -1,5 +1,8 @@
 #include "Randomizer.h"
 
+#include <cstdlib>
+#include <ctime>
+
 
 Randomizer::Randomizer(void)
 {

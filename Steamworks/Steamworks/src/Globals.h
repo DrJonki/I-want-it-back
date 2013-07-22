@@ -18,11 +18,12 @@ namespace ns
 
 	extern bool runningState;
 	extern bool exitState;
+	extern bool restartState;
 	extern bool deathState;
 	extern bool endOfLevelState;
 	extern float spawnPoint;
 
-	extern unsigned int soundState;
+	extern int soundState;
 
 	extern float cameraSpeed;
 

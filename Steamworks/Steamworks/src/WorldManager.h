@@ -1,15 +1,6 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
-#include <Box2D\Box2D.h>
-#include <memory>
-
 #include "Map.h"
-#include "Globals.h"
-#include "LoadSettings.h"
-#include "EngineSettings.h"
-#include "Player.h"
-#include "ContactListener.h"
 
 class WorldManager
 {

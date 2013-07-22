@@ -1,5 +1,21 @@
 #include "Game.h"
 
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\RectangleShape.hpp>
+#include <SFML\OpenGL.hpp>
+#include <SFML\Window\Event.hpp>
+#include <SFML\System\Clock.hpp>
+
+#include <iostream>
+
+#include "Mainmenu.h"
+#include "Pausemenu.h"
+#include "Deathmenu.h"
+#include "Endmenu.h"
+#include "WorldManager.h"
+#include "Player.h"
+#include "Gui.h"
+
 
 void loadingScreen();
 
@@ -14,8 +30,8 @@ namespace
 	sf::Clock renderClock;
 
 	//Debug numbers
-	int d_updateTime = 0.f;
-	int d_renderTime = 0.f;
+	int d_updateTime = 0;
+	int d_renderTime = 0;
 
 	//View centers
 	float viewCenterTop = 0.f;
@@ -34,6 +50,9 @@ namespace
 	Pausemenu* pauseMenu;
 
 	Gui* gui;
+
+	Deathmenu deathMenu(&gameWindow, &e);
+	Endmenu endMenu(&gameWindow, &e, &mainMenu.getLoadSettings());
 }
 
 Game::Game(void)
@@ -53,13 +72,13 @@ bool Game::runAndDontCrashPls()
 		ShowWindow(hwnd, SW_HIDE);
 	}
 	
-	while (ns::deathState || (mainMenu.showMenu() && !ns::exitState)){
+	while (ns::restartState || ns::deathState || (mainMenu.showMenu() && !ns::exitState)){
 		init();
 
-		while (ns::runningState && !ns::deathState){
+		while (ns::runningState){
 			if (mainMenu.getEngineSettings().vSync){
 				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue){
-					if (!paused){
+					if (!paused && !ns::deathState){
 						update();
 						pollEvents();
 					}
@@ -70,10 +89,12 @@ bool Game::runAndDontCrashPls()
 					}
 					if (pauseMenu->showMenu(paused))
 						paused = false;
+					deathMenu.showMenu();
+					endMenu.showMenu();
 				}
 			}
 			else {
-				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue && !paused){
+				if (updateClock.getElapsedTime().asSeconds() > ns::g_updateTimerValue && !paused && !ns::deathState){
 					update();
 					pollEvents();
 				}
@@ -84,6 +105,8 @@ bool Game::runAndDontCrashPls()
 				}
 				if (pauseMenu->showMenu(paused))
 					paused = false;
+				deathMenu.showMenu();
+				endMenu.showMenu();
 			}
 		}
 		deInit();
@@ -119,11 +142,13 @@ void Game::update()
 	
 	worldManager.stepWorldPhysics();
 	
-	pauseMenu->getView(VIEW_TOP).move(ns::cameraSpeed, 0);
-	pauseMenu->getView(VIEW_BOTTOM).move(ns::cameraSpeed, 0);
+	if (!ns::endOfLevelState){
+		pauseMenu->getView(VIEW_TOP).move(ns::cameraSpeed, 0);
+		pauseMenu->getView(VIEW_BOTTOM).move(ns::cameraSpeed, 0);
 
-	if (player[0]->getPosition().x > pauseMenu->getView(VIEW_TOP).getCenter().x) pauseMenu->getView(VIEW_TOP).setCenter(sf::Vector2f(player[0]->getPosition().x, pauseMenu->getView(VIEW_TOP).getCenter().y));
-	if (player[1]->getPosition().x > pauseMenu->getView(VIEW_BOTTOM).getCenter().x) pauseMenu->getView(VIEW_BOTTOM).setCenter(sf::Vector2f(player[1]->getPosition().x, pauseMenu->getView(VIEW_BOTTOM).getCenter().y));
+		if (player[0]->getPosition().x > pauseMenu->getView(VIEW_TOP).getCenter().x) pauseMenu->getView(VIEW_TOP).setCenter(sf::Vector2f(player[0]->getPosition().x, pauseMenu->getView(VIEW_TOP).getCenter().y));
+		if (player[1]->getPosition().x > pauseMenu->getView(VIEW_BOTTOM).getCenter().x) pauseMenu->getView(VIEW_BOTTOM).setCenter(sf::Vector2f(player[1]->getPosition().x, pauseMenu->getView(VIEW_BOTTOM).getCenter().y));
+	}
 
 	viewCenterTop = pauseMenu->getView(VIEW_TOP).getCenter().x;
 	viewCenterBottom = pauseMenu->getView(VIEW_BOTTOM).getCenter().x;
@@ -133,14 +158,14 @@ void Game::update()
 		sf::Listener::setPosition(pauseMenu->getView(VIEW_BOTTOM).getCenter().x, 0.f, 0.f);
 	else
 		sf::Listener::setPosition(pauseMenu->getView(VIEW_TOP).getCenter().x, 0.f, 0.f);
-	sf::Listener::setGlobalVolume(mainMenu.getEngineSettings().globalVolume);
+	sf::Listener::setGlobalVolume((float)mainMenu.getEngineSettings().globalVolume);
 
 	gui->update();
 	//End of update loop
 
 	if (mainMenu.getEngineSettings().debug){
 		//Pointer updates
-		d_updateTime = updateClock.getElapsedTime().asMicroseconds();
+		d_updateTime = (int)updateClock.getElapsedTime().asMicroseconds();
 
 		if (debugUpdateClock.getElapsedTime().asMilliseconds() >= 250){
 			ns::debug->draw();
@@ -197,32 +222,40 @@ void Game::render()
 
 	gui->draw();
 	pauseMenu->draw();
+	deathMenu.draw();
+	endMenu.draw();
 
 	//End of render loop
 	glFlush();
 	gameWindow.display();
 
 	if (mainMenu.getEngineSettings().debug){
-		d_renderTime = renderClock.getElapsedTime().asMicroseconds();
+		d_renderTime = (int)renderClock.getElapsedTime().asMicroseconds();
 	}
 }
 
 void Game::pollEvents()
 {
-	while (gameWindow.pollEvent(e)){
-		if (e.type == sf::Event::KeyPressed){
-			if (e.key.code == sf::Keyboard::Escape){
-				if (!paused) paused = true;
+	if (!ns::endOfLevelState){
+		while (gameWindow.pollEvent(e)){
+			if (e.type == sf::Event::KeyPressed){
+				if (e.key.code == sf::Keyboard::Escape){
+					if (!paused) paused = true;
+				}
+				else if (e.key.code == sf::Keyboard::Up){
+					ns::soundState++;
+					if (ns::soundState > 2)
+						ns::soundState = 0;
+				}
+				else if (e.key.code == sf::Keyboard::Down){
+					ns::soundState--;
+					if (ns::soundState < 0)
+						ns::soundState = 2;
+				}
 			}
-			else if (e.key.code == sf::Keyboard::Up && ns::soundState < 2){
-				ns::soundState++;
+			if (e.type == sf::Event::LostFocus){
+				paused = true;
 			}
-			else if (e.key.code == sf::Keyboard::Down && ns::soundState > 0){
-				ns::soundState--;
-			}
-		}
-		if (e.type == sf::Event::LostFocus){
-			paused = true;
 		}
 	}
 }
@@ -231,9 +264,10 @@ void Game::init()
 {
 	paused = false;
 	ns::deathState = false;
+	ns::restartState = false;
 	
 	pauseMenu = new Pausemenu(&gameWindow, &e, mainMenu.getEngineSettings());
-
+	
 	gameWindow.setActive(false);
 
 	viewCenterTop = pauseMenu->getView(VIEW_TOP).getCenter().x;
@@ -245,12 +279,24 @@ void Game::init()
 	gui = new Gui(&gameWindow);
 	cListener = new ContactListener;
 
+	sf::Clock loadClock;
+	loadClock.restart();
+
+	std::cout << "Constructing players..." << std::endl;
 	player[0] = new Player(1, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
 	player[1] = new Player(2, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
+	std::cout << "constructing players complete! Time: " << loadClock.getElapsedTime().asSeconds() << std::endl;
+	loadClock.restart();
 
+	std::cout << "Loading world..." << std::endl;
 	worldManager.loadWorld(cListener, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
-	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
-	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener, mainMenu.getEngineSettings());
+	std::cout << "Loading world complete! Time: " << loadClock.getElapsedTime().asSeconds() << std::endl;
+	loadClock.restart();
+
+	std::cout << "Loading player data..." << std::endl;
+	player[0]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener);
+	player[1]->loadPlayer(&gameWindow, worldManager.getWorldPtr(), cListener);
+	std::cout << "Loading player data complete! Time: " << loadClock.getElapsedTime().asSeconds() << std::endl;
 
 	worldManager.getWorldPtr()->SetContactListener(cListener);
 
@@ -264,7 +310,7 @@ void Game::init()
 	sShape.setOutlineColor(sf::Color::Yellow);
 	sShape.setSize(sf::Vector2f((float)mainMenu.getEngineSettings().resolution.x, 11));
 	sShape.setOrigin(0, 6);
-	sShape.setPosition(0, mainMenu.getEngineSettings().resolution.y / 2);
+	sShape.setPosition(0.f, (float)(mainMenu.getEngineSettings().resolution.y / 2));
 
 	updateClock.restart();
 	SetForegroundWindow(gameWindow.getSystemHandle());
@@ -272,6 +318,8 @@ void Game::init()
 	ns::runningState = true;
 	loadingScreenThread.wait();
 	gameWindow.setActive(true);
+
+	std::cout << "Done loading!" << std::endl;
 }
 
 void Game::deInit()

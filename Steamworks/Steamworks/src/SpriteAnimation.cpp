@@ -1,5 +1,7 @@
 #include "SpriteAnimation.h"
 
+#include "Globals.h"
+
 
 SpriteAnimation::SpriteAnimation(void)
 {

@@ -1,5 +1,8 @@
 #include "DebugObject.h"
 
+#include <sstream>
+
+
 DebugObject::DebugObject(void)
 {
 	_dValuef = nullptr;

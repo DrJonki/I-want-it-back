@@ -1,15 +1,16 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\Text.hpp>
 #include <SFML\Audio\Music.hpp>
+#include <SFML\Window\Event.hpp>
+#include <SFML\Graphics\RectangleShape.hpp>
+#include <SFML\Graphics\CircleShape.hpp>
 
-#include <sstream>
 #include <vector>
-#include <cmath>
 
 #include "EngineSettings.h"
 #include "LoadSettings.h"
-#include "Globals.h"
 #include "GameButton.h"
 
 class Mainmenu
@@ -19,8 +20,8 @@ public:
 	~Mainmenu(void);
 
 	bool showMenu();
-	LoadSettings getLoadSettings() { return _loadSettings; };
-	EngineSettings getEngineSettings() { return _engineSettings; };
+	LoadSettings& getLoadSettings() { return _loadSettings; };
+	EngineSettings& getEngineSettings() { return _engineSettings; };
 
 private:
 	void init();

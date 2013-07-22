@@ -89,8 +89,10 @@
   <ItemGroup>
     <ClCompile Include="src\BackgroundObject.cpp" />
     <ClCompile Include="src\ContactListener.cpp" />
+    <ClCompile Include="src\Deathmenu.cpp" />
     <ClCompile Include="src\DebugConsole.cpp" />
     <ClCompile Include="src\DebugObject.cpp" />
+    <ClCompile Include="src\Endmenu.cpp" />
     <ClCompile Include="src\EngineSettings.cpp" />
     <ClCompile Include="src\ForegroundObject.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -107,21 +109,23 @@
     <ClCompile Include="src\Pausemenu.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Randomizer.cpp" />
-    <ClCompile Include="src\RichText.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\SoundSource.cpp" />
     <ClCompile Include="src\SoundStream.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\SpriteAnimation.cpp" />
+    <ClCompile Include="src\TextButton.cpp" />
     <ClCompile Include="src\Trigger.cpp" />
     <ClCompile Include="src\WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BackgroundObject.h" />
     <ClInclude Include="src\ContactListener.h" />
+    <ClInclude Include="src\Deathmenu.h" />
     <ClInclude Include="src\DebugConsole.h" />
     <ClInclude Include="src\DebugObject.h" />
     <ClInclude Include="src\dirent.h" />
+    <ClInclude Include="src\Endmenu.h" />
     <ClInclude Include="src\EngineSettings.h" />
     <ClInclude Include="src\ForegroundObject.h" />
     <ClInclude Include="src\Game.h" />
@@ -137,12 +141,12 @@
     <ClInclude Include="src\Pausemenu.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Randomizer.h" />
-    <ClInclude Include="src\RichText.hpp" />
     <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\SoundSource.h" />
     <ClInclude Include="src\SoundStream.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\SpriteAnimation.h" />
+    <ClInclude Include="src\TextButton.h" />
     <ClInclude Include="src\Trigger.h" />
     <ClInclude Include="src\WorldManager.h" />
   </ItemGroup>

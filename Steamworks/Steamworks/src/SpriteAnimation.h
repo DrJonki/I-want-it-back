@@ -1,13 +1,7 @@
 #pragma once
 
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Image.hpp>
-#include <SFML/Audio/Sound.hpp>
-#include <string>
-#include <vector>
-#include <memory>
-
-#include "Globals.h"
+#include <SFML\Audio\Sound.hpp>
+#include <SFML\Graphics\Texture.hpp>
 
 class SpriteAnimation
 {

@@ -1,11 +1,9 @@
 #pragma once
 
-#include <fstream>
-#include <Windows.h>
+#include <string>
 
 
 namespace ns
 {
 	std::wstring s2ws(const std::string& s);
-
 }

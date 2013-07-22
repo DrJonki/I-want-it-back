@@ -1,9 +1,11 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\Font.hpp>
+#include <SFML\Window\Event.hpp>
+
 #include <vector>
 
-//#include "Globals.h"
 #include "DebugObject.h"
 
 class DebugConsole

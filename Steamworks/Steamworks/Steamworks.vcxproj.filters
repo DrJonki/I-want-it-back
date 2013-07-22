@@ -34,15 +34,6 @@
     <Filter Include="Header Files\System">
       <UniqueIdentifier>{6b3b51e2-3805-4926-8f7a-269d24feb022}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\System">
-      <UniqueIdentifier>{6a0a6fde-c894-45a7-a897-232953295574}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Graphics\Text">
-      <UniqueIdentifier>{5219e51e-160e-4077-a1c6-aeda07f1dfaf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Graphics\Text">
-      <UniqueIdentifier>{d4b7de46-f23f-48a2-808a-9f3be65768ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Graphics\Animation">
       <UniqueIdentifier>{2abd4482-aaac-45e7-b590-a3d1c5809e61}</UniqueIdentifier>
     </Filter>
@@ -58,11 +49,14 @@
     <Filter Include="Header Files\System\Menu">
       <UniqueIdentifier>{27e5baa2-344d-4cfe-94d3-426915041767}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\System\Menu">
-      <UniqueIdentifier>{88f4c474-aafd-4247-801d-5f447cf64433}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\System\Sound">
       <UniqueIdentifier>{2e7c736a-eeb5-436b-83fd-a958fd9aae6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{6a0a6fde-c894-45a7-a897-232953295574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Menu">
+      <UniqueIdentifier>{88f4c474-aafd-4247-801d-5f447cf64433}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\System\Sound">
       <UniqueIdentifier>{30a4e78f-ce21-4362-9d85-40b818c1311e}</UniqueIdentifier>
@@ -83,9 +77,6 @@
     </ClCompile>
     <ClCompile Include="src\Player.cpp">
       <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RichText.cpp">
-      <Filter>Source Files\Graphics\Text</Filter>
     </ClCompile>
     <ClCompile Include="src\SpriteAnimation.cpp">
       <Filter>Source Files\Graphics\Animation</Filter>
@@ -153,6 +144,15 @@
     <ClCompile Include="src\Globals.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Deathmenu.cpp">
+      <Filter>Source Files\System\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Endmenu.cpp">
+      <Filter>Source Files\System\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextButton.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -169,9 +169,6 @@
     </ClInclude>
     <ClInclude Include="src\Player.h">
       <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RichText.hpp">
-      <Filter>Header Files\Graphics\Text</Filter>
     </ClInclude>
     <ClInclude Include="src\SpriteAnimation.h">
       <Filter>Header Files\Graphics\Animation</Filter>
@@ -238,6 +235,15 @@
     </ClInclude>
     <ClInclude Include="src\SoundStream.h">
       <Filter>Header Files\System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Deathmenu.h">
+      <Filter>Header Files\System\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Endmenu.h">
+      <Filter>Header Files\System\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextButton.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

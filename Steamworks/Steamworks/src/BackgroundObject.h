@@ -1,8 +1,7 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
-
-#include "Globals.h"
+#include <SFML\Graphics\RectangleShape.hpp>
+#include <SFML\Graphics\Texture.hpp>
 
 class BackgroundObject : public sf::RectangleShape
 {

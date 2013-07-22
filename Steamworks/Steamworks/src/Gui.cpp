@@ -1,5 +1,7 @@
 #include "Gui.h"
 
+#include "Globals.h"
+
 
 namespace
 {

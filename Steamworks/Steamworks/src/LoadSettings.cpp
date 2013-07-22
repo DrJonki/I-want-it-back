@@ -1,5 +1,9 @@
 #include "LoadSettings.h"
 
+#include <fstream>
+
+#include "dirent.h"
+
 
 LoadSettings::LoadSettings(void)
 {
@@ -8,7 +12,6 @@ LoadSettings::LoadSettings(void)
 	loadLevels();
 	loadCredits();
 }
-
 
 LoadSettings::~LoadSettings(void)
 {}

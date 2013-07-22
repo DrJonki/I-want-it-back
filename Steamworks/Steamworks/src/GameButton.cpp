@@ -1,5 +1,8 @@
 #include "GameButton.h"
 
+#include <SFML\Window\Keyboard.hpp>
+#include <SFML\Window\Mouse.hpp>
+
 
 GameButton::GameButton(sf::RenderWindow* window)
 	: _window(window),

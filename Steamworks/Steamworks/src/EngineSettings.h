@@ -1,15 +1,8 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
+#include <SFML\System\Vector2.hpp>
 
-#include <fstream>
-#include <sstream>
-#include <Windows.h>
-#include <iostream>
-#include <direct.h>
-
-#include "Misc.h"
-#include "Globals.h"
+#include <string>
 
 class EngineSettings
 {

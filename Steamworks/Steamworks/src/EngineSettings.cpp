@@ -1,5 +1,12 @@
 #include "EngineSettings.h"
 
+#include <SFML\Window\VideoMode.hpp>
+
+#include <direct.h>
+#include <fstream>
+#include <sstream>
+
+#include "Globals.h"
 
 
 EngineSettings::EngineSettings(void)

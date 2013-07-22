@@ -1,10 +1,11 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <Box2D/Box2D.h>
-#include <vector>
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\RectangleShape.hpp>
+#include <Box2D\Dynamics\b2Fixture.h>
+#include <Box2D\Dynamics\b2Body.h>
+#include <Box2D\Dynamics\b2World.h>
 
-#include "Globals.h"
 #include "SpriteAnimation.h"
 #include "ContactListener.h"
 
@@ -33,7 +34,5 @@ protected:
 						const float friction,
 						const float restitution,
 						const unsigned int playerNumber,
-						const float bBoxModX = 1.f,
-						const float bBoxModY = 1.f,
 						const bool fixedAngle = true);
 };

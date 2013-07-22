@@ -1,5 +1,8 @@
 #include "Misc.h"
 
+#include <Windows.h>
+
+
 namespace ns{
 
 

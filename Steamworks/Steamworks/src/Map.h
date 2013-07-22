@@ -1,22 +1,12 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
-#include <Box2D\Box2D.h>
-
-#include <sstream>
-#include <fstream>
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <memory>
-
-#include "MapObject.h"
-#include "BackgroundObject.h"
-#include "ForegroundObject.h"
+#include "ContactListener.h"
 #include "LoadSettings.h"
 #include "EngineSettings.h"
+#include "MapObject.h"
+#include "ForegroundObject.h"
+#include "BackgroundObject.h"
 #include "Trigger.h"
-#include "ContactListener.h"
 #include "SoundManager.h"
 
 class Map

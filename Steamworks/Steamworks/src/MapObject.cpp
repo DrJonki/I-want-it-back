@@ -1,5 +1,9 @@
 #include "MapObject.h"
 
+#include <Box2D\Dynamics\b2Fixture.h>
+#include <Box2D\Collision\Shapes\b2PolygonShape.h>
+
+#include "Globals.h"
 
 MapObject::MapObject(void)
 	: _trigData(0),

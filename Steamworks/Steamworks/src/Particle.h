@@ -1,7 +1,9 @@
 #pragma once
 
-#include <SFML\Graphics.hpp>
-#include <vector>
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\CircleShape.hpp>
+#include <SFML\Graphics\Texture.hpp>
+#include <SFML\System\Vector2.hpp>
 
 #include "Randomizer.h"
 

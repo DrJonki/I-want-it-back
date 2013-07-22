@@ -1,5 +1,11 @@
 #include "Trigger.h"
 
+#include <Box2D\Dynamics\b2Fixture.h>
+#include <Box2D\Collision\Shapes\b2PolygonShape.h>
+#include <Box2D\Dynamics\b2World.h>
+
+#include "Globals.h"
+
 
 Trigger::Trigger(void)
 	: _type(0),
@@ -51,7 +57,10 @@ void Trigger::load(b2World* world,
 	setSize(sf::Vector2f(sizeX, sizeY));
 	setOrigin(sizeX / 2, sizeY / 2);
 	setPosition(posX, posY);
-	if (resourceType == RT_ANIMATION) setFillColor(sf::Color::Color(0, 0, 255, 150));
+	if (data == (void*)TRIG_LETHAL) setFillColor(sf::Color::Color(255, 0, 0, 150));
+	else if (data == (void*)TRIG_CHECKPOINT) setFillColor(sf::Color::Color(255, 255, 0, 150));
+	else if (data == (void*)TRIG_ENDOFLEVEL) setFillColor(sf::Color::Color(255, 0, 255, 150));
+	else if (resourceType == RT_ANIMATION) setFillColor(sf::Color::Color(0, 0, 255, 150));
 	else if (resourceType == RT_SOUND) setFillColor(sf::Color::Color(0, 255, 0, 150));
-	else setFillColor(sf::Color::Color(255, 255, 255, 150));
+	else setFillColor(sf::Color::Color(0, 0, 0, 255));
 }
