@@ -16,13 +16,6 @@ public:
 
 	void updateResolution();
 
-	std::string getResolutionString();
-	std::string getAAString();
-	std::string getGVolumeString();
-	std::string getMVolumeString();
-	std::string getSVolumeString();
-	std::string getAVolumeString();
-	std::string getSPrefString();
 	bool usingCustomRes();
 
 	int resVectorNumber;

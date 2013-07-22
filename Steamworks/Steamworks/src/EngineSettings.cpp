@@ -199,66 +199,6 @@ void EngineSettings::updateResolution()
 	usingCustomRes();
 }
 
-std::string EngineSettings::getResolutionString()
-{
-	if (usingCustomRes()) return "Custom";
-	else{
-		std::stringstream ss;
-
-		ss << resolution.x;
-		ss << " x ";
-		ss << resolution.y;
-
-		return ss.str();
-	}
-}
-
-std::string EngineSettings::getAAString()
-{
-	std::stringstream ss;
-
-	ss << "x";
-	ss << antiAliasing;
-
-	return ss.str();
-}
-
-std::string EngineSettings::getGVolumeString()
-{
-	std::stringstream ss;
-
-	ss << globalVolume;
-
-	return ss.str();
-}
-
-std::string EngineSettings::getMVolumeString()
-{
-	std::stringstream ss;
-
-	ss << musicVolume;
-
-	return ss.str();
-}
-
-std::string EngineSettings::getSVolumeString()
-{
-	std::stringstream ss;
-
-	ss << soundVolume;
-
-	return ss.str();
-}
-
-std::string EngineSettings::getAVolumeString()
-{
-	std::stringstream ss;
-
-	ss << anbientVolume;
-
-	return ss.str();
-}
-
 bool EngineSettings::usingCustomRes()
 {
 	for (unsigned int i = 0; i < sf::VideoMode::getFullscreenModes().size(); i++){

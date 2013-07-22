@@ -1,6 +1,7 @@
 #include "Pausemenu.h"
 
 #include "Globals.h"
+#include "Misc.h"
 
 namespace
 {
@@ -106,18 +107,18 @@ void Pausemenu::update()
 			confirmButton[CON_APPLY].setPosition(600, 500);
 			confirmButton[CON_BACK].setPosition(600, confirmButton[CON_APPLY].getPosition().y + 100);
 
-			settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
+			settingText[SET_RESOLUTION].setString(ns::getString(_engineSettings.resolution.x) + " x " + ns::getString(_engineSettings.resolution.y));
 			if (_engineSettings.vSync) settingText[SET_VSYNC].setString("Enabled");
 			else settingText[SET_VSYNC].setString("Disabled");
 			if (_engineSettings.fullScreen) settingText[SET_FULLSCREEN].setString("Enabled");
 			else settingText[SET_FULLSCREEN].setString("Disabled");
-			settingText[SET_AA].setString(_engineSettings.getAAString());
+			settingText[SET_AA].setString(ns::getString((int)_engineSettings.antiAliasing));
 			if (_engineSettings.smoothTextures) settingText[SET_SMOOTH].setString("Enabled");
 			else settingText[SET_SMOOTH].setString("Disabled");
-			settingText[SET_GVOLUME].setString(_engineSettings.getGVolumeString());
-			settingText[SET_MVOLUME].setString(_engineSettings.getMVolumeString());
-			settingText[SET_SVOLUME].setString(_engineSettings.getSVolumeString());
-			settingText[SET_AVOLUME].setString(_engineSettings.getAVolumeString());
+			settingText[SET_GVOLUME].setString(ns::getString(_engineSettings.globalVolume));
+			settingText[SET_MVOLUME].setString(ns::getString(_engineSettings.musicVolume));
+			settingText[SET_SVOLUME].setString(ns::getString(_engineSettings.soundVolume));
+			settingText[SET_AVOLUME].setString(ns::getString(_engineSettings.anbientVolume));
 
 			break;
 			}
@@ -397,7 +398,7 @@ void Pausemenu::init()
 
 	settingText[SET_RESOLUTION].setFont(_font);
 	settingText[SET_RESOLUTION].setCharacterSize(30);
-	settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
+	settingText[SET_RESOLUTION].setString(ns::getString(_engineSettings.resolution.x) + " x " + ns::getString(_engineSettings.resolution.y));
 	settingText[SET_RESOLUTION].setColor(sf::Color::White);
 	settingText[SET_RESOLUTION].setOrigin(0, settingText[SET_RESOLUTION].getGlobalBounds().height / 2);
 	settingText[SET_RESOLUTION].setPosition(settingButton[SET_RESOLUTION].getPosition().x + settingButton[SET_RESOLUTION].getSize().x + 25, settingButton[SET_RESOLUTION].getPosition().y + (settingButton[SET_RESOLUTION].getSize().y / 3));
@@ -440,7 +441,7 @@ void Pausemenu::init()
 
 	settingText[SET_AA].setFont(_font);
 	settingText[SET_AA].setCharacterSize(30);
-	settingText[SET_AA].setString(_engineSettings.getAAString());
+	settingText[SET_AA].setString(ns::getString((int)_engineSettings.antiAliasing));
 	settingText[SET_AA].setColor(sf::Color::White);
 	settingText[SET_AA].setOrigin(0, settingText[SET_AA].getGlobalBounds().height / 2);
 	settingText[SET_AA].setPosition(settingButton[SET_AA].getPosition().x + settingButton[SET_AA].getSize().x + 25, settingButton[SET_AA].getPosition().y + (settingButton[SET_AA].getSize().y / 3));
@@ -470,7 +471,7 @@ void Pausemenu::init()
 
 	settingText[SET_GVOLUME].setFont(_font);
 	settingText[SET_GVOLUME].setCharacterSize(30);
-	settingText[SET_GVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_GVOLUME].setString(ns::getString(_engineSettings.globalVolume));
 	settingText[SET_GVOLUME].setColor(sf::Color::White);
 	settingText[SET_GVOLUME].setOrigin(0, settingText[SET_GVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_GVOLUME].setPosition(settingButton[SET_GVOLUME].getPosition().x + settingButton[SET_GVOLUME].getSize().x + 25, settingButton[SET_GVOLUME].getPosition().y + (settingButton[SET_GVOLUME].getSize().y / 3));
@@ -484,7 +485,7 @@ void Pausemenu::init()
 
 	settingText[SET_MVOLUME].setFont(_font);
 	settingText[SET_MVOLUME].setCharacterSize(30);
-	settingText[SET_MVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_MVOLUME].setString(ns::getString(_engineSettings.musicVolume));
 	settingText[SET_MVOLUME].setColor(sf::Color::White);
 	settingText[SET_MVOLUME].setOrigin(0, settingText[SET_MVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_MVOLUME].setPosition(settingButton[SET_MVOLUME].getPosition().x + settingButton[SET_MVOLUME].getSize().x + 25, settingButton[SET_MVOLUME].getPosition().y + (settingButton[SET_MVOLUME].getSize().y / 3));
@@ -498,7 +499,7 @@ void Pausemenu::init()
 
 	settingText[SET_SVOLUME].setFont(_font);
 	settingText[SET_SVOLUME].setCharacterSize(30);
-	settingText[SET_SVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_SVOLUME].setString(ns::getString(_engineSettings.soundVolume));
 	settingText[SET_SVOLUME].setColor(sf::Color::White);
 	settingText[SET_SVOLUME].setOrigin(0, settingText[SET_SVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_SVOLUME].setPosition(settingButton[SET_SVOLUME].getPosition().x + settingButton[SET_SVOLUME].getSize().x + 25, settingButton[SET_SVOLUME].getPosition().y + (settingButton[SET_SVOLUME].getSize().y / 3));
@@ -512,7 +513,7 @@ void Pausemenu::init()
 
 	settingText[SET_AVOLUME].setFont(_font);
 	settingText[SET_AVOLUME].setCharacterSize(30);
-	settingText[SET_AVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_AVOLUME].setString(ns::getString(_engineSettings.anbientVolume));
 	settingText[SET_AVOLUME].setColor(sf::Color::White);
 	settingText[SET_AVOLUME].setOrigin(0, settingText[SET_AVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_AVOLUME].setPosition(settingButton[SET_AVOLUME].getPosition().x + settingButton[SET_AVOLUME].getSize().x + 25, settingButton[SET_AVOLUME].getPosition().y + (settingButton[SET_AVOLUME].getSize().y / 3));

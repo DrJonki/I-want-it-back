@@ -72,13 +72,17 @@ private:
 	static const enum
 	{
 		BUT_START,
-		BUT_CAMPAIGN,
 		BUT_LEVEL,
+		BUT_INFO,
 		BUT_SETTINGS,
 		BUT_CREDITS,
 		BUT_EXIT,
 		BUT_LAST
 	};
+
+	bool levelMenuSelected;
+	int levelSelection;
+	sf::Text levelMenuText;
 
 	static const enum
 	{

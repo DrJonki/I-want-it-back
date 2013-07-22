@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "Globals.h"
+#include "Misc.h"
 
 namespace
 {
@@ -22,7 +23,8 @@ namespace
 Mainmenu::Mainmenu(sf::RenderWindow* window, sf::Event* e)
 	: _window(window),
 	  _e(e),
-	  titleMinAlpha(70)
+	  titleMinAlpha(70),
+	  levelMenuSelected(false)
 {}
 
 Mainmenu::~Mainmenu(void)
@@ -55,17 +57,17 @@ bool Mainmenu::showMenu()
 			menuState = BUT_START;
 			return true;
 		}
-		else if (mainButton[BUT_CAMPAIGN].isPressed() && menuState == 0){
-			menuState = BUT_CAMPAIGN;
-			subSelectionState = _loadSettings._campaign;
-		}
 		else if (mainButton[BUT_LEVEL].isPressed() && menuState == 0){
 			menuState = BUT_LEVEL;
+			subSelectionState = _loadSettings._campaign;
+			levelMenuSelected = false;
+
 			_loadSettings.loadLevels();
-
-			if (_loadSettings._levelVector.size() > _loadSettings._level) subSelectionState = _loadSettings._level;
-
 			initLevels();
+			levelSelection = _loadSettings._level;
+		}
+		else if (mainButton[BUT_INFO].isPressed() && menuState == 0){
+			
 		}
 		else if (mainButton[BUT_SETTINGS].isPressed() && menuState == 0){
 			menuState = BUT_SETTINGS;
@@ -127,19 +129,19 @@ void Mainmenu::init()
 	mainButton[BUT_START]._text.setString("Start");
 	mainButton[BUT_START]._text.setColor(sf::Color::Black);
 	//Campaign
-	mainButton[BUT_CAMPAIGN].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 200, image);
-	mainButton[BUT_CAMPAIGN]._text.setFont(_font);
-	mainButton[BUT_CAMPAIGN]._text.setCharacterSize(30);
-	mainButton[BUT_CAMPAIGN]._text.setString("Select\ncampaign");
-	mainButton[BUT_CAMPAIGN]._text.setColor(sf::Color::Black);
-	//Level
-	mainButton[BUT_LEVEL].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_CAMPAIGN].getPosition().y + 125, image);
+	mainButton[BUT_LEVEL].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 200, image);
 	mainButton[BUT_LEVEL]._text.setFont(_font);
 	mainButton[BUT_LEVEL]._text.setCharacterSize(30);
-	mainButton[BUT_LEVEL]._text.setString("Select\nlevel");
+	mainButton[BUT_LEVEL]._text.setString("Select\ncampaign");
 	mainButton[BUT_LEVEL]._text.setColor(sf::Color::Black);
+	//Level
+	mainButton[BUT_INFO].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_LEVEL].getPosition().y + 125, image);
+	mainButton[BUT_INFO]._text.setFont(_font);
+	mainButton[BUT_INFO]._text.setCharacterSize(30);
+	mainButton[BUT_INFO]._text.setString("Instructions");
+	mainButton[BUT_INFO]._text.setColor(sf::Color::Black);
 	//Settings
-	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_LEVEL].getPosition().y + 125, image);
+	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_INFO].getPosition().y + 125, image);
 	mainButton[BUT_SETTINGS]._text.setFont(_font);
 	mainButton[BUT_SETTINGS]._text.setCharacterSize(30);
 	mainButton[BUT_SETTINGS]._text.setString("Settings");
@@ -186,6 +188,11 @@ void Mainmenu::init()
 	}
 	campaignText[0].setPosition(800, 500);
 
+	levelMenuText.setFont(_font);
+	levelMenuText.setCharacterSize(55);
+	levelMenuText.setString("Campaign           Level");
+	levelMenuText.setColor(sf::Color::White);
+	levelMenuText.setPosition(800, 300);
 	//Level
 	//Nuthing to see hiar :)
 
@@ -206,7 +213,7 @@ void Mainmenu::init()
 
 	settingText[SET_RESOLUTION].setFont(_font);
 	settingText[SET_RESOLUTION].setCharacterSize(30);
-	settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
+	settingText[SET_RESOLUTION].setString(ns::getString(_engineSettings.resolution.x) + " x " + ns::getString(_engineSettings.resolution.y));
 	settingText[SET_RESOLUTION].setColor(sf::Color::White);
 	settingText[SET_RESOLUTION].setOrigin(0, settingText[SET_RESOLUTION].getGlobalBounds().height / 2);
 	settingText[SET_RESOLUTION].setPosition(settingButton[SET_RESOLUTION].getPosition().x + settingButton[SET_RESOLUTION].getSize().x + 25, settingButton[SET_RESOLUTION].getPosition().y + (settingButton[SET_RESOLUTION].getSize().y / 3));
@@ -249,7 +256,7 @@ void Mainmenu::init()
 
 	settingText[SET_AA].setFont(_font);
 	settingText[SET_AA].setCharacterSize(30);
-	settingText[SET_AA].setString(_engineSettings.getAAString());
+	settingText[SET_AA].setString(ns::getString((int)_engineSettings.antiAliasing));
 	settingText[SET_AA].setColor(sf::Color::White);
 	settingText[SET_AA].setOrigin(0, settingText[SET_AA].getGlobalBounds().height / 2);
 	settingText[SET_AA].setPosition(settingButton[SET_AA].getPosition().x + settingButton[SET_AA].getSize().x + 25, settingButton[SET_AA].getPosition().y + (settingButton[SET_AA].getSize().y / 3));
@@ -279,7 +286,7 @@ void Mainmenu::init()
 
 	settingText[SET_GVOLUME].setFont(_font);
 	settingText[SET_GVOLUME].setCharacterSize(30);
-	settingText[SET_GVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_GVOLUME].setString(ns::getString(_engineSettings.globalVolume));
 	settingText[SET_GVOLUME].setColor(sf::Color::White);
 	settingText[SET_GVOLUME].setOrigin(0, settingText[SET_GVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_GVOLUME].setPosition(settingButton[SET_GVOLUME].getPosition().x + settingButton[SET_GVOLUME].getSize().x + 25, settingButton[SET_GVOLUME].getPosition().y + (settingButton[SET_GVOLUME].getSize().y / 3));
@@ -293,7 +300,7 @@ void Mainmenu::init()
 
 	settingText[SET_MVOLUME].setFont(_font);
 	settingText[SET_MVOLUME].setCharacterSize(30);
-	settingText[SET_MVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_MVOLUME].setString(ns::getString(_engineSettings.musicVolume));
 	settingText[SET_MVOLUME].setColor(sf::Color::White);
 	settingText[SET_MVOLUME].setOrigin(0, settingText[SET_MVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_MVOLUME].setPosition(settingButton[SET_MVOLUME].getPosition().x + settingButton[SET_MVOLUME].getSize().x + 25, settingButton[SET_MVOLUME].getPosition().y + (settingButton[SET_MVOLUME].getSize().y / 3));
@@ -307,7 +314,7 @@ void Mainmenu::init()
 
 	settingText[SET_SVOLUME].setFont(_font);
 	settingText[SET_SVOLUME].setCharacterSize(30);
-	settingText[SET_SVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_SVOLUME].setString(ns::getString(_engineSettings.soundVolume));
 	settingText[SET_SVOLUME].setColor(sf::Color::White);
 	settingText[SET_SVOLUME].setOrigin(0, settingText[SET_SVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_SVOLUME].setPosition(settingButton[SET_SVOLUME].getPosition().x + settingButton[SET_SVOLUME].getSize().x + 25, settingButton[SET_SVOLUME].getPosition().y + (settingButton[SET_SVOLUME].getSize().y / 3));
@@ -321,7 +328,7 @@ void Mainmenu::init()
 
 	settingText[SET_AVOLUME].setFont(_font);
 	settingText[SET_AVOLUME].setCharacterSize(30);
-	settingText[SET_AVOLUME].setString(_engineSettings.getMVolumeString());
+	settingText[SET_AVOLUME].setString(ns::getString(_engineSettings.anbientVolume));
 	settingText[SET_AVOLUME].setColor(sf::Color::White);
 	settingText[SET_AVOLUME].setOrigin(0, settingText[SET_AVOLUME].getGlobalBounds().height / 2);
 	settingText[SET_AVOLUME].setPosition(settingButton[SET_AVOLUME].getPosition().x + settingButton[SET_AVOLUME].getSize().x + 25, settingButton[SET_AVOLUME].getPosition().y + (settingButton[SET_AVOLUME].getSize().y / 3));
@@ -370,47 +377,51 @@ void Mainmenu::update()
 
 	switch (menuState)
 	{
-		case BUT_CAMPAIGN:
+		case BUT_LEVEL:
 			{
-			subSelectionMax = _loadSettings._campaignVector.size() - 1;
+			if (levelMenuSelected){
+				_loadSettings._level = levelSelection;
 
-			_loadSettings._campaign = subSelectionState;
+				confirmButton[CON_BACK].setPosition(600, 505);
 
-			confirmButton[CON_BACK].setPosition(600, 505);
+				if (levelText[0].getPosition().y < 500 - (levelSelection * 60)) levelText[0].move(0, 4);
+				else if (levelText[0].getPosition().y > 500 - (levelSelection * 60)) levelText[0].move(0, -4);
+				if (_loadSettings._levelVector.size() > 1){
+					for (unsigned int i = 1; i < levelText.size(); i++){
+						levelText[i].setPosition(levelText[0].getPosition().x, levelText[0].getPosition().y + (60 * i));
 
-			if (campaignText[0].getPosition().y < 500 - (subSelectionState * 60)) campaignText[0].move(0, 4);
-			else if (campaignText[0].getPosition().y > 500 - (subSelectionState * 60)) campaignText[0].move(0, -4);
-			for (unsigned int i = 1; i < campaignText.size(); i++){
-				campaignText[i].setPosition(campaignText[0].getPosition().x, campaignText[0].getPosition().y + (60 * i));
-
-				if (i == subSelectionState) campaignText[i].setColor(sf::Color::White);
-				else campaignText[i].setColor(sf::Color::Color(255, 255, 255, 128));
+						if (i == levelSelection) levelText[i].setColor(sf::Color::White);
+						else levelText[i].setColor(sf::Color::Color(255, 255, 255, 128));
+					}
+				}
+				if (levelSelection != 0) levelText[0].setColor(sf::Color::Color(255, 255, 255, 128));
+				else levelText[0].setColor(sf::Color::White);
 			}
-			if (subSelectionState != 0) campaignText[0].setColor(sf::Color::Color(255, 255, 255, 128));
-			else campaignText[0].setColor(sf::Color::White);
+
+			else{
+				subSelectionMax = _loadSettings._campaignVector.size() - 1;
+
+				_loadSettings._campaign = subSelectionState;
+
+				confirmButton[CON_BACK].setPosition(600, 505);
+
+				if (campaignText[0].getPosition().y < 500 - (subSelectionState * 60)) campaignText[0].move(0, 4);
+				else if (campaignText[0].getPosition().y > 500 - (subSelectionState * 60)) campaignText[0].move(0, -4);
+				for (unsigned int i = 1; i < campaignText.size(); i++){
+					campaignText[i].setPosition(campaignText[0].getPosition().x, campaignText[0].getPosition().y + (60 * i));
+
+					if (i == subSelectionState) campaignText[i].setColor(sf::Color::White);
+					else campaignText[i].setColor(sf::Color::Color(255, 255, 255, 128));
+				}
+				if (subSelectionState != 0) campaignText[0].setColor(sf::Color::Color(255, 255, 255, 128));
+				else campaignText[0].setColor(sf::Color::White);
+			}
 
 			break;
 			}
-		case BUT_LEVEL:
+		case BUT_INFO:
 			{
-			subSelectionMax = _loadSettings._levelVector.size() - 1;
-
-			_loadSettings._level = subSelectionState;
-
-			confirmButton[CON_BACK].setPosition(600, 505);
-
-			if (levelText[0].getPosition().y < 500 - (subSelectionState * 60)) levelText[0].move(0, 4);
-			else if (levelText[0].getPosition().y > 500 - (subSelectionState * 60)) levelText[0].move(0, -4);
-			if (_loadSettings._levelVector.size() > 1){
-				for (unsigned int i = 1; i < levelText.size(); i++){
-					levelText[i].setPosition(levelText[0].getPosition().x, levelText[0].getPosition().y + (60 * i));
-
-					if (i == subSelectionState) levelText[i].setColor(sf::Color::White);
-					else levelText[i].setColor(sf::Color::Color(255, 255, 255, 128));
-				}
-			}
-			if (subSelectionState != 0) levelText[0].setColor(sf::Color::Color(255, 255, 255, 128));
-			else levelText[0].setColor(sf::Color::White);
+			
 
 			break;
 			}
@@ -426,18 +437,18 @@ void Mainmenu::update()
 			confirmButton[CON_APPLY].setPosition(600, 500);
 			confirmButton[CON_BACK].setPosition(600, confirmButton[CON_APPLY].getPosition().y + 100);
 
-			settingText[SET_RESOLUTION].setString(_engineSettings.getResolutionString());
+			settingText[SET_RESOLUTION].setString(ns::getString(_engineSettings.resolution.x) + " x " + ns::getString(_engineSettings.resolution.y));
 			if (_engineSettings.vSync) settingText[SET_VSYNC].setString("Enabled");
 			else settingText[SET_VSYNC].setString("Disabled");
 			if (_engineSettings.fullScreen) settingText[SET_FULLSCREEN].setString("Enabled");
 			else settingText[SET_FULLSCREEN].setString("Disabled");
-			settingText[SET_AA].setString(_engineSettings.getAAString());
+			settingText[SET_AA].setString(ns::getString((int)_engineSettings.antiAliasing));
 			if (_engineSettings.smoothTextures) settingText[SET_SMOOTH].setString("Enabled");
 			else settingText[SET_SMOOTH].setString("Disabled");
-			settingText[SET_GVOLUME].setString(_engineSettings.getGVolumeString());
-			settingText[SET_MVOLUME].setString(_engineSettings.getMVolumeString());
-			settingText[SET_SVOLUME].setString(_engineSettings.getSVolumeString());
-			settingText[SET_AVOLUME].setString(_engineSettings.getAVolumeString());
+			settingText[SET_GVOLUME].setString(ns::getString(_engineSettings.globalVolume));
+			settingText[SET_MVOLUME].setString(ns::getString(_engineSettings.musicVolume));
+			settingText[SET_SVOLUME].setString(ns::getString(_engineSettings.soundVolume));
+			settingText[SET_AVOLUME].setString(ns::getString(_engineSettings.anbientVolume));
 
 			break;
 			}
@@ -474,24 +485,30 @@ void Mainmenu::update()
 	//Selection shape repositioning
 	switch (menuState)
 	{
-		case BUT_CAMPAIGN: //Campaign
+		case BUT_LEVEL: //Campaign
 			{
-			if (campaignText.size() <= 1){
-				selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + (campaignText[subSelectionState].getLocalBounds().height));
+			if (levelMenuSelected){
+				if (levelText.size() <= 1){
+					selectionShape.setPosition(levelText[levelSelection].getPosition().x - 25, levelText[levelSelection].getPosition().y + (levelText[levelSelection].getLocalBounds().height));
+				}
+				else{
+					selectionShape.setPosition(levelText[levelSelection].getPosition().x - 25, levelText[levelSelection].getPosition().y + levelText[levelSelection].getLocalBounds().height);
+				}
 			}
+
 			else{
-				selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + campaignText[subSelectionState].getLocalBounds().height);
+				if (campaignText.size() <= 1){
+					selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + (campaignText[subSelectionState].getLocalBounds().height));
+				}
+				else{
+					selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + campaignText[subSelectionState].getLocalBounds().height);
+				}
 			}
 			break;
 			}
-		case BUT_LEVEL: //Level
+		case BUT_INFO: //Level
 			{
-			if (levelText.size() <= 1){
-				selectionShape.setPosition(levelText[subSelectionState].getPosition().x - 25, levelText[subSelectionState].getPosition().y + (levelText[subSelectionState].getLocalBounds().height));
-			}
-			else{
-				selectionShape.setPosition(levelText[subSelectionState].getPosition().x - 25, levelText[subSelectionState].getPosition().y + levelText[subSelectionState].getLocalBounds().height);
-			}
+			
 			break;
 			}
 		case BUT_SETTINGS: //Settings
@@ -523,9 +540,6 @@ void Mainmenu::update()
 		confirmButton[CON_BACK].update(confirmButton[CON_BACK].isOver());
 
 		if (confirmButton[CON_BACK].isPressed()){
-			if (menuState == BUT_CAMPAIGN){
-				_loadSettings.loadLevels();
-			}
 			menuState = 0;
 			subSelectionState = 0;
 			subSelectionMax = 0;
@@ -561,26 +575,57 @@ void Mainmenu::update()
 
 		//In sub menu
 		else if (_e->type == sf::Event::KeyPressed && menuState > 0){
-			if (_e->key.code == sf::Keyboard::Up && subSelectionState > 0){
-				subSelectionState--;
+			if (_e->key.code == sf::Keyboard::Up){
+				if (levelMenuSelected && levelSelection > 0)
+					levelSelection--;
+				else if (!levelMenuSelected && subSelectionState > 0){
+					subSelectionState--;
+
+					if (menuState == BUT_LEVEL){
+						levelSelection = 0;
+						_loadSettings._campaign = subSelectionState;
+						_loadSettings.loadLevels();
+						initLevels();
+					}
+				}
 				lockMouse = true;
 			}
 			else if (_e->key.code == sf::Keyboard::Down && subSelectionState < subSelectionMax){
-				subSelectionState++;
+				if (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1)
+					levelSelection++;
+				else if (!levelMenuSelected && subSelectionState < subSelectionMax){
+					subSelectionState++;
+
+					if (menuState == BUT_LEVEL){
+						levelMenuSelected = false;
+						levelSelection = 0;
+						_loadSettings._campaign = subSelectionState;
+						_loadSettings.loadLevels();
+						initLevels();
+					}
+				}
 				lockMouse = true;
 			}
 			else if (_e->key.code == sf::Keyboard::Escape){
-				if (menuState == BUT_CAMPAIGN){
-					_loadSettings.loadLevels();
-				}
 				menuState = 0;
 				subSelectionState = 0;
 				subSelectionMax = 0;
 				_engineSettings.loadFromFile();
 			}
 
+			//Levels menu
+			if (menuState == BUT_LEVEL){
+				if (_e->key.code == sf::Keyboard::Left || _e->key.code == sf::Keyboard::Right)
+					levelMenuSelected = !levelMenuSelected;
+			}
+
+			//Instructions menu
+			else if (menuState == BUT_INFO){
+
+			}
+
 			//Settings menu
-			if (menuState == BUT_SETTINGS){
+			else if (menuState == BUT_SETTINGS){
 				if (subSelectionState == SET_RESOLUTION){
 					if ((_e->key.code == sf::Keyboard::Left || _e->key.code == sf::Keyboard::Right) && _engineSettings.usingCustomRes()){
 						_engineSettings.resVectorNumber = sf::VideoMode::getFullscreenModes().size() / 3 - 1;
@@ -671,20 +716,22 @@ void Mainmenu::draw()
 
 	switch (menuState)
 	{
-		case BUT_CAMPAIGN:
+		case BUT_LEVEL:
 			{
 			for (unsigned int i = 0; i < campaignText.size(); i++)
 				_window->draw(campaignText[i]);
-			_window->draw(confirmButton[CON_BACK]);
-			_window->draw(confirmButton[CON_BACK]._text);
-			break;
-			}
-		case BUT_LEVEL:
-			{
+
 			for (unsigned int i = 0; i < levelText.size(); i++)
 				_window->draw(levelText[i]);
+
 			_window->draw(confirmButton[CON_BACK]);
 			_window->draw(confirmButton[CON_BACK]._text);
+			_window->draw(levelMenuText);
+			break;
+			}
+		case BUT_INFO:
+			{
+			
 			break;
 			}
 		case BUT_SETTINGS:
@@ -733,13 +780,21 @@ void Mainmenu::initLevels()
 
 		levelText.back().setString(_loadSettings._levelVector[i]);
 	}
-	levelText[0].setPosition(800, 500 - (subSelectionState * 60));
+	levelText[0].setPosition(1200, 500 - (levelSelection * 60));
+
+	for (unsigned int i = 1; i < _loadSettings._levelVector.size(); i++){
+		levelText[i].setPosition(levelText[0].getPosition().x, levelText[0].getPosition().y + (60 * i));
+
+		if (i == levelSelection) levelText[i].setColor(sf::Color::White);
+		else levelText[i].setColor(sf::Color::Color(255, 255, 255, 128));
+	}
+	if (levelSelection != 0) levelText[0].setColor(sf::Color::Color(255, 255, 255, 128));
+	else levelText[0].setColor(sf::Color::White);
 }
 
 void Mainmenu::restartVideo()
 {
 	_engineSettings.writeToFile();
-
 
 	_window->close();
 	
