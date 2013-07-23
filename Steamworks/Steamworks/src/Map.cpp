@@ -50,12 +50,26 @@ void Map::load(b2World* world,
 	createForeground();
 	createTriggers();
 
-
+	
 	sManager.loadSounds(lsettings, esettings);
 	sManager.loadStreams(lsettings, esettings);
 
 	sManager.playStream();
 	sManager.playSound();
+}
+
+void Map::resetMapStates()
+{
+	sManager.resetSounds();
+
+	for (unsigned int i = 0; i < _foregroundObject.size(); i++){
+		_foregroundObject[i].setCurrentFrame(1);
+		_foregroundObject[i]._playing = false;
+	}
+	for (unsigned int i = 0; i < _mapObject.size(); i++){
+		_mapObject[i].setCurrentFrame(1);
+		_mapObject[i]._playing = false;
+	}
 }
 
 

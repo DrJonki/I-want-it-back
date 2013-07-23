@@ -26,6 +26,8 @@ public:
 			  sf::RenderWindow* window,
 			  LoadSettings& lsettigns,
 			  EngineSettings& esettings);
+
+	void resetMapStates();
 	
 	/// Updates the animation states & triggers
 	void update();

@@ -9,6 +9,7 @@ public:
 	~WorldManager(void);
 
 	void loadWorld(ContactListener* listener, LoadSettings&, EngineSettings&);
+	void resetWorldStates();
 	void deleteWorld();
 
 	void stepWorldPhysics();

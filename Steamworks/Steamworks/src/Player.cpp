@@ -62,6 +62,16 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 	resetClocks();
 }
 
+void Player::resetState()
+{
+	if (_playerNumber == 1) setPosition(ns::spawnPoint, 350);
+	else if (_playerNumber == 2) setPosition(ns::spawnPoint, 950);
+
+	animState = ANIM_RUNNING;
+
+	resetClocks();
+}
+
 void Player::unloadPlayer()
 {
 	_world = nullptr;

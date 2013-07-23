@@ -36,7 +36,8 @@ void Endmenu::showMenu()
 					ns::spawnPoint = 1000.f;
 					ns::runningState = false;
 					ns::endOfLevelState = false;
-					ns::deathState = true;
+					ns::deathState = false;
+					ns::restartState = true;
 				}
 				else if (_e->key.code == sf::Keyboard::Return){
 					_backgroundShape.setFillColor(sf::Color::Color(0, 0, 0, 0));
@@ -45,7 +46,8 @@ void Endmenu::showMenu()
 						_lSettings->_level++;
 						ns::runningState = false;
 						ns::endOfLevelState = false;
-						ns::deathState = true;
+						ns::deathState = false;
+						ns::restartState = true;
 					}
 					else{
 						ns::runningState = false;

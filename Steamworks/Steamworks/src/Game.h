@@ -15,4 +15,5 @@ private:
 	void pollEvents();
 	void init();
 	void deInit();
+	void resetStates();
 };

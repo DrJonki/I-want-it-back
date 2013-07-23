@@ -72,8 +72,11 @@ bool Game::runAndDontCrashPls()
 		ShowWindow(hwnd, SW_HIDE);
 	}
 	
-	while (ns::restartState || ns::deathState || (mainMenu.showMenu() && !ns::exitState)){
-		init();
+	while (ns::restartState || (mainMenu.showMenu() && !ns::exitState)){
+		if (!ns::restartState)
+			init();
+		else
+			resetStates();
 
 		while (ns::runningState){
 			if (mainMenu.getEngineSettings().vSync){
@@ -109,7 +112,8 @@ bool Game::runAndDontCrashPls()
 				endMenu.showMenu();
 			}
 		}
-		deInit();
+		if (!ns::restartState)
+			deInit();
 	}
 
 	if (ns::debug != nullptr) delete ns::debug;
@@ -363,4 +367,24 @@ void loadingScreen()
 	}
 
 	gameWindow.setActive(false);
+}
+
+void Game::resetStates()
+{
+	viewCenterTop = pauseMenu->getView(VIEW_TOP).getCenter().x;
+	viewCenterBottom = pauseMenu->getView(VIEW_BOTTOM).getCenter().x;
+
+	SetForegroundWindow(gameWindow.getSystemHandle());
+
+	paused = false;
+	ns::deathState = false;
+	ns::restartState = false;
+	ns::runningState = true;
+
+	worldManager.resetWorldStates();
+	player[0]->resetState();
+	player[1]->resetClocks();
+
+	pauseMenu->getView(VIEW_TOP).setCenter(ns::spawnPoint, 300);
+	pauseMenu->getView(VIEW_BOTTOM).setCenter(ns::spawnPoint, 900);
 }

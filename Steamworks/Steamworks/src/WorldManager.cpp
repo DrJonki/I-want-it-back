@@ -23,6 +23,11 @@ void WorldManager::loadWorld(ContactListener* listener, LoadSettings& lsettings,
 	_gameMap->load(_gameWorld, listener, _window, lsettings, esettings);
 }
 
+void WorldManager::resetWorldStates()
+{
+	_gameMap->resetMapStates();
+}
+
 void WorldManager::deleteWorld()
 {
 	if (_gameWorld != nullptr){

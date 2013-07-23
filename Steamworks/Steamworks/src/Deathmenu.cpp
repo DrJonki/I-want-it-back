@@ -32,6 +32,8 @@ void Deathmenu::showMenu()
 				if (_e->key.code == sf::Keyboard::Return){
 					_backgroundShape.setFillColor(sf::Color::Color(255, 0, 0, 0));
 					ns::runningState = false;
+					ns::deathState = false;
+					ns::restartState = true;
 				}
 				else if (_e->key.code == sf::Keyboard::Escape){
 					_backgroundShape.setFillColor(sf::Color::Color(255, 0, 0, 0));

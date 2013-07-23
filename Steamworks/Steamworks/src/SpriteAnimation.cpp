@@ -91,9 +91,11 @@ void SpriteAnimation::stepBack(const bool force)
 
 void SpriteAnimation::setCurrentFrame(const unsigned int currentFrame)
 {
-	_currentFrame = currentFrame;
-	_tempSteps = 1;
-	_frameChanged = true;
+	if (frameTexture.size() > 0){
+		_currentFrame = currentFrame;
+		_tempSteps = 1;
+		_frameChanged = true;
+	}
 
 	checkSounds();
 }

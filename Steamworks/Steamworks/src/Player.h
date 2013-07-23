@@ -15,6 +15,7 @@ public:
 	~Player(void);
 
 	void loadPlayer(sf::RenderWindow* window, b2World* world, ContactListener* lis);
+	void resetState();
 	void unloadPlayer();
 	void createSensors();
 
