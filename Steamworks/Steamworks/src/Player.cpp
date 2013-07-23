@@ -88,7 +88,7 @@ void Player::resetClocks()
 
 void Player::update()
 {
-	if (hangTime.getElapsedTime().asMilliseconds() > 1000 && _cListener->inContact(_sensorData[SEN_BOTTOM])){
+	if (hangTime.getElapsedTime().asMilliseconds() > 1125 && _cListener->inContact(_sensorData[SEN_BOTTOM])){
 		animState = ANIM_SOMERSAULT;
 	}
 	if (_cListener->inContact(_sensorData[SEN_BOTTOM]) || (animState == ANIM_LEDGEGRAB && animations[ANIM_LEDGEGRAB].getCurrentFrame() > 3)){
@@ -96,7 +96,7 @@ void Player::update()
 	}
 
 	//Crouching
-	if (((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && somersaultTime.getElapsedTime().asMilliseconds() > 1000) || animState == ANIM_SOMERSAULT || _cListener->inContact(_sensorData[SEN_MIDDLE]) || _cListener->inContact(_sensorData[SEN_TOP]))){
+	if (((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && _cListener->inContact(_sensorData[SEN_BOTTOM]) && somersaultTime.getElapsedTime().asMilliseconds() > 1000) || animState == ANIM_SOMERSAULT || _cListener->inContact(_sensorData[SEN_MIDDLE]) || _cListener->inContact(_sensorData[SEN_TOP]))){
 		b2Filter filter = topFixture->GetFilterData();
 		filter.maskBits = FIL_NULL;
 		topFixture->SetFilterData(filter);
