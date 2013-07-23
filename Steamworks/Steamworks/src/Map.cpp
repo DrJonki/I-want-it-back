@@ -168,7 +168,7 @@ void Map::createBackgrounds()
 			}
 
 			_backGroundObject.emplace_back(BackgroundObject());
-			_backGroundObject.back().load(t_bottom, t_sizeX, t_sizeY, t_posX, t_textureDir);
+			_backGroundObject.back().load(t_bottom, t_sizeX, t_sizeY, t_posX, t_textureDir, _esettings->smoothTextures);
 
 
 			temp++;
@@ -227,7 +227,7 @@ void Map::createStatics()
 			}
 
 			_mapObject.emplace_back(MapObject());
-			_mapObject.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, hasPhys, t_textureDir, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames, t_bBoxModX, t_bBoxModY);
+			_mapObject.back().load(_world, t_sizeX, t_sizeY, t_posX, t_posY, hasPhys, t_textureDir, _esettings->smoothTextures, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames, t_bBoxModX, t_bBoxModY);
 			_mapObject.back()._trigData = t_data;
 			_mapObject.back()._loop = t_loop;
 		}
@@ -281,7 +281,7 @@ void Map::createForeground()
 			}
 
 			_foregroundObject.emplace_back(ForegroundObject());
-			_foregroundObject.back().load(t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames);
+			_foregroundObject.back().load(t_sizeX, t_sizeY, t_posX, t_posY, t_textureDir, _esettings->smoothTextures, t_aSizeX, t_aSizeY, t_startX, t_startY, t_interval, t_frames);
 			_foregroundObject.back()._trigData = t_data;
 			_foregroundObject.back()._loop = t_loop;
 		}

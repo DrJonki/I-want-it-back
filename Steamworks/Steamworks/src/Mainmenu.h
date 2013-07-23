@@ -61,6 +61,15 @@ private:
 		CON_BACK
 	};
 
+	std::vector<GameButton> arrowButton;
+	static const enum
+	{
+		ARR_UP,
+		ARR_DOWN,
+		ARR_LEFT,
+		ARR_RIGHT,
+	};
+
 
 	sf::Texture titleTexture;
 	sf::RectangleShape titleBackground;
@@ -83,6 +92,9 @@ private:
 	bool levelMenuSelected;
 	int levelSelection;
 	sf::Text levelMenuText;
+
+	sf::Texture infoTexture[3];
+	sf::RectangleShape infoShape;
 
 	static const enum
 	{

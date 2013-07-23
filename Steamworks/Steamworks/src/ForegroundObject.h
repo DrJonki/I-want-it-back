@@ -15,6 +15,7 @@ public:
 			  const float posX,
 			  const float posY,
 			  const std::string textureDir,
+			  const bool smooth,
 			  const int aSizeX = 0,
 			  const int aSizeY = 0,
 			  const int startX = 0,

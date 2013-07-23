@@ -16,6 +16,7 @@ void ForegroundObject::load(const float sizeX,
 							const float posX,
 							const float posY,
 							const std::string textureDir,
+							const bool smooth,
 							const int aSizeX,
 							const int aSizeY,
 							const int startX,
@@ -29,8 +30,8 @@ void ForegroundObject::load(const float sizeX,
 
 	sf::Image image;
 	if (image.loadFromFile(textureDir)){
-		if (aSizeX <= 0 || aSizeY <= 0) loadSheet(image, startX, startY, sizeX, sizeY, frames);
-		else loadSheet(image, startX, startY, aSizeX, aSizeY, frames);
+		if (aSizeX <= 0 || aSizeY <= 0) loadSheet(image, startX, startY, sizeX, sizeY, frames, smooth);
+		else loadSheet(image, startX, startY, aSizeX, aSizeY, frames, smooth);
 		setStepInterval(interval);
 		setTexture(&getCurrentTexture());
 	}

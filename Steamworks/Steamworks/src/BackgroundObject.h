@@ -13,7 +13,8 @@ public:
 			  const float sizeX,
 			  const float sizeY,
 			  const float posX,
-			  std::string textureDir);
+			  std::string textureDir,
+			  const bool smooth);
 
 private:
 	sf::Texture _texture;

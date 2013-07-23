@@ -22,7 +22,7 @@ void GameButton::load(const float sizeX,
 	setSize(sf::Vector2f(sizeX, sizeY));
 	setPosition(posX, posY);
 
-	loadSheet(image, 0, 0, 200, 100, 3);
+	loadSheet(image, 0, 0, image.getSize().x / 3, image.getSize().y, 3, true);
 
 	setCurrentFrame(1);
 	setTexture(&getCurrentTexture());
@@ -60,13 +60,12 @@ void GameButton::update(const bool selected)
 
 bool GameButton::mouseOnButton()
 {
-	sf::Vector2i pixelPos = sf::Mouse::getPosition(*_window);
-	sf::Vector2f worldPos = _window->mapPixelToCoords(pixelPos);
+	sf::Vector2f worldPos = _window->mapPixelToCoords(sf::Mouse::getPosition(*_window));
 
-	if (worldPos.x > getPosition().x &&
-		worldPos.y > getPosition().y &&
-		worldPos.x < getPosition().x + getSize().x &&
-		worldPos.y < getPosition().y + getSize().y)
+	if (worldPos.x > getPosition().x - getOrigin().x &&
+		worldPos.y > getPosition().y - getOrigin().y &&
+		worldPos.x < getPosition().x + getSize().x - getOrigin().x &&
+		worldPos.y < getPosition().y + getSize().y - getOrigin().y)
 	{
 		return true;
 	}

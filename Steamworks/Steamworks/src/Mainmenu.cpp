@@ -67,7 +67,7 @@ bool Mainmenu::showMenu()
 			levelSelection = _loadSettings._level;
 		}
 		else if (mainButton[BUT_INFO].isPressed() && menuState == 0){
-			
+			menuState = BUT_INFO;
 		}
 		else if (mainButton[BUT_SETTINGS].isPressed() && menuState == 0){
 			menuState = BUT_SETTINGS;
@@ -175,8 +175,26 @@ void Mainmenu::init()
 	confirmButton[CON_BACK]._text.setString("<< Back");
 	confirmButton[CON_BACK]._text.setColor(sf::Color::Black);
 
+	//Arrow buttons
+	for (int i = 0; i < 4; i++)
+		arrowButton.emplace_back(GameButton(_window));
+
+	image.loadFromFile("Resources/Common/Graphics/UI/arrow.png");
+
+	arrowButton[ARR_UP].load(32, 32, 0, 0, image);
+	arrowButton[ARR_DOWN].load(32, 32, 0, 0, image);
+	arrowButton[ARR_LEFT].load(32, 32, 0, 0, image);
+	arrowButton[ARR_RIGHT].load(32, 32, 0, 0, image);
+	for (int i = 0; i < 4; i++)
+		arrowButton[i].setOrigin(arrowButton[i].getSize().x / 2, arrowButton[i].getSize().y / 2);
+	arrowButton[ARR_UP].setRotation(180);
+	arrowButton[ARR_LEFT].setRotation(90);
+	arrowButton[ARR_RIGHT].setRotation(270);
+
 	//Sub menu buttons
 	/////////////////////////////////////////////////////////
+	image.loadFromFile("Resources/Common/Graphics/UI/button_start.png");
+
 	//Campaign
 	campaignText.reserve(_loadSettings._campaignVector.size());
 	for (unsigned int i = 0; i < _loadSettings._campaignVector.size(); i++){
@@ -195,6 +213,15 @@ void Mainmenu::init()
 	levelMenuText.setPosition(800, 300);
 	//Level
 	//Nuthing to see hiar :)
+
+	//Instructions
+	infoTexture[0].loadFromFile("Resources/Common/Graphics/UI/info1.png");
+	infoTexture[1].loadFromFile("Resources/Common/Graphics/UI/info2.png");
+	infoTexture[2].loadFromFile("Resources/Common/Graphics/UI/info3.png");
+
+	infoShape.setSize(sf::Vector2f(960, 1200));
+	infoShape.setTexture(&infoTexture[0]);
+	infoShape.setPosition(960, 0);
 
 	//Settings
 	settingButton.reserve(SET_LAST);
@@ -358,10 +385,10 @@ void Mainmenu::init()
 
 
 	titleTexture.loadFromFile("Resources/Common/Graphics/UI/TitleScreen.png");
-	titleBackground.setSize(sf::Vector2f(1600, 1200));
+	titleBackground.setSize(sf::Vector2f(1920, 1200));
 	titleBackground.setTexture(&titleTexture);
 	titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
-	titleBackground.setPosition(320, 0);
+	titleBackground.setPosition(0, 0);
 
 	titleMusic.openFromFile("Resources/Common/Audio/Music/titlemusic.ogg");
 	titleMusic.setLoop(true);
@@ -421,7 +448,11 @@ void Mainmenu::update()
 			}
 		case BUT_INFO:
 			{
-			
+			subSelectionMax = 2;
+
+			confirmButton[CON_BACK].setPosition(600, 568);
+
+			infoShape.setTexture(&infoTexture[subSelectionState]);
 
 			break;
 			}
@@ -488,32 +519,33 @@ void Mainmenu::update()
 		case BUT_LEVEL: //Campaign
 			{
 			if (levelMenuSelected){
-				if (levelText.size() <= 1){
-					selectionShape.setPosition(levelText[levelSelection].getPosition().x - 25, levelText[levelSelection].getPosition().y + (levelText[levelSelection].getLocalBounds().height));
-				}
-				else{
-					selectionShape.setPosition(levelText[levelSelection].getPosition().x - 25, levelText[levelSelection].getPosition().y + levelText[levelSelection].getLocalBounds().height);
-				}
+				selectionShape.setPosition(1160, 535);
+			}
+			else{
+				selectionShape.setPosition(760, 535);
 			}
 
-			else{
-				if (campaignText.size() <= 1){
-					selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + (campaignText[subSelectionState].getLocalBounds().height));
-				}
-				else{
-					selectionShape.setPosition(campaignText[subSelectionState].getPosition().x - 25, campaignText[subSelectionState].getPosition().y + campaignText[subSelectionState].getLocalBounds().height);
-				}
-			}
+			arrowButton[ARR_UP].setPosition(selectionShape.getPosition().x, selectionShape.getPosition().y - 50);
+			arrowButton[ARR_DOWN].setPosition(selectionShape.getPosition().x, selectionShape.getPosition().y + 50);
+
 			break;
 			}
-		case BUT_INFO: //Level
+		case BUT_INFO:
 			{
-			
+			arrowButton[ARR_UP].setPosition(800, 580);
+			arrowButton[ARR_DOWN].setPosition(800, 620);
 			break;
 			}
 		case BUT_SETTINGS: //Settings
-			selectionShape.setPosition(settingButton[subSelectionState].getPosition().x - 25, settingButton[subSelectionState].getPosition().y + (settingButton[subSelectionState].getGlobalBounds().height / 2));
+			{
+			selectionShape.setPosition(settingButton[subSelectionState].getPosition().x - 90, settingButton[subSelectionState].getPosition().y + (settingButton[subSelectionState].getGlobalBounds().height / 2));
+
+			arrowButton[ARR_LEFT].setPosition(selectionShape.getPosition().x - 50, selectionShape.getPosition().y);
+			arrowButton[ARR_RIGHT].setPosition(selectionShape.getPosition().x + 50, selectionShape.getPosition().y);
+			
 			break;
+
+			}
 		default: //Main menu
 			selectionShape.setPosition(mainButton[selectionState].getPosition().x - 25, mainButton[selectionState].getPosition().y + (mainButton[selectionState].getGlobalBounds().height / 2));
 	}
@@ -538,11 +570,125 @@ void Mainmenu::update()
 	if (menuState > 0){
 		confirmButton[CON_APPLY].update(confirmButton[CON_APPLY].isOver());
 		confirmButton[CON_BACK].update(confirmButton[CON_BACK].isOver());
+		for (int i = 0; i < 4; i++)
+			arrowButton[i].update(arrowButton[i].isOver());
+
+		//In sub menu
+		if (arrowButton[ARR_UP].isPressed()){
+			if (levelMenuSelected && levelSelection > 0)
+				levelSelection--;
+			else if (!levelMenuSelected && subSelectionState > 0){
+				subSelectionState--;
+				
+			if (menuState == BUT_LEVEL){
+				levelSelection = 0;
+					_loadSettings._campaign = subSelectionState;
+					_loadSettings.loadLevels();
+					initLevels();
+				}
+			}
+		}
+		else if (arrowButton[ARR_DOWN].isPressed() && subSelectionState < subSelectionMax){
+			if (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1)
+				levelSelection++;
+			else if (!levelMenuSelected && subSelectionState < subSelectionMax){
+				subSelectionState++;
+
+				if (menuState == BUT_LEVEL){
+					levelMenuSelected = false;
+					levelSelection = 0;
+					_loadSettings._campaign = subSelectionState;
+					_loadSettings.loadLevels();
+					initLevels();
+				}
+			}
+		}
+
+		if (menuState == BUT_SETTINGS){
+			if (subSelectionState == SET_RESOLUTION){
+				if (arrowButton[ARR_LEFT].isPressed() && (sf::VideoMode::getFullscreenModes().size() / 3) - 1 > _engineSettings.resVectorNumber){
+					if (_engineSettings.usingCustomRes()){
+						_engineSettings.resVectorNumber = sf::VideoMode::getFullscreenModes().size() / 3 - 1;
+						_engineSettings.updateResolution();
+					}
+					else{
+						_engineSettings.resVectorNumber++;
+						_engineSettings.updateResolution();
+					}
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.resVectorNumber > 0){
+					if (_engineSettings.usingCustomRes()){
+						_engineSettings.resVectorNumber = sf::VideoMode::getFullscreenModes().size() / 3 - 1;
+						_engineSettings.updateResolution();
+					}
+					else{
+					_engineSettings.resVectorNumber--;
+					_engineSettings.updateResolution();
+					}
+				}
+			}
+			else if (subSelectionState == SET_VSYNC){
+				if (arrowButton[ARR_LEFT].isPressed() || arrowButton[ARR_RIGHT].isPressed()){
+					_engineSettings.vSync = !_engineSettings.vSync;
+				}
+			}
+			else if (subSelectionState == SET_FULLSCREEN){
+				if (arrowButton[ARR_LEFT].isPressed() || arrowButton[ARR_RIGHT].isPressed()){
+					_engineSettings.fullScreen = !_engineSettings.fullScreen;
+				}
+			}
+			else if (subSelectionState == SET_AA){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.antiAliasing > 0){
+					_engineSettings.antiAliasing -= 2;
+			}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.antiAliasing < 8){
+					_engineSettings.antiAliasing += 2;
+				}
+			}
+			else if (subSelectionState == SET_SMOOTH){
+				if (arrowButton[ARR_LEFT].isPressed() || arrowButton[ARR_RIGHT].isPressed()){
+					_engineSettings.smoothTextures = !_engineSettings.smoothTextures;
+				}
+			}
+			else if (subSelectionState == SET_GVOLUME){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.globalVolume > 0){
+					_engineSettings.globalVolume--;
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.globalVolume < 100){
+					_engineSettings.globalVolume++;
+				}
+			}
+			else if (subSelectionState == SET_MVOLUME){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.musicVolume > 0){
+					_engineSettings.musicVolume--;
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.musicVolume < 100){
+					_engineSettings.musicVolume++;
+				}
+			}
+			else if (subSelectionState == SET_SVOLUME){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.soundVolume > 0){
+					_engineSettings.soundVolume--;
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.soundVolume < 100){
+					_engineSettings.soundVolume++;
+				}
+			}
+			else if (subSelectionState == SET_AVOLUME){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.anbientVolume > 0){
+					_engineSettings.anbientVolume--;
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.anbientVolume < 100){
+					_engineSettings.anbientVolume++;
+				}
+			}
+		}
 
 		if (confirmButton[CON_BACK].isPressed()){
 			menuState = 0;
 			subSelectionState = 0;
 			subSelectionMax = 0;
+			levelMenuSelected = false;
 			_engineSettings.loadFromFile();
 		}
 		else if (confirmButton[CON_APPLY].isPressed() && menuState == BUT_SETTINGS && confirmButton[CON_APPLY].isOver()){
@@ -610,6 +756,7 @@ void Mainmenu::update()
 				menuState = 0;
 				subSelectionState = 0;
 				subSelectionMax = 0;
+				levelMenuSelected = false;
 				_engineSettings.loadFromFile();
 			}
 
@@ -617,11 +764,6 @@ void Mainmenu::update()
 			if (menuState == BUT_LEVEL){
 				if (_e->key.code == sf::Keyboard::Left || _e->key.code == sf::Keyboard::Right)
 					levelMenuSelected = !levelMenuSelected;
-			}
-
-			//Instructions menu
-			else if (menuState == BUT_INFO){
-
 			}
 
 			//Settings menu
@@ -727,11 +869,17 @@ void Mainmenu::draw()
 			_window->draw(confirmButton[CON_BACK]);
 			_window->draw(confirmButton[CON_BACK]._text);
 			_window->draw(levelMenuText);
+			_window->draw(arrowButton[ARR_UP]);
+			_window->draw(arrowButton[ARR_DOWN]);
 			break;
 			}
 		case BUT_INFO:
 			{
-			
+			_window->draw(infoShape);
+			_window->draw(confirmButton[CON_BACK]);
+			_window->draw(confirmButton[CON_BACK]._text);
+			_window->draw(arrowButton[ARR_UP]);
+			_window->draw(arrowButton[ARR_DOWN]);
 			break;
 			}
 		case BUT_SETTINGS:
@@ -745,6 +893,8 @@ void Mainmenu::draw()
 			_window->draw(confirmButton[CON_APPLY]._text);
 			_window->draw(confirmButton[CON_BACK]);
 			_window->draw(confirmButton[CON_BACK]._text);
+			_window->draw(arrowButton[ARR_LEFT]);
+			_window->draw(arrowButton[ARR_RIGHT]);
 			break;
 			}
 		case BUT_CREDITS:

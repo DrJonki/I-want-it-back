@@ -20,6 +20,7 @@ public:
 			  const float posY,
 			  const bool hasPhysics,
 			  const std::string textureDir,
+			  const bool smooth,
 			  const int aSizeX = 0,
 			  const int aSizeY = 0,
 			  const int startX = 0,

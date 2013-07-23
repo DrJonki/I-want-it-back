@@ -140,6 +140,7 @@ void Player::update()
 			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
 
 			animState = ANIM_JUMPING;
+			if (animations[ANIM_JUMPING].lastFrame()) animations[ANIM_JUMPING].setCurrentFrame(1);
 		}
 	}
 	if (_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT_CORNER]) && !_cListener->inContact(_sensorData[SEN_BOTTOM]) && animState != ANIM_LEDGEGRAB){
@@ -151,7 +152,7 @@ void Player::update()
 
 
 	//Ledge grabbing
-	if (_cListener->inContact(_sensorData[SEN_TOPRIGHT]) && _cListener->inContact(_sensorData[SEN_BOTTOM]) && animations[ANIM_LEDGEGRAB].getCurrentFrame() <= 2){
+	if (_cListener->inContact(_sensorData[SEN_TOPRIGHT]) && _cListener->inContact(_sensorData[SEN_BOTTOM]) && _cListener->inContact(_sensorData[SEN_BOTTOMRIGHT]) && animations[ANIM_LEDGEGRAB].getCurrentFrame() <= 2){
 		animState = ANIM_LEDGEGRAB;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || animations[ANIM_LEDGEGRAB].getCurrentFrame() > 1 || animations[ANIM_LEDGEGRAB].getTempSteps() > 1){
