@@ -127,37 +127,37 @@ void Mainmenu::init()
 	mainButton[BUT_START]._text.setFont(_font);
 	mainButton[BUT_START]._text.setCharacterSize(40);
 	mainButton[BUT_START]._text.setString("Start");
-	mainButton[BUT_START]._text.setColor(sf::Color::Black);
+	mainButton[BUT_START]._text.setColor(sf::Color::White);
 	//Campaign
 	mainButton[BUT_LEVEL].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 200, image);
 	mainButton[BUT_LEVEL]._text.setFont(_font);
 	mainButton[BUT_LEVEL]._text.setCharacterSize(30);
 	mainButton[BUT_LEVEL]._text.setString("Select\ncampaign");
-	mainButton[BUT_LEVEL]._text.setColor(sf::Color::Black);
+	mainButton[BUT_LEVEL]._text.setColor(sf::Color::White);
 	//Level
 	mainButton[BUT_INFO].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_LEVEL].getPosition().y + 125, image);
 	mainButton[BUT_INFO]._text.setFont(_font);
 	mainButton[BUT_INFO]._text.setCharacterSize(30);
 	mainButton[BUT_INFO]._text.setString("Instructions");
-	mainButton[BUT_INFO]._text.setColor(sf::Color::Black);
+	mainButton[BUT_INFO]._text.setColor(sf::Color::White);
 	//Settings
 	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_INFO].getPosition().y + 125, image);
 	mainButton[BUT_SETTINGS]._text.setFont(_font);
 	mainButton[BUT_SETTINGS]._text.setCharacterSize(30);
 	mainButton[BUT_SETTINGS]._text.setString("Settings");
-	mainButton[BUT_SETTINGS]._text.setColor(sf::Color::Black);
+	mainButton[BUT_SETTINGS]._text.setColor(sf::Color::White);
 	//Credits
 	mainButton[BUT_CREDITS].load(150, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_SETTINGS].getPosition().y + 150, image);
 	mainButton[BUT_CREDITS]._text.setFont(_font);
 	mainButton[BUT_CREDITS]._text.setCharacterSize(26);
 	mainButton[BUT_CREDITS]._text.setString("Credits");
-	mainButton[BUT_CREDITS]._text.setColor(sf::Color::Black);
+	mainButton[BUT_CREDITS]._text.setColor(sf::Color::White);
 	//Exit
 	mainButton[BUT_EXIT].load(150, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_CREDITS].getPosition().y + 100, image);
 	mainButton[BUT_EXIT]._text.setFont(_font);
 	mainButton[BUT_EXIT]._text.setCharacterSize(26);
 	mainButton[BUT_EXIT]._text.setString("Exit");
-	mainButton[BUT_EXIT]._text.setColor(sf::Color::Black);
+	mainButton[BUT_EXIT]._text.setColor(sf::Color::White);
 
 	//Confirmation buttons
 	confirmButton.emplace_back(GameButton(_window));
@@ -167,13 +167,13 @@ void Mainmenu::init()
 	confirmButton[CON_APPLY]._text.setFont(_font);
 	confirmButton[CON_APPLY]._text.setCharacterSize(22);
 	confirmButton[CON_APPLY]._text.setString("Apply >>");
-	confirmButton[CON_APPLY]._text.setColor(sf::Color::Black);
+	confirmButton[CON_APPLY]._text.setColor(sf::Color::White);
 
 	confirmButton[CON_BACK].load(100, 65, confirmButton[CON_APPLY].getPosition().x, confirmButton[CON_APPLY].getPosition().y + 100, image);
 	confirmButton[CON_BACK]._text.setFont(_font);
 	confirmButton[CON_BACK]._text.setCharacterSize(24);
 	confirmButton[CON_BACK]._text.setString("<< Back");
-	confirmButton[CON_BACK]._text.setColor(sf::Color::Black);
+	confirmButton[CON_BACK]._text.setColor(sf::Color::White);
 
 	//Arrow buttons
 	for (int i = 0; i < 4; i++)
@@ -236,7 +236,7 @@ void Mainmenu::init()
 	settingButton[SET_RESOLUTION]._text.setFont(_font);
 	settingButton[SET_RESOLUTION]._text.setCharacterSize(28);
 	settingButton[SET_RESOLUTION]._text.setString("Resolution");
-	settingButton[SET_RESOLUTION]._text.setColor(sf::Color::Black);
+	settingButton[SET_RESOLUTION]._text.setColor(sf::Color::White);
 
 	settingText[SET_RESOLUTION].setFont(_font);
 	settingText[SET_RESOLUTION].setCharacterSize(30);
@@ -249,7 +249,7 @@ void Mainmenu::init()
 	settingButton[SET_VSYNC]._text.setFont(_font);
 	settingButton[SET_VSYNC]._text.setCharacterSize(28);
 	settingButton[SET_VSYNC]._text.setString("V-Sync");
-	settingButton[SET_VSYNC]._text.setColor(sf::Color::Black);
+	settingButton[SET_VSYNC]._text.setColor(sf::Color::White);
 
 	settingText[SET_VSYNC].setFont(_font);
 	settingText[SET_VSYNC].setCharacterSize(30);
@@ -264,7 +264,7 @@ void Mainmenu::init()
 	settingButton[SET_FULLSCREEN]._text.setFont(_font);
 	settingButton[SET_FULLSCREEN]._text.setCharacterSize(28);
 	settingButton[SET_FULLSCREEN]._text.setString("Fullscreen");
-	settingButton[SET_FULLSCREEN]._text.setColor(sf::Color::Black);
+	settingButton[SET_FULLSCREEN]._text.setColor(sf::Color::White);
 
 	settingText[SET_FULLSCREEN].setFont(_font);
 	settingText[SET_FULLSCREEN].setCharacterSize(30);
@@ -279,7 +279,7 @@ void Mainmenu::init()
 	settingButton[SET_AA]._text.setFont(_font);
 	settingButton[SET_AA]._text.setCharacterSize(28);
 	settingButton[SET_AA]._text.setString("Anti-aliasing");
-	settingButton[SET_AA]._text.setColor(sf::Color::Black);
+	settingButton[SET_AA]._text.setColor(sf::Color::White);
 
 	settingText[SET_AA].setFont(_font);
 	settingText[SET_AA].setCharacterSize(30);
@@ -293,7 +293,7 @@ void Mainmenu::init()
 	settingButton[SET_SMOOTH]._text.setFont(_font);
 	settingButton[SET_SMOOTH]._text.setCharacterSize(24);
 	settingButton[SET_SMOOTH]._text.setString("Smooth textures");
-	settingButton[SET_SMOOTH]._text.setColor(sf::Color::Black);
+	settingButton[SET_SMOOTH]._text.setColor(sf::Color::White);
 
 	settingText[SET_SMOOTH].setFont(_font);
 	settingText[SET_SMOOTH].setCharacterSize(30);
@@ -309,7 +309,7 @@ void Mainmenu::init()
 	settingButton[SET_GVOLUME]._text.setFont(_font);
 	settingButton[SET_GVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_GVOLUME]._text.setString("Global volume");
-	settingButton[SET_GVOLUME]._text.setColor(sf::Color::Black);
+	settingButton[SET_GVOLUME]._text.setColor(sf::Color::White);
 
 	settingText[SET_GVOLUME].setFont(_font);
 	settingText[SET_GVOLUME].setCharacterSize(30);
@@ -323,7 +323,7 @@ void Mainmenu::init()
 	settingButton[SET_MVOLUME]._text.setFont(_font);
 	settingButton[SET_MVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_MVOLUME]._text.setString("Music volume");
-	settingButton[SET_MVOLUME]._text.setColor(sf::Color::Black);
+	settingButton[SET_MVOLUME]._text.setColor(sf::Color::White);
 
 	settingText[SET_MVOLUME].setFont(_font);
 	settingText[SET_MVOLUME].setCharacterSize(30);
@@ -337,7 +337,7 @@ void Mainmenu::init()
 	settingButton[SET_SVOLUME]._text.setFont(_font);
 	settingButton[SET_SVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_SVOLUME]._text.setString("Sound volume");
-	settingButton[SET_SVOLUME]._text.setColor(sf::Color::Black);
+	settingButton[SET_SVOLUME]._text.setColor(sf::Color::White);
 
 	settingText[SET_SVOLUME].setFont(_font);
 	settingText[SET_SVOLUME].setCharacterSize(30);
@@ -351,7 +351,7 @@ void Mainmenu::init()
 	settingButton[SET_AVOLUME]._text.setFont(_font);
 	settingButton[SET_AVOLUME]._text.setCharacterSize(24);
 	settingButton[SET_AVOLUME]._text.setString("Anbient volume");
-	settingButton[SET_AVOLUME]._text.setColor(sf::Color::Black);
+	settingButton[SET_AVOLUME]._text.setColor(sf::Color::White);
 
 	settingText[SET_AVOLUME].setFont(_font);
 	settingText[SET_AVOLUME].setCharacterSize(30);
