@@ -329,7 +329,7 @@ void Pausemenu::init()
 	}
 	sf::Image image;
 	image.loadFromFile("Resources/Common/Graphics/UI/button_start.png");
-	_font.loadFromFile("Resources/Common/Fonts/Amble-Bold.ttf");
+	_font.loadFromFile("Resources/Common/Fonts/galvanize.ttf");
 
 	//Main buttons
 	/////////////////////////////////////////////////////////

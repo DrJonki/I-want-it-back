@@ -67,6 +67,7 @@ bool Mainmenu::showMenu()
 			levelSelection = _loadSettings._level;
 		}
 		else if (mainButton[BUT_INFO].isPressed() && menuState == 0){
+			subSelectionState = 0;
 			menuState = BUT_INFO;
 		}
 		else if (mainButton[BUT_SETTINGS].isPressed() && menuState == 0){
@@ -118,7 +119,7 @@ void Mainmenu::init()
 	}
 	sf::Image image;
 	image.loadFromFile("Resources/Common/Graphics/UI/button_start.png");
-	_font.loadFromFile("Resources/Common/Fonts/Amble-Bold.ttf");
+	_font.loadFromFile("Resources/Common/Fonts/galvanize.ttf");
 
 	//Main buttons
 	/////////////////////////////////////////////////////////
@@ -414,17 +415,19 @@ void Mainmenu::update()
 
 				confirmButton[CON_BACK].setPosition(600, 505);
 
-				if (levelText[0].getPosition().y < 500 - (levelSelection * 60)) levelText[0].move(0, 4);
-				else if (levelText[0].getPosition().y > 500 - (levelSelection * 60)) levelText[0].move(0, -4);
+				if (levelText[0].getPosition().y < 500 - (levelSelection * 60)) levelText[0].move(0, 6);
+				else if (levelText[0].getPosition().y > 500 - (levelSelection * 60)) levelText[0].move(0, -6);
 				if (_loadSettings._levelVector.size() > 1){
-					for (unsigned int i = 1; i < levelText.size(); i++){
+					for (int i = 1; i < (signed int)levelText.size(); i++){
 						levelText[i].setPosition(levelText[0].getPosition().x, levelText[0].getPosition().y + (60 * i));
 
-						if (i == levelSelection) levelText[i].setColor(sf::Color::White);
+						if (i < levelSelection - 2) levelText[i].setColor(sf::Color::Color(255, 255, 255, 0));
+						else if (i == levelSelection) levelText[i].setColor(sf::Color::White);
 						else levelText[i].setColor(sf::Color::Color(255, 255, 255, 128));
 					}
 				}
-				if (levelSelection != 0) levelText[0].setColor(sf::Color::Color(255, 255, 255, 128));
+				if (levelSelection > 2) levelText[0].setColor(sf::Color::Color(255, 255, 255, 0));
+				else if (levelSelection != 0) levelText[0].setColor(sf::Color::Color(255, 255, 255, 128));
 				else levelText[0].setColor(sf::Color::White);
 			}
 
@@ -435,15 +438,17 @@ void Mainmenu::update()
 
 				confirmButton[CON_BACK].setPosition(600, 505);
 
-				if (campaignText[0].getPosition().y < 500 - (subSelectionState * 60)) campaignText[0].move(0, 4);
-				else if (campaignText[0].getPosition().y > 500 - (subSelectionState * 60)) campaignText[0].move(0, -4);
-				for (unsigned int i = 1; i < campaignText.size(); i++){
+				if (campaignText[0].getPosition().y < 500 - (subSelectionState * 60)) campaignText[0].move(0, 6);
+				else if (campaignText[0].getPosition().y > 500 - (subSelectionState * 60)) campaignText[0].move(0, -6);
+				for (int i = 1; i < (signed int)campaignText.size(); i++){
 					campaignText[i].setPosition(campaignText[0].getPosition().x, campaignText[0].getPosition().y + (60 * i));
-
-					if (i == subSelectionState) campaignText[i].setColor(sf::Color::White);
+					
+					if (i < subSelectionState - 2) campaignText[i].setColor(sf::Color::Color(255, 255, 255, 0));
+					else if (i == subSelectionState) campaignText[i].setColor(sf::Color::White);
 					else campaignText[i].setColor(sf::Color::Color(255, 255, 255, 128));
 				}
-				if (subSelectionState != 0) campaignText[0].setColor(sf::Color::Color(255, 255, 255, 128));
+				if (subSelectionState > 2) campaignText[0].setColor(sf::Color::Color(255, 255, 255, 0));
+				else if (subSelectionState != 0) campaignText[0].setColor(sf::Color::Color(255, 255, 255, 128));
 				else campaignText[0].setColor(sf::Color::White);
 			}
 
@@ -916,7 +921,9 @@ void Mainmenu::draw()
 		_window->draw(mainButton[i]._text);
 	}
 
-	if (menuState != BUT_CREDITS) _window->draw(selectionShape);
+	if (menuState > 0){
+		if (menuState != BUT_CREDITS) _window->draw(selectionShape);
+	}
 
 	_window->display();
 }

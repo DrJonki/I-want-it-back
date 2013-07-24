@@ -278,6 +278,8 @@ void Game::init()
 	paused = false;
 	ns::deathState = false;
 	ns::restartState = false;
+
+	gameWindow.setMouseCursorVisible(false);
 	
 	pauseMenu = new Pausemenu(&gameWindow, &e, mainMenu.getEngineSettings());
 	
@@ -357,10 +359,9 @@ void Game::deInit()
 void loadingScreen()
 {
 	gameWindow.setActive(true);
-	gameWindow.setMouseCursorVisible(false);
 
 	sf::Font font;
-	font.loadFromFile("Resources/Common/Fonts/Amble-Bold.ttf");
+	font.loadFromFile("Resources/Common/Fonts/galvanize.ttf");
 	sf::Text text;
 	text.setFont(font);
 	text.setCharacterSize(100);

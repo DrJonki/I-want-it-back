@@ -10,7 +10,7 @@ Deathmenu::Deathmenu(sf::RenderWindow* window, sf::Event* e)
 	_backgroundShape.setSize(sf::Vector2f(1920, 1200));
 	_backgroundShape.setFillColor(sf::Color::Color(255, 0, 0, 0));
 
-	_font.loadFromFile("Resources/Common/Fonts/Amble-Bold.ttf");
+	_font.loadFromFile("Resources/Common/Fonts/galvanize.ttf");
 	_text.setFont(_font);
 	_text.setCharacterSize(60);
 	_text.setPosition(300, 300);

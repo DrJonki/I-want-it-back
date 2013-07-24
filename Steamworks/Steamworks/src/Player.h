@@ -82,6 +82,4 @@ private:
 	};
 
 	int animState;
-
-	unsigned int animationState;
 };

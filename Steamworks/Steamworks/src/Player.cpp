@@ -7,7 +7,7 @@
 
 Player::Player(const unsigned short playerNo, LoadSettings& lsettings, EngineSettings& esettings)
 	: _playerNumber(playerNo),
-	  animationState(0)
+	  animState(0)
 {
 	unloadPlayer();
 

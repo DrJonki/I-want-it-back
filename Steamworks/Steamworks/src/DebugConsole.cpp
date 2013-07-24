@@ -19,7 +19,7 @@ DebugConsole::~DebugConsole(void){}
 void DebugConsole::draw()
 {
 	if (debugWindow.isOpen()){
-		debugWindow.clear(sf::Color::Color(24, 93, 145, 255));
+		debugWindow.clear(sf::Color::Color(40, 40, 40, 255));
 
 		for (unsigned int i = 0; i < dObject.size(); i++){
 			dObject[i].update();
