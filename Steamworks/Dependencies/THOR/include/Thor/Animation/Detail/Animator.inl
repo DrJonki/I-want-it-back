@@ -23,13 +23,17 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 
+#include <cassert>
+#include <cmath>
+
+
 namespace thor
 {
 
 template <class Animated, typename Id>
 Animator<Animated, Id>::Animator()
 : mAnimationMap()
-, mPlayingAnimation(mAnimationMap.end())
+, mPlayingAnimation(nullptr)
 , mProgress(0.f)
 , mLoop(false)
 {
@@ -45,41 +49,33 @@ void Animator<Animated, Id>::addAnimation(const Id& id, const AnimationFunction&
 template <class Animated, typename Id>
 void Animator<Animated, Id>::playAnimation(const Id& id, bool loop)
 {
-	AnimationMapIterator itr = mAnimationMap.find(id);
+	typename AnimationMap::iterator itr = mAnimationMap.find(id);
 	assert(itr != mAnimationMap.end());
 
-	playAnimation(itr, loop);
+	playAnimation(itr->second, loop);
 }
 
 template <class Animated, typename Id>
 void Animator<Animated, Id>::stopAnimation()
 {
-	mPlayingAnimation = mAnimationMap.end();
+	mPlayingAnimation = nullptr;
 }
 
 template <class Animated, typename Id>
 bool Animator<Animated, Id>::isPlayingAnimation() const
 {
-	return mPlayingAnimation != mAnimationMap.end();
-}
-
-template <class Animated, typename Id>
-Id Animator<Animated, Id>::getPlayingAnimation() const
-{
-	assert(isPlayingAnimation());
-
-	return mPlayingAnimation->first;
+	return mPlayingAnimation != nullptr;
 }
 
 template <class Animated, typename Id>
 void Animator<Animated, Id>::update(sf::Time dt)
 {
 	// No animation playing: Do nothing
-	if (!isPlayingAnimation())
+	if (!mPlayingAnimation)
 		return;
 
 	// Update progress, scale dt with 1 / current animation duration
-	mProgress += dt.asSeconds() / mPlayingAnimation->second.second.asSeconds();
+	mProgress += dt.asSeconds() / mPlayingAnimation->second.asSeconds();
 
 	// If animation is expired, stop or restart animation at loops
 	if (mProgress > 1.f)
@@ -95,14 +91,14 @@ template <class Animated, typename Id>
 void Animator<Animated, Id>::animate(Animated& animated) const
 {
 	// If animation is playing, apply it
-	if (isPlayingAnimation())
-		mPlayingAnimation->second.first(animated, mProgress);
+	if (mPlayingAnimation)
+		mPlayingAnimation->first(animated, mProgress);
 }
 
 template <class Animated, typename Id>
-void Animator<Animated, Id>::playAnimation(AnimationMapIterator animation, bool loop)
+void Animator<Animated, Id>::playAnimation(ScaledAnimation& animation, bool loop)
 {
-	mPlayingAnimation = animation;
+	mPlayingAnimation = &animation;
 	mProgress = 0.f;
 	mLoop = loop;
 }

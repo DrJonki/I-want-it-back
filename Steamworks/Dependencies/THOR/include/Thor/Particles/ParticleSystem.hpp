@@ -43,6 +43,7 @@
 
 #include <vector>
 #include <utility>
+#include <memory>
 
 
 namespace sf
@@ -80,15 +81,13 @@ class THOR_API ParticleSystem : public sf::Drawable, private sf::NonCopyable, pr
 	// Public member functions
 	public:
 		/// @brief Constructor: Create particle system from a whole sf::Texture
-		/// @param texture Reference to the sf::Texture used as particle texture. The texture must remain valid as long as the
-		///  particle system uses it.
-		explicit					ParticleSystem(const sf::Texture& texture);
+		/// @param texture Shared resource pointer to the sf::Texture used as particle texture. May not be empty.
+		explicit					ParticleSystem(std::shared_ptr<const sf::Texture> texture);
 
 		/// @brief Constructor: Create particle system using parts of a sf::Texture
-		/// @param texture Reference to the sf::Texture used as particle texture. The texture must remain valid as long as the
-		///  particle system uses it.
+		/// @param texture Shared resource pointer to the sf::Texture used as particle texture. May not be empty.
 		/// @param textureRect Area of the texture that is used to draw the particle.
-									ParticleSystem(const sf::Texture& texture, const sf::IntRect& textureRect);
+									ParticleSystem(std::shared_ptr<const sf::Texture> texture, const sf::IntRect& textureRect);
 
 		/// @brief Swaps the contents of two instances in constant time.
 		///
@@ -187,7 +186,7 @@ class THOR_API ParticleSystem : public sf::Drawable, private sf::NonCopyable, pr
 		AffectorContainer					mAffectors;
 		EmitterContainer					mEmitters;
 
-		const sf::Texture*					mTexture;
+		std::shared_ptr<const sf::Texture>	mTexture;
 		sf::IntRect							mTextureRect;
 
 		mutable sf::VertexArray				mVertices;

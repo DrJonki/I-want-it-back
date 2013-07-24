@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Input/ActionMap.hpp Source File</title>
+<title>Events/ActionMap.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -39,7 +39,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_e540aa96518235b344e655c4cbbe7889.html">Input</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_b8636758dec46a1ef2aa48d9b795bc2b.html">Events</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -75,9 +75,9 @@
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef THOR_ACTIONMAP_HPP</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define THOR_ACTIONMAP_HPP</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_action_8hpp.html" title="Class thor::Action.">Thor/Input/Action.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_action_context_8hpp.html" title="Class template thor::ActionContext.">Thor/Input/ActionContext.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;Thor/Input/Detail/ActionOperations.hpp&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_action_8hpp.html" title="Class thor::Action.">Thor/Events/Action.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_action_context_8hpp.html" title="Class template thor::ActionContext.">Thor/Events/ActionContext.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;Thor/Events/Detail/ActionOperations.hpp&gt;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;Aurora/Tools/NonCopyable.hpp&gt;</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;Aurora/Tools/ForEach.hpp&gt;</span></div>
@@ -105,45 +105,47 @@
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">// ---------------------------------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">// Public member functions</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#a1fb7507f79952f586632d5278f478d33" title="Clears old events and polls the window for new ones.">update</a>(sf::Window&amp; window);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent</a>(<span class="keyword">const</span> sf::Event&amp; event);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#a74d791cc5f9b77dd58ed26038b9712f8" title="Removes the events that have been temporarily stored.">clearEvents</a>();</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="classthor_1_1_action.html" title="Class for dynamic actions that are connected with SFML events.">Action</a>&amp;                     <a class="code" href="classthor_1_1_action_map.html#a7b1121806e82d520864273245b8f89d7" title="Returns the action associated with a given action identifier.">operator[] </a>(<span class="keyword">const</span> ActionId&amp; <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#af6e5df6edc9b2db70b95a22366750d1c" title="Remove the action associated with the specified id.">removeAction</a>(<span class="keyword">const</span> ActionId&amp; <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#acc4aac406f688b712c2b1726076bc8e9" title="Removes all actions associated with this map.">clearActions</a>();</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keywordtype">bool</span>                        <a class="code" href="classthor_1_1_action_map.html#a0d446fc01ad6a7420724fad73e52d588" title="Returns whether the action associated with the specified identifier is currently in effect...">isActive</a>(<span class="keyword">const</span> ActionId&amp; <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#ab230939e33d92d44c1514219c8261761" title="Forwards active actions to a callback system.">invokeCallbacks</a>(<a class="code" href="classthor_1_1_event_system.html" title="Class for object-oriented handling of user-defined events.">CallbackSystem</a>&amp; system, sf::Window* window) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="comment">// ---------------------------------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="comment">// Private types</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <span class="keyword">typedef</span> std::map&lt;ActionId, Action&gt; Map;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="comment">// ---------------------------------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="comment">// Private variables</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        Map                         mActionMap;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        detail::EventBuffer         mEventBuffer;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;};</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">explicit</span>                    <a class="code" href="classthor_1_1_action_map.html#ad715b9b05189698db08390cfa42f2215" title="Constructor.">ActionMap</a>(sf::Window&amp; window);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#ab39f1b6850f47937ba9aa9c069683075" title="Clears old events and polls the window for new ones.">update</a>();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent</a>(<span class="keyword">const</span> sf::Event&amp; event);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#a74d791cc5f9b77dd58ed26038b9712f8" title="Removes the events that have been temporarily stored.">clearEvents</a>();</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="classthor_1_1_action.html" title="Class for dynamic actions that are connected with SFML events.">Action</a>&amp;                     <a class="code" href="classthor_1_1_action_map.html#a7b1121806e82d520864273245b8f89d7" title="Returns the action associated with a given action identifier.">operator[] </a>(<span class="keyword">const</span> ActionId&amp; <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#af6e5df6edc9b2db70b95a22366750d1c" title="Remove the action associated with the specified id.">removeAction</a>(<span class="keyword">const</span> ActionId&amp; <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#acc4aac406f688b712c2b1726076bc8e9" title="Removes all actions associated with this map.">clearActions</a>();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keywordtype">bool</span>                        <a class="code" href="classthor_1_1_action_map.html#a0d446fc01ad6a7420724fad73e52d588" title="Returns whether the action associated with the specified identifier is currently in effect...">isActive</a>(<span class="keyword">const</span> ActionId&amp; <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordtype">void</span>                        <a class="code" href="classthor_1_1_action_map.html#ac2b0e4c56b445bc8235191c939111236" title="Forwards active actions to a callback system.">invokeCallbacks</a>(<a class="code" href="classthor_1_1_event_system.html" title="Class for object-oriented handling of user-defined events.">CallbackSystem</a>&amp; system) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="comment">// ---------------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="comment">// Private types</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keyword">typedef</span> std::map&lt;ActionId, Action&gt; Map;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="comment">// ---------------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="comment">// Private variables</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        Map                         mActionMap;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        detail::EventBuffer         mEventBuffer;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;};</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;} <span class="comment">// namespace thor</span></div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor">#include &lt;Thor/Input/Detail/ActionMap.inl&gt;</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">#endif // THOR_ACTIONMAP_HPP</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;} <span class="comment">// namespace thor</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">#include &lt;Thor/Events/Detail/ActionMap.inl&gt;</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">#endif // THOR_ACTIONMAP_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

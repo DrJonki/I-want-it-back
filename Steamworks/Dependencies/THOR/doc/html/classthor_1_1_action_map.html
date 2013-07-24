@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classthor_1_1_action_map-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">thor::ActionMap&lt; ActionId &gt; Class Template Reference<div class="ingroups"><a class="el" href="group___input.html">Input</a></div></div>  </div>
+<div class="title">thor::ActionMap&lt; ActionId &gt; Class Template Reference<div class="ingroups"><a class="el" href="group___events.html">Events</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -70,9 +70,12 @@ typedef <a class="el" href="classthor_1_1_event_system.html">EventSystem</a><br 
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1fb7507f79952f586632d5278f478d33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_action_map.html#a1fb7507f79952f586632d5278f478d33">update</a> (sf::Window &amp;window)</td></tr>
-<tr class="memdesc:a1fb7507f79952f586632d5278f478d33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears old events and polls the window for new ones.  <a href="#a1fb7507f79952f586632d5278f478d33">More...</a><br/></td></tr>
-<tr class="separator:a1fb7507f79952f586632d5278f478d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad715b9b05189698db08390cfa42f2215"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_action_map.html#ad715b9b05189698db08390cfa42f2215">ActionMap</a> (sf::Window &amp;window)</td></tr>
+<tr class="memdesc:ad715b9b05189698db08390cfa42f2215"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ad715b9b05189698db08390cfa42f2215">More...</a><br/></td></tr>
+<tr class="separator:ad715b9b05189698db08390cfa42f2215"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab39f1b6850f47937ba9aa9c069683075"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_action_map.html#ab39f1b6850f47937ba9aa9c069683075">update</a> ()</td></tr>
+<tr class="memdesc:ab39f1b6850f47937ba9aa9c069683075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears old events and polls the window for new ones.  <a href="#ab39f1b6850f47937ba9aa9c069683075">More...</a><br/></td></tr>
+<tr class="separator:ab39f1b6850f47937ba9aa9c069683075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35fb4699720e3658161a020adc499fe4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4">pushEvent</a> (const sf::Event &amp;event)</td></tr>
 <tr class="memdesc:a35fb4699720e3658161a020adc499fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Feeds the action map with a SFML event, that can be used during the current frame.  <a href="#a35fb4699720e3658161a020adc499fe4">More...</a><br/></td></tr>
 <tr class="separator:a35fb4699720e3658161a020adc499fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -93,9 +96,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a0d446fc01ad6a7420724fad73e52d588"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_action_map.html#a0d446fc01ad6a7420724fad73e52d588">isActive</a> (const ActionId &amp;id) const </td></tr>
 <tr class="memdesc:a0d446fc01ad6a7420724fad73e52d588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the action associated with the specified identifier is currently in effect.  <a href="#a0d446fc01ad6a7420724fad73e52d588">More...</a><br/></td></tr>
 <tr class="separator:a0d446fc01ad6a7420724fad73e52d588"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab230939e33d92d44c1514219c8261761"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_action_map.html#ab230939e33d92d44c1514219c8261761">invokeCallbacks</a> (<a class="el" href="classthor_1_1_action_map.html#abcf6b326bd4508a860756d3cd46b1b1d">CallbackSystem</a> &amp;system, sf::Window *window) const </td></tr>
-<tr class="memdesc:ab230939e33d92d44c1514219c8261761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards active actions to a callback system.  <a href="#ab230939e33d92d44c1514219c8261761">More...</a><br/></td></tr>
-<tr class="separator:ab230939e33d92d44c1514219c8261761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2b0e4c56b445bc8235191c939111236"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_action_map.html#ac2b0e4c56b445bc8235191c939111236">invokeCallbacks</a> (<a class="el" href="classthor_1_1_action_map.html#abcf6b326bd4508a860756d3cd46b1b1d">CallbackSystem</a> &amp;system) const </td></tr>
+<tr class="memdesc:ac2b0e4c56b445bc8235191c939111236"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards active actions to a callback system.  <a href="#ac2b0e4c56b445bc8235191c939111236">More...</a><br/></td></tr>
+<tr class="separator:ac2b0e4c56b445bc8235191c939111236"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename ActionId&gt;<br/>
@@ -109,7 +112,42 @@ class thor::ActionMap&lt; ActionId &gt;</h3>
   </table>
   </dd>
 </dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ad715b9b05189698db08390cfa42f2215"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ActionId &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classthor_1_1_action_map.html">thor::ActionMap</a>&lt; ActionId &gt;::<a class="el" href="classthor_1_1_action_map.html">ActionMap</a> </td>
+          <td>(</td>
+          <td class="paramtype">sf::Window &amp;&#160;</td>
+          <td class="paramname"><em>window</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">window</td><td>The SFML window used for event generation and referenced in <a class="el" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">ActionContext</a> objects. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a74d791cc5f9b77dd58ed26038b9712f8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -126,11 +164,11 @@ template&lt;typename ActionId &gt; </div>
 </div><div class="memdoc">
 
 <p>Removes the events that have been temporarily stored. </p>
-<p>You only need this function in combination with <a class="el" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent()</a>, if you want to feed the action map manually with events. Otherwise, you can just call <a class="el" href="classthor_1_1_action_map.html#a1fb7507f79952f586632d5278f478d33" title="Clears old events and polls the window for new ones.">update()</a>. </p>
+<p>You only need this function in combination with <a class="el" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent()</a>, if you want to feed the action map manually with events. Otherwise, you can just call <a class="el" href="classthor_1_1_action_map.html#ab39f1b6850f47937ba9aa9c069683075" title="Clears old events and polls the window for new ones.">update()</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="ab230939e33d92d44c1514219c8261761"></a>
+<a class="anchor" id="ac2b0e4c56b445bc8235191c939111236"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -140,18 +178,8 @@ template&lt;typename ActionId &gt; </div>
           <td class="memname">void <a class="el" href="classthor_1_1_action_map.html">thor::ActionMap</a>&lt; ActionId &gt;::invokeCallbacks </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classthor_1_1_action_map.html#abcf6b326bd4508a860756d3cd46b1b1d">CallbackSystem</a> &amp;&#160;</td>
-          <td class="paramname"><em>system</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sf::Window *&#160;</td>
-          <td class="paramname"><em>window</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramname"><em>system</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -159,17 +187,16 @@ template&lt;typename ActionId &gt; </div>
 <p>Forwards active actions to a callback system. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">system</td><td>Callback system of type <a class="el" href="classthor_1_1_event_system.html" title="Class for object-oriented handling of user-defined events.">EventSystem</a>&lt; ActionContext&lt;ActionId&gt;, ActionId &gt; </td></tr>
-    <tr><td class="paramname">window</td><td>Window pointer which is stored in the <a class="el" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">ActionContext</a> passed to the callbacks. Can be nullptr.</td></tr>
+    <tr><td class="paramname">system</td><td>Callback system of type <a class="el" href="classthor_1_1_event_system.html" title="Class for object-oriented handling of user-defined events.">EventSystem</a>&lt; ActionContext&lt;ActionId&gt;, ActionId &gt;</td></tr>
   </table>
   </dd>
 </dl>
 <p>For every action that is currently active, the action ID is passed to <em>system</em>, where all listener functions associated with the ID are invoked. </p>
 <div class="fragment"><div class="line"><span class="comment">// Listener function for &quot;run&quot; actions</span></div>
-<div class="line"><span class="keywordtype">void</span> callback(<a class="code" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">thor::ActionContext&lt;std::string&gt;</a> context);</div>
+<div class="line"><span class="keywordtype">void</span> callback(<span class="keyword">const</span> <a class="code" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">thor::ActionContext&lt;std::string&gt;</a>&amp; context);</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Map to register &quot;run&quot; action</span></div>
-<div class="line"><a class="code" href="classthor_1_1_action_map.html" title="Class template that associates identifiers with dynamic actions.">thor::ActionMap&lt;std::string&gt;</a> map;</div>
+<div class="line"><a class="code" href="classthor_1_1_action_map.html" title="Class template that associates identifiers with dynamic actions.">thor::ActionMap&lt;std::string&gt;</a> map(...);</div>
 <div class="line">map[<span class="stringliteral">&quot;run&quot;</span>] = <a class="code" href="classthor_1_1_action.html" title="Class for dynamic actions that are connected with SFML events.">thor::Action</a>(sf::Keyboard::R);</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Create EventSystem object, connect &quot;run&quot; action to callback</span></div>
@@ -177,7 +204,7 @@ template&lt;typename ActionId &gt; </div>
 <div class="line">system.<a class="code" href="classthor_1_1_event_system.html#a64c0d8ebaea4679220f9efdb7c928d34" title="Connects an event to the specified listener.">connect</a>(<span class="stringliteral">&quot;run&quot;</span>, &amp;callback);</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// In the main loop: Forward actions to the callback system</span></div>
-<div class="line">map.<a class="code" href="classthor_1_1_action_map.html#ab230939e33d92d44c1514219c8261761" title="Forwards active actions to a callback system.">invokeCallbacks</a>(system, &amp;window);</div>
+<div class="line">map.invokeCallbacks(system);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -244,11 +271,11 @@ template&lt;typename ActionId&gt; </div>
 </div><div class="memdoc">
 
 <p>Feeds the action map with a SFML event, that can be used during the current frame. </p>
-<p>When you use the <a class="el" href="classthor_1_1_action_map.html#a1fb7507f79952f586632d5278f478d33" title="Clears old events and polls the window for new ones.">update()</a> method, you needn't invoke <a class="el" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent()</a>. This method exists for more flexibility: You can push user-defined events, and you can do something else with the polled events before calling <a class="el" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent()</a>. </p>
+<p>When you use the <a class="el" href="classthor_1_1_action_map.html#ab39f1b6850f47937ba9aa9c069683075" title="Clears old events and polls the window for new ones.">update()</a> method, you needn't invoke <a class="el" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent()</a>. This method exists for more flexibility: You can push user-defined events, and you can do something else with the polled events before calling <a class="el" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent()</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a1fb7507f79952f586632d5278f478d33"></a>
+<a class="anchor" id="ab39f1b6850f47937ba9aa9c069683075"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -257,38 +284,31 @@ template&lt;typename ActionId&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classthor_1_1_action_map.html">thor::ActionMap</a>&lt; ActionId &gt;::update </td>
           <td>(</td>
-          <td class="paramtype">sf::Window &amp;&#160;</td>
-          <td class="paramname"><em>window</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Clears old events and polls the window for new ones. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">window</td><td>The SFML window from which events are polled.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>When you invoke this method, you should not call sf::Window::pollEvent() in the same frame, since <a class="el" href="classthor_1_1_action_map.html#a1fb7507f79952f586632d5278f478d33" title="Clears old events and polls the window for new ones.">update()</a> already does that. The following code </p>
-<div class="fragment"><div class="line">map.<a class="code" href="classthor_1_1_action_map.html#a1fb7507f79952f586632d5278f478d33" title="Clears old events and polls the window for new ones.">update</a>(window);</div>
+<p>When you invoke this method, you should not call sf::Window::pollEvent() in the same frame, since <a class="el" href="classthor_1_1_action_map.html#ab39f1b6850f47937ba9aa9c069683075" title="Clears old events and polls the window for new ones.">update()</a> already does that. The following code </p>
+<div class="fragment"><div class="line">map.update();</div>
 </div><!-- fragment --><p> is equivalent to </p>
-<div class="fragment"><div class="line">map.<a class="code" href="classthor_1_1_action_map.html#a74d791cc5f9b77dd58ed26038b9712f8" title="Removes the events that have been temporarily stored.">clearEvents</a>();</div>
+<div class="fragment"><div class="line">map.clearEvents();</div>
 <div class="line"></div>
 <div class="line">sf::Event event;</div>
 <div class="line"><span class="keywordflow">while</span> (window.pollEvent(event))</div>
-<div class="line">    map.<a class="code" href="classthor_1_1_action_map.html#a35fb4699720e3658161a020adc499fe4" title="Feeds the action map with a SFML event, that can be used during the current frame.">pushEvent</a>(event);</div>
+<div class="line">    map.pushEvent(event);</div>
 </div><!-- fragment --> 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Input/<a class="el" href="_action_map_8hpp_source.html">ActionMap.hpp</a></li>
+<li>Events/<a class="el" href="_action_map_8hpp_source.html">ActionMap.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

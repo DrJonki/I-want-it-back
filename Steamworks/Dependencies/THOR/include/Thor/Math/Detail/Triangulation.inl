@@ -270,14 +270,15 @@ namespace detail
 	
 		// Insert important advanced vertices, link to base triangle, fill user->advanced map
 		std::map<UserVertex*, AdvancedVertex*> map;
-		AURORA_FOREACH(UserVertex* userVertex, importantVertices)
+		AURORA_CITR_FOREACH(itr, importantVertices)
 		{
-			allVertices.push_back(AdvancedVertex(*userVertex, firstTriangle));
+			UserVertex& userVertex = **itr;
+			allVertices.push_back(AdvancedVertex(userVertex, firstTriangle));
 
 			AdvancedVertex& advancedVertex = allVertices.back();
 			firstTriangle->addVertex(advancedVertex);
 			
-			map.insert(std::make_pair(userVertex, &advancedVertex));
+			map.insert(std::make_pair(&userVertex, &advancedVertex));
 		}
 
 		// Insert advanced edges, using the user->advanced map

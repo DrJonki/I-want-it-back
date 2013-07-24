@@ -107,14 +107,14 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga24d4e8040ad8180b219d720b58b4195c"><td class="memTemplItemLeft" align="right" valign="top">sf::Vector3&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___vectors.html#ga24d4e8040ad8180b219d720b58b4195c">thor::crossProduct</a> (const sf::Vector2&lt; T &gt; &amp;lhs, const sf::Vector2&lt; T &gt; &amp;rhs)</td></tr>
 <tr class="memdesc:ga24d4e8040ad8180b219d720b58b4195c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the cross product of two 2D vectors.  <a href="group___vectors.html#ga24d4e8040ad8180b219d720b58b4195c">More...</a><br/></td></tr>
 <tr class="separator:ga24d4e8040ad8180b219d720b58b4195c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa19bf09080a7e758970b33f24a6028b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:gafa19bf09080a7e758970b33f24a6028b"><td class="memTemplItemLeft" align="right" valign="top">sf::Vector2&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___vectors.html#gafa19bf09080a7e758970b33f24a6028b">thor::cwiseProduct</a> (const sf::Vector2&lt; T &gt; &amp;lhs, const sf::Vector2&lt; T &gt; &amp;rhs)</td></tr>
-<tr class="memdesc:gafa19bf09080a7e758970b33f24a6028b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the component-wise product of <em>lhs</em> and <em>rhs</em>.  <a href="group___vectors.html#gafa19bf09080a7e758970b33f24a6028b">More...</a><br/></td></tr>
-<tr class="separator:gafa19bf09080a7e758970b33f24a6028b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84dc45ff93256d4a2886c263c463d34c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ga84dc45ff93256d4a2886c263c463d34c"><td class="memTemplItemLeft" align="right" valign="top">sf::Vector2&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___vectors.html#ga84dc45ff93256d4a2886c263c463d34c">thor::cwiseQuotient</a> (const sf::Vector2&lt; T &gt; &amp;lhs, const sf::Vector2&lt; T &gt; &amp;rhs)</td></tr>
-<tr class="memdesc:ga84dc45ff93256d4a2886c263c463d34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the component-wise quotient of <em>lhs</em> and <em>rhs</em>.  <a href="group___vectors.html#ga84dc45ff93256d4a2886c263c463d34c">More...</a><br/></td></tr>
-<tr class="separator:ga84dc45ff93256d4a2886c263c463d34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3418ecb8f7c7f01035f7e05cdbb321f4"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga3418ecb8f7c7f01035f7e05cdbb321f4"><td class="memTemplItemLeft" align="right" valign="top">sf::Vector2&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___vectors.html#ga3418ecb8f7c7f01035f7e05cdbb321f4">thor::componentwiseProduct</a> (const sf::Vector2&lt; T &gt; &amp;lhs, const sf::Vector2&lt; T &gt; &amp;rhs)</td></tr>
+<tr class="memdesc:ga3418ecb8f7c7f01035f7e05cdbb321f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the component-wise product of <em>lhs</em> and <em>rhs</em>.  <a href="group___vectors.html#ga3418ecb8f7c7f01035f7e05cdbb321f4">More...</a><br/></td></tr>
+<tr class="separator:ga3418ecb8f7c7f01035f7e05cdbb321f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa03bfc13fa8f4457dc486012c43fa775"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:gaa03bfc13fa8f4457dc486012c43fa775"><td class="memTemplItemLeft" align="right" valign="top">sf::Vector2&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___vectors.html#gaa03bfc13fa8f4457dc486012c43fa775">thor::componentwiseQuotient</a> (const sf::Vector2&lt; T &gt; &amp;lhs, const sf::Vector2&lt; T &gt; &amp;rhs)</td></tr>
+<tr class="memdesc:gaa03bfc13fa8f4457dc486012c43fa775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the component-wise quotient of <em>lhs</em> and <em>rhs</em>.  <a href="group___vectors.html#gaa03bfc13fa8f4457dc486012c43fa775">More...</a><br/></td></tr>
+<tr class="separator:gaa03bfc13fa8f4457dc486012c43fa775"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Algebraic operations on two-dimensional vectors (dot product, vector length and angles, ...) </p>
@@ -138,12 +138,12 @@ template&lt;typename T &gt; </td></tr>
 <tr>
 <td>crossProduct(v,w) </td><td>perpendicularVector(v) </td><td>signedAngle(v,w)  </td></tr>
 <tr>
-<td>cwiseProduct(v,w) </td><td>cwiseQuotient(v,w)  </td></tr>
+<td>componentwiseProduct(v,w) </td><td>componentwiseQuotient(v,w)  </td></tr>
 </table>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

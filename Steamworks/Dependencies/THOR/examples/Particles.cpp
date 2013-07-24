@@ -6,30 +6,48 @@
 #include <SFML/Graphics.hpp>
 
 
+// Functor that returns the mouse position in float coordinates
+struct MousePosition
+{
+	MousePosition(sf::Window& window)
+	: window(window)
+	{
+	}
+
+	sf::Vector2f operator() ()
+	{
+		return sf::Vector2f(sf::Mouse::getPosition(window));
+	}
+
+	sf::Window& window;
+};
+
+
 int main()
 {
 	// Create window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Thor Particles");
 	
-	// Load texture
-	sf::Texture texture;
-	if (!texture.loadFromFile("Media/particle.png"))
+	// Load image and initialize sprite
+	std::shared_ptr<sf::Texture> texture(new sf::Texture());
+	if (!texture->loadFromFile("Media/particle.png"))
 		return EXIT_FAILURE;
 	
 	// Create emitter
 	thor::UniversalEmitter::Ptr emitter = thor::UniversalEmitter::create();
 	emitter->setEmissionRate(30.f);
 	emitter->setParticleLifetime(sf::seconds(5.f));
+	emitter->setParticlePosition(MousePosition(window));
 
 	// Create particle system
 	thor::ParticleSystem system(texture);
 	system.addEmitter(emitter);
 
 	// Build color gradient (green -> teal -> blue)
-	thor::ColorGradient gradient;
-	gradient[0.f] = sf::Color(0, 150, 0);
-	gradient[0.5f] = sf::Color(0, 150, 100);
-	gradient[1.f] = sf::Color(0, 0, 150);
+	thor::ColorGradient gradient = thor::createGradient
+		(sf::Color(0, 150, 0))		(1)
+		(sf::Color(0, 150, 100))	(1)
+		(sf::Color(0, 0, 150));
 
 	// Create color and fade in/out animations
 	thor::ColorAnimation colorizer(gradient);
@@ -42,8 +60,9 @@ int main()
 	system.addAffector( thor::ForceAffector::create(sf::Vector2f(0.f, 100.f))  );
 
 	// Attributes that influence emitter
+	sf::Vector2f		position;
 	thor::PolarVector2f velocity(200.f, -90.f);
-	bool paused = false;
+	bool				paused = false;
 
 	sf::Font font;
 	if (!font.loadFromFile("Media/sansation.ttf"))
@@ -94,8 +113,7 @@ int main()
 		if (!paused)
 			system.update(frameTime);
 
-		// Set initial particle position and velocity, rotate vector randomly by maximal 10 degrees
-		emitter->setParticlePosition( window.mapPixelToCoords(sf::Mouse::getPosition(window)) );
+		// Set initial particle velocity, rotate vector randomly by maximal 10 degrees
 		emitter->setParticleVelocity( thor::Distributions::deflect(velocity, 10.f) );
 
 		// Draw everything

@@ -35,8 +35,7 @@
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
 <div class="title">Animation</div>  </div>
 </div><!--header-->
@@ -59,70 +58,13 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_frame_animation.html">thor::FrameAnimation</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes a sprite's subrect over time.  <a href="classthor_1_1_frame_animation.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_ref_animation.html">thor::RefAnimation&lt; Animation &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to reference another animation.  <a href="classthor_1_1_ref_animation.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga0da8e8c3cbecb7d1ca464fd89ed10cd5"><td class="memTemplParams" colspan="2">template&lt;typename Animation &gt; </td></tr>
-<tr class="memitem:ga0da8e8c3cbecb7d1ca464fd89ed10cd5"><td class="memTemplItemLeft" align="right" valign="top">RefAnimation&lt; Animation &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___animation.html#ga0da8e8c3cbecb7d1ca464fd89ed10cd5">refAnimation</a> (Animation &amp;referenced)</td></tr>
-<tr class="memdesc:ga0da8e8c3cbecb7d1ca464fd89ed10cd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an animation that references another one.  <a href="#ga0da8e8c3cbecb7d1ca464fd89ed10cd5">More...</a><br/></td></tr>
-<tr class="separator:ga0da8e8c3cbecb7d1ca464fd89ed10cd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Classes able to animate sf::Sprite objects in different ways. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0da8e8c3cbecb7d1ca464fd89ed10cd5"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Animation &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">RefAnimation&lt; Animation &gt; refAnimation </td>
-          <td>(</td>
-          <td class="paramtype">Animation &amp;&#160;</td>
-          <td class="paramname"><em>referenced</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">related</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates an animation that references another one. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">referenced</td><td>Animation to reference. Must remain valid during usage.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Creates an animation object that has no functionality on its own, but references another existing animation. By using it, you can avoid copies and change the original animation object, even after it has been added to a <a class="el" href="classthor_1_1_animator.html" title="Class that stores the progress of an object&#39;s animation.">thor::Animator</a>. On the other side, you must make sure the original animation stays alive while being referenced. <br/>
-<br/>
- Example: </p>
-<div class="fragment"><div class="line"><span class="comment">// Create animation</span></div>
-<div class="line"><a class="code" href="classthor_1_1_frame_animation.html" title="Changes a sprite&#39;s subrect over time.">thor::FrameAnimation</a> anim;</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Insert reference into animator</span></div>
-<div class="line"><a class="code" href="classthor_1_1_animator.html" title="Class that stores the progress of an object&#39;s animation.">thor::Animator</a>&lt;...&gt; animator;</div>
-<div class="line">animator.<a class="code" href="classthor_1_1_animator.html#a0d78c11f968a59a2568441d5e87438ab" title="Registers an animation with a given name.">addAnimation</a>(..., thor::refAnimation(anim), ...);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Later changes will affect animation inside animator</span></div>
-<div class="line">anim.<a class="code" href="classthor_1_1_frame_animation.html#aaedf109b5f2e8f547cd852787433db91" title="Adds a frame to the animation, changes only the sub-rect.">addFrame</a>(...);</div>
-</div><!-- fragment --> 
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

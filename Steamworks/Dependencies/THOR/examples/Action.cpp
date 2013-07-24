@@ -1,5 +1,5 @@
 
-#include <Thor/Input.hpp>
+#include <Thor/Events.hpp>
 #include <Thor/Graphics/ToString.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
@@ -27,7 +27,7 @@ int main()
 	window.setKeyRepeatEnabled(false);
 
 	// Create thor::ActionMap that maps MyAction values to thor::Action instances
-	thor::ActionMap<MyAction> map;
+	thor::ActionMap<MyAction> map(window);
 	using thor::Action;
 
 	// Run: Press one of the shift keys and R (realtime input)
@@ -51,7 +51,7 @@ int main()
 	for (;;)
 	{
 		// Generate new actions (calls window.pollEvent(...))
-		map.update(window);
+		map.update();
 
 		// Check which actions are currently in effect, react correspondingly
 		if (map.isActive(Run))
@@ -60,7 +60,7 @@ int main()
 			return 0;
 
 		// Forward actions to callbacks: Invokes onResize() in case of sf::Event::Resized events
-		map.invokeCallbacks(system, &window);
+		map.invokeCallbacks(system);
 
 		// Update window
 		window.display();

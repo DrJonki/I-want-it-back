@@ -115,13 +115,13 @@ void FrameAnimation::operator() (Animated& target, float progress) const
 	assert(progress >= 0.f && progress <= 1.f);
 
 	ensureNormalized();
-	AURORA_FOREACH(const detail::Frame& frame, mFrames)
+	AURORA_CITR_FOREACH(itr, mFrames)
 	{
-		progress -= frame.duration;
+		progress -= itr->duration;
 		
 		if (progress < 0.f)
 		{
-			target.setTextureRect(frame.subrect);
+			target.setTextureRect(itr->subrect);
 			break;
 		}
 	}
