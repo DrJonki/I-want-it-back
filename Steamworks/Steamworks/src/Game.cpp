@@ -5,6 +5,7 @@
 #include <SFML\OpenGL.hpp>
 #include <SFML\Window\Event.hpp>
 #include <SFML\System\Clock.hpp>
+#include <Thor\Time\StopWatch.hpp>
 
 #include <iostream>
 
@@ -28,6 +29,8 @@ namespace
 	sf::Clock debugUpdateClock;
 	sf::Clock updateClock;
 	sf::Clock renderClock;
+
+	thor::StopWatch gameTime;
 
 	//Debug numbers
 	int d_updateTime = 0;
@@ -93,7 +96,7 @@ bool Game::runAndDontCrashPls()
 					if (pauseMenu->showMenu(paused))
 						paused = false;
 					deathMenu.showMenu();
-					endMenu.showMenu();
+					endMenu.showMenu(gameTime.getElapsedTime().asSeconds());
 				}
 			}
 			else {
@@ -109,8 +112,12 @@ bool Game::runAndDontCrashPls()
 				if (pauseMenu->showMenu(paused))
 					paused = false;
 				deathMenu.showMenu();
-				endMenu.showMenu();
+				endMenu.showMenu(gameTime.getElapsedTime().asSeconds());
 			}
+			if (!paused && !ns::endOfLevelState && !ns::deathState)
+				gameTime.start();
+			else
+				gameTime.stop();
 		}
 		if (!ns::restartState)
 			deInit();
@@ -125,6 +132,8 @@ bool Game::runAndDontCrashPls()
 
 void Game::update()
 {
+	gameWindow.setMouseCursorVisible(false);
+
 	updateClock.restart();
 
 	pauseMenu->getView(VIEW_TOP).setCenter(sf::Vector2f(viewCenterTop, 300));
@@ -324,6 +333,8 @@ void Game::init()
 	gameWindow.setActive(true);
 
 	std::cout << "Done loading!" << std::endl;
+
+	gameTime.restart();
 }
 
 void Game::deInit()
@@ -346,6 +357,7 @@ void Game::deInit()
 void loadingScreen()
 {
 	gameWindow.setActive(true);
+	gameWindow.setMouseCursorVisible(false);
 
 	sf::Font font;
 	font.loadFromFile("Resources/Common/Fonts/Amble-Bold.ttf");
@@ -387,4 +399,6 @@ void Game::resetStates()
 
 	viewCenterTop = pauseMenu->getView(VIEW_TOP).getCenter().x;
 	viewCenterBottom = pauseMenu->getView(VIEW_BOTTOM).getCenter().x;
+
+	gameTime.restart();
 }

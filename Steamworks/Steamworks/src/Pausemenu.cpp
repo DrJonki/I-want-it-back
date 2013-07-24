@@ -35,6 +35,8 @@ Pausemenu::~Pausemenu(void)
 bool Pausemenu::showMenu(bool paused)
 {
 	if (paused){
+		_window->setMouseCursorVisible(true);
+
 		if (pauseBackground.getFillColor().a < 200)
 			pauseBackground.setFillColor(sf::Color::Color(0, 0, 0, pauseBackground.getFillColor().a + 6));
 

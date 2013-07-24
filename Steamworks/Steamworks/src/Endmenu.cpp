@@ -1,6 +1,9 @@
 #include "Endmenu.h"
 
+#include <sstream>
+
 #include "Globals.h"
+#include "Misc.h"
 
 
 Endmenu::Endmenu(sf::RenderWindow* window, sf::Event* e, LoadSettings* lsettings)
@@ -16,18 +19,28 @@ Endmenu::Endmenu(sf::RenderWindow* window, sf::Event* e, LoadSettings* lsettings
 	_text.setCharacterSize(60);
 	_text.setPosition(300, 300);
 	_text.setString("Level completed!\n\n\nEnter - Next level (if one exists)\nR - Restart current level\nEscape - Exit to menu");
+
+	_timeText.setFont(_font);
+	_timeText.setCharacterSize(60);
+	_timeText.setPosition(1000, 300);
 }
 
 Endmenu::~Endmenu(void)
 {}
 
 
-void Endmenu::showMenu()
+void Endmenu::showMenu(float time)
 {
 	if (ns::endOfLevelState){
 		if (_backgroundShape.getFillColor().a < 200){
 			_backgroundShape.setFillColor(sf::Color::Color(0, 0, 0, _backgroundShape.getFillColor().a + 5));
 		}
+
+		std::stringstream ss;
+		ss << "Time: ";
+		ss << time;
+		ss << " s";
+		_timeText.setString(ss.str());
 
 		while (_window->pollEvent(*_e)){
 			if (_e->type == sf::Event::KeyPressed){
@@ -71,8 +84,14 @@ void Endmenu::showMenu()
 
 void Endmenu::draw()
 {
-	if (_backgroundShape.getFillColor().a < 127) _text.setColor(sf::Color::Color(255, 255, 255, _backgroundShape.getFillColor().a * 2));
-	else _text.setColor(sf::Color::Color(255, 255, 255, 255));
+	if (_backgroundShape.getFillColor().a < 127){
+		_text.setColor(sf::Color::Color(255, 255, 255, _backgroundShape.getFillColor().a * 2));
+		_timeText.setColor(sf::Color::Color(255, 255, 255, _backgroundShape.getFillColor().a * 2));
+	}
+	else{
+		_text.setColor(sf::Color::Color(255, 255, 255, 255));
+		_timeText.setColor(sf::Color::Color(255, 255, 255, 255));
+	}
 
 	if (_backgroundShape.getFillColor().a >= 5){
 		sf::View view;
@@ -82,5 +101,6 @@ void Endmenu::draw()
 
 		_window->draw(_backgroundShape);
 		_window->draw(_text);
+		_window->draw(_timeText);
 	}
 }

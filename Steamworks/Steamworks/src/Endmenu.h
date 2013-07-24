@@ -14,7 +14,7 @@ public:
 	Endmenu(sf::RenderWindow* window, sf::Event* e, LoadSettings* lsettings);
 	~Endmenu(void);
 
-	void showMenu();
+	void showMenu(float time);
 	void draw();
 
 private:
@@ -27,5 +27,6 @@ private:
 
 	sf::Font _font;
 	sf::Text _text;
+	sf::Text _timeText;
 };
 

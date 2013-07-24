@@ -402,6 +402,9 @@ void Mainmenu::update()
 {
 	updateClock.restart();
 
+	if (lockMouse) _window->setMouseCursorVisible(false);
+	else _window->setMouseCursorVisible(true);
+
 	switch (menuState)
 	{
 		case BUT_LEVEL:
