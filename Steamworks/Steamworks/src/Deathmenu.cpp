@@ -40,6 +40,7 @@ void Deathmenu::showMenu()
 					ns::spawnPoint = 1000.f;
 					ns::runningState = false;
 					ns::deathState = false;
+					ns::restartState = false;
 				}
 			}
 		}

@@ -371,9 +371,6 @@ void loadingScreen()
 
 void Game::resetStates()
 {
-	viewCenterTop = pauseMenu->getView(VIEW_TOP).getCenter().x;
-	viewCenterBottom = pauseMenu->getView(VIEW_BOTTOM).getCenter().x;
-
 	SetForegroundWindow(gameWindow.getSystemHandle());
 
 	paused = false;
@@ -383,8 +380,11 @@ void Game::resetStates()
 
 	worldManager.resetWorldStates();
 	player[0]->resetState();
-	player[1]->resetClocks();
+	player[1]->resetState();
 
 	pauseMenu->getView(VIEW_TOP).setCenter(ns::spawnPoint, 300);
 	pauseMenu->getView(VIEW_BOTTOM).setCenter(ns::spawnPoint, 900);
+
+	viewCenterTop = pauseMenu->getView(VIEW_TOP).getCenter().x;
+	viewCenterBottom = pauseMenu->getView(VIEW_BOTTOM).getCenter().x;
 }

@@ -64,10 +64,14 @@ void Player::loadPlayer(sf::RenderWindow* window, b2World* world, ContactListene
 
 void Player::resetState()
 {
-	if (_playerNumber == 1) setPosition(ns::spawnPoint, 350);
-	else if (_playerNumber == 2) setPosition(ns::spawnPoint, 950);
-
 	animState = ANIM_RUNNING;
+
+	if (_playerNumber == 1)
+		_body->SetTransform(b2Vec2(ns::spawnPoint / ns::g_P2MScale, 300 / ns::g_P2MScale), _body->GetAngle());
+	else if (_playerNumber == 2)
+		_body->SetTransform(b2Vec2(ns::spawnPoint / ns::g_P2MScale, 900 / ns::g_P2MScale), _body->GetAngle());
+
+	_body->SetLinearVelocity(b2Vec2(0, 0));
 
 	resetClocks();
 }
