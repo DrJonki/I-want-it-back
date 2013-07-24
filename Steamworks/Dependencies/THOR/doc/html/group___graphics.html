@@ -62,9 +62,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7278132f31fb06362a12e739b7093ef4"><td class="memItemLeft" align="right" valign="top">sf::Color&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___graphics.html#ga7278132f31fb06362a12e739b7093ef4">thor::blendColors</a> (const sf::Color &amp;firstColor, const sf::Color &amp;secondColor, float interpolation)</td></tr>
-<tr class="memdesc:ga7278132f31fb06362a12e739b7093ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blends the colors <em>firstColor</em> and <em>secondColor</em>, according to the given interpolation.  <a href="#ga7278132f31fb06362a12e739b7093ef4">More...</a><br/></td></tr>
-<tr class="separator:ga7278132f31fb06362a12e739b7093ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaee83b49d8aa92dd62424c8ca7131cc4e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___graphics.html#gaee83b49d8aa92dd62424c8ca7131cc4e">thor::toString</a> (const sf::Color &amp;color)</td></tr>
 <tr class="memdesc:gaee83b49d8aa92dd62424c8ca7131cc4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a std::string representation of sf::Color.  <a href="#gaee83b49d8aa92dd62424c8ca7131cc4e">More...</a><br/></td></tr>
 <tr class="separator:gaee83b49d8aa92dd62424c8ca7131cc4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -105,19 +102,22 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___graphics.html#gafec4585bd0b82363b349d3e7bfe7c0d1">swap</a> (BigTexture &amp;lhs, BigTexture &amp;rhs)</td></tr>
 <tr class="memdesc:gafec4585bd0b82363b349d3e7bfe7c0d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchanges the contents of two big textures. <br/></td></tr>
 <tr class="separator:gafec4585bd0b82363b349d3e7bfe7c0d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga130df4096af03daa2b7099f98d74a41e"><td class="memItemLeft" align="right" valign="top">detail::ColorGradientConvertible&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___graphics.html#ga130df4096af03daa2b7099f98d74a41e">createGradient</a> (const sf::Color &amp;color)</td></tr>
-<tr class="memdesc:ga130df4096af03daa2b7099f98d74a41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a color gradient based on a list of colors and transitions.  <a href="#ga130df4096af03daa2b7099f98d74a41e">More...</a><br/></td></tr>
-<tr class="separator:ga130df4096af03daa2b7099f98d74a41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacdd2378a03774ac320893b5de41fffce"><td class="memItemLeft" align="right" valign="top">sf::Color&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___graphics.html#gacdd2378a03774ac320893b5de41fffce">blendColors</a> (const sf::Color &amp;firstColor, const sf::Color &amp;secondColor, float interpolation)</td></tr>
+<tr class="memdesc:gacdd2378a03774ac320893b5de41fffce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blends the colors <em>firstColor</em> and <em>secondColor</em>, according to the given interpolation.  <a href="#gacdd2378a03774ac320893b5de41fffce">More...</a><br/></td></tr>
+<tr class="separator:gacdd2378a03774ac320893b5de41fffce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Miscellaneous graphics-related functionality, such as specialized sprites or color helpers. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga7278132f31fb06362a12e739b7093ef4"></a>
+<a class="anchor" id="gacdd2378a03774ac320893b5de41fffce"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">sf::Color thor::blendColors </td>
+          <td class="memname">sf::Color blendColors </td>
           <td>(</td>
           <td class="paramtype">const sf::Color &amp;&#160;</td>
           <td class="paramname"><em>firstColor</em>, </td>
@@ -140,6 +140,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">related</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Blends the colors <em>firstColor</em> and <em>secondColor</em>, according to the given interpolation. </p>
@@ -151,36 +156,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga130df4096af03daa2b7099f98d74a41e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">detail::ColorGradientConvertible createGradient </td>
-          <td>(</td>
-          <td class="paramtype">const sf::Color &amp;&#160;</td>
-          <td class="paramname"><em>color</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">related</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a color gradient based on a list of colors and transitions. </p>
-<p>A color gradient consists of a list of N different colors and N-1 corresponding transition times (which specify how long it takes to morph one color to the other). So, the gradient is an alternating chain of colors and relative transition times, this is also the way you generate it: </p>
-<div class="fragment"><div class="line"><a class="code" href="classthor_1_1_color_gradient.html" title="Class to implement color gradients.">thor::ColorGradient</a> gradient = thor::CreateGradient(sf::Color::Red)(3.f)(sf::Color::Blue)(1.f)(sf::Color::Cyan);</div>
-</div><!-- fragment --><p> In the above example, you have 3 colors and therefore 2 transitions. The gradient from red to blue takes 3 time units (the number between the colors), the one from blue to cyan takes 1 time unit. As mentioned, the transition times are relative to each other, i.e. the two partial gradients make up 75% and 25% of the whole gradient. Like this, you can build complexly composed gradients using a simple syntax. </p>
-<dl class="section return"><dt>Returns</dt><dd>Implementation-defined type that is convertible to <a class="el" href="classthor_1_1_color_gradient.html" title="Class to implement color gradients.">thor::ColorGradient</a>. Do <b>not</b> use the type directly. </dd></dl>
 
 </div>
 </div>
@@ -321,7 +296,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

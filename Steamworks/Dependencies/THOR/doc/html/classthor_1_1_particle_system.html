@@ -68,12 +68,12 @@ Inheritance diagram for thor::ParticleSystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa21e6d83baab37caf115db1efce3dac0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_particle_system.html#aa21e6d83baab37caf115db1efce3dac0">ParticleSystem</a> (std::shared_ptr&lt; const sf::Texture &gt; texture)</td></tr>
-<tr class="memdesc:aa21e6d83baab37caf115db1efce3dac0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Create particle system from a whole sf::Texture.  <a href="#aa21e6d83baab37caf115db1efce3dac0">More...</a><br/></td></tr>
-<tr class="separator:aa21e6d83baab37caf115db1efce3dac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71df24fa0b16a2c52580943dcfa12d5f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_particle_system.html#a71df24fa0b16a2c52580943dcfa12d5f">ParticleSystem</a> (std::shared_ptr&lt; const sf::Texture &gt; texture, const sf::IntRect &amp;textureRect)</td></tr>
-<tr class="memdesc:a71df24fa0b16a2c52580943dcfa12d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Create particle system using parts of a sf::Texture.  <a href="#a71df24fa0b16a2c52580943dcfa12d5f">More...</a><br/></td></tr>
-<tr class="separator:a71df24fa0b16a2c52580943dcfa12d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaf7855ba648ab823ff01424201649a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_particle_system.html#adaf7855ba648ab823ff01424201649a5">ParticleSystem</a> (const sf::Texture &amp;texture)</td></tr>
+<tr class="memdesc:adaf7855ba648ab823ff01424201649a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Create particle system from a whole sf::Texture.  <a href="#adaf7855ba648ab823ff01424201649a5">More...</a><br/></td></tr>
+<tr class="separator:adaf7855ba648ab823ff01424201649a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7cc56a86bab620dd6a12b0242b7ad64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_particle_system.html#ad7cc56a86bab620dd6a12b0242b7ad64">ParticleSystem</a> (const sf::Texture &amp;texture, const sf::IntRect &amp;textureRect)</td></tr>
+<tr class="memdesc:ad7cc56a86bab620dd6a12b0242b7ad64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Create particle system using parts of a sf::Texture.  <a href="#ad7cc56a86bab620dd6a12b0242b7ad64">More...</a><br/></td></tr>
+<tr class="separator:ad7cc56a86bab620dd6a12b0242b7ad64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac30ae877884c219fcefae3869c362a2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac30ae877884c219fcefae3869c362a2d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classthor_1_1_particle_system.html#ac30ae877884c219fcefae3869c362a2d">swap</a> (<a class="el" href="classthor_1_1_particle_system.html">ParticleSystem</a> &amp;other)</td></tr>
 <tr class="memdesc:ac30ae877884c219fcefae3869c362a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents of two instances in constant time. <br/></td></tr>
@@ -131,7 +131,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <br/>
  This class is noncopyable. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aa21e6d83baab37caf115db1efce3dac0"></a>
+<a class="anchor" id="adaf7855ba648ab823ff01424201649a5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -141,7 +141,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
         <tr>
           <td class="memname">thor::ParticleSystem::ParticleSystem </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; const sf::Texture &gt;&#160;</td>
+          <td class="paramtype">const sf::Texture &amp;&#160;</td>
           <td class="paramname"><em>texture</em></td><td>)</td>
           <td></td>
         </tr>
@@ -156,21 +156,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <p>Constructor: Create particle system from a whole sf::Texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texture</td><td>Shared resource pointer to the sf::Texture used as particle texture. May not be empty. </td></tr>
+    <tr><td class="paramname">texture</td><td>Reference to the sf::Texture used as particle texture. The texture must remain valid as long as the particle system uses it. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a71df24fa0b16a2c52580943dcfa12d5f"></a>
+<a class="anchor" id="ad7cc56a86bab620dd6a12b0242b7ad64"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">thor::ParticleSystem::ParticleSystem </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; const sf::Texture &gt;&#160;</td>
+          <td class="paramtype">const sf::Texture &amp;&#160;</td>
           <td class="paramname"><em>texture</em>, </td>
         </tr>
         <tr>
@@ -190,7 +190,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <p>Constructor: Create particle system using parts of a sf::Texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texture</td><td>Shared resource pointer to the sf::Texture used as particle texture. May not be empty. </td></tr>
+    <tr><td class="paramname">texture</td><td>Reference to the sf::Texture used as particle texture. The texture must remain valid as long as the particle system uses it. </td></tr>
     <tr><td class="paramname">textureRect</td><td>Area of the texture that is used to draw the particle. </td></tr>
   </table>
   </dd>
@@ -478,7 +478,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

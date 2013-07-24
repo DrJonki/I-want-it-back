@@ -35,6 +35,8 @@
 
 #include <map>
 #include <functional>
+#include <cassert>
+#include <cmath>
 
 
 namespace thor
@@ -68,7 +70,8 @@ class Animator
 
 		/// @brief Registers an animation with a given name.
 		/// @param id Value that identifies the animation (must not be registered yet).
-		/// @param animation Animation to add to the animator.
+		/// @param animation Animation to add to the animator. The animation is copied; if you want to insert a reference
+		///  instead, use the function refAnimation().
 		/// @param duration Duration of the animation.
 		void						addAnimation(const Id& id, const AnimationFunction& animation, sf::Time duration);
 
@@ -87,6 +90,11 @@ class Animator
 		///  If no animation is playing, false is returned.
 		bool						isPlayingAnimation() const;
 
+		/// @brief Returns the ID of the currently playing animation.
+		/// @warning The behavior is undefined if no animation is playing. Therefore, you have to make sure by a preceding call
+		///  to isPlayingAnimation() whether it is safe to call getPlayingAnimation().
+		Id							getPlayingAnimation() const;
+
 		/// @brief Updates the animator's progress. You should call this method each frame.
 		/// @param dt Frame time.
 		void						update(sf::Time dt);
@@ -102,19 +110,20 @@ class Animator
 	private:
 		typedef std::pair<AnimationFunction, sf::Time>		ScaledAnimation;
 		typedef std::map<Id, ScaledAnimation>				AnimationMap;
+		typedef typename AnimationMap::iterator				AnimationMapIterator;
 
 
 	// ---------------------------------------------------------------------------------------------------------------------------
 	// Private member functions
 	private:
-		void						playAnimation(ScaledAnimation& animation, bool loop);
+		void						playAnimation(AnimationMapIterator animation, bool loop);
 
 			
 	// ---------------------------------------------------------------------------------------------------------------------------
 	// Private variables
 	private:
 		AnimationMap				mAnimationMap;
-		const ScaledAnimation*		mPlayingAnimation;
+		AnimationMapIterator		mPlayingAnimation;
 		float						mProgress;
 		bool						mLoop;
 };
