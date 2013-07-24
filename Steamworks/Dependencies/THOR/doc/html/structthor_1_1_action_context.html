@@ -49,7 +49,7 @@
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structthor_1_1_action_context-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">thor::ActionContext&lt; ActionId &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___events.html">Events</a></div></div>  </div>
+<div class="title">thor::ActionContext&lt; ActionId &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___input.html">Input</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -59,7 +59,7 @@
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a801942af8047b39a69ecbc0233ba06c3"><td class="memItemLeft" align="right" valign="top">sf::Window *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3">window</a></td></tr>
-<tr class="memdesc:a801942af8047b39a69ecbc0233ba06c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to sf::Window passed to the action map.  <a href="#a801942af8047b39a69ecbc0233ba06c3">More...</a><br/></td></tr>
+<tr class="memdesc:a801942af8047b39a69ecbc0233ba06c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to sf::Window passed to the <a class="el" href="classthor_1_1_action_map.html#ab230939e33d92d44c1514219c8261761" title="Forwards active actions to a callback system.">ActionMap::invokeCallbacks()</a>.  <a href="#a801942af8047b39a69ecbc0233ba06c3">More...</a><br/></td></tr>
 <tr class="separator:a801942af8047b39a69ecbc0233ba06c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a03fa6d9d7f5bf5103ffe44f8621cd7"><td class="memItemLeft" align="right" valign="top">const sf::Event *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structthor_1_1_action_context.html#a7a03fa6d9d7f5bf5103ffe44f8621cd7">event</a></td></tr>
 <tr class="memdesc:a7a03fa6d9d7f5bf5103ffe44f8621cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to a sf::Event that contributed to this action's activation.  <a href="#a7a03fa6d9d7f5bf5103ffe44f8621cd7">More...</a><br/></td></tr>
@@ -74,7 +74,7 @@ struct thor::ActionContext&lt; ActionId &gt;</h3>
 
 <p>Structure containing information about the context in which an action has occurred. </p>
 <p>This structure aggregates the events and the realtime input that were used to activate a specific action. Its objects are passed to the <a class="el" href="classthor_1_1_event_system.html" title="Class for object-oriented handling of user-defined events.">EventSystem</a> class, which makes it possible for listener functions to get information about the action's trigger (e.g. the sf::Event::KeyPressed event for key presses). </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classthor_1_1_action_map.html#ac2b0e4c56b445bc8235191c939111236" title="Forwards active actions to a callback system.">ActionMap::invokeCallbacks()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classthor_1_1_action_map.html#ab230939e33d92d44c1514219c8261761" title="Forwards active actions to a callback system.">ActionMap::invokeCallbacks()</a> </dd></dl>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a class="anchor" id="a90b6f4839cdd7e65e08890579c27f2f3"></a>
 <div class="memitem">
@@ -136,18 +136,18 @@ template&lt;typename ActionId&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Pointer to sf::Window passed to the action map. </p>
-<p>Use this variable to access the window inside a callback function. This pointer is never <em>nullptr</em>. </p>
+<p>Pointer to sf::Window passed to the <a class="el" href="classthor_1_1_action_map.html#ab230939e33d92d44c1514219c8261761" title="Forwards active actions to a callback system.">ActionMap::invokeCallbacks()</a>. </p>
+<p>Use this variable to access the window inside a callback function. This pointer can be <em>nullptr</em> if you didn't specify a window when calling <a class="el" href="classthor_1_1_action_map.html#ab230939e33d92d44c1514219c8261761" title="Forwards active actions to a callback system.">ActionMap::invokeCallbacks()</a>. </p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>Events/<a class="el" href="_action_context_8hpp_source.html">ActionContext.hpp</a></li>
+<li>Input/<a class="el" href="_action_context_8hpp_source.html">ActionContext.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

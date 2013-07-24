@@ -33,5 +33,6 @@
 #include <Thor/Animation/ColorAnimation.hpp>
 #include <Thor/Animation/FadeAnimation.hpp>
 #include <Thor/Animation/FrameAnimation.hpp>
+#include <Thor/Animation/RefAnimation.hpp>
 
 #endif // THOR_MODULE_ANIMATION_HPP

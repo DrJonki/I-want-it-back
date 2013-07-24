@@ -76,7 +76,7 @@
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define THOR_COLORANIMATION_HPP</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_config_8hpp.html" title="Configuration header of the library.">Thor/Config.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_colors_8hpp.html" title="Color-related functionality and class thor::ColorGradient.">Thor/Graphics/Colors.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_color_gradient_8hpp.html" title="Class thor::ColorGradient.">Thor/Graphics/ColorGradient.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_uniform_access_8hpp.html" title="Global functions to access SFML and Thor objects uniformly.">Thor/Graphics/UniformAccess.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
@@ -108,7 +108,7 @@
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> Animated&gt;</div>
 <div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="classthor_1_1_color_animation.html#a036a470af7c0ef468818355b350c0182">   74</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classthor_1_1_color_animation.html#a036a470af7c0ef468818355b350c0182" title="Animates the object.">ColorAnimation::operator() </a>(Animated&amp; target, <span class="keywordtype">float</span> progress)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="group___graphics.html#ga5557f7eb8d4d150ac2d86b30baa653b1" title="Sets the color of a graphical object.">setColor</a>(target, mGradient.<a class="code" href="classthor_1_1_color_gradient.html#a4dfd45c17ad60830329359a206db1f72" title="Returns the color at a given progress of the gradient.">getColor</a>(progress));</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="group___graphics.html#ga5557f7eb8d4d150ac2d86b30baa653b1" title="Sets the color of a graphical object.">setColor</a>(target, mGradient.<a class="code" href="classthor_1_1_color_gradient.html#a1774a23b08c84540f6a1c363dfe09463" title="Interpolates a color in the gradient.">getColor</a>(progress));</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;} <span class="comment">// namespace thor</span></div>
@@ -117,7 +117,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

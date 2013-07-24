@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Events/ActionContext.hpp Source File</title>
+<title>Input/ActionContext.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -39,7 +39,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_b8636758dec46a1ef2aa48d9b795bc2b.html">Events</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_e540aa96518235b344e655c4cbbe7889.html">Input</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -93,36 +93,36 @@
 <div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="structthor_1_1_action_context.html">   54</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">ActionContext</a></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">// Constructor</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">ActionContext</a>(sf::Window&amp; <a class="code" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3" title="Pointer to sf::Window passed to the action map.">window</a>, <span class="keyword">const</span> sf::Event* <a class="code" href="structthor_1_1_action_context.html#a7a03fa6d9d7f5bf5103ffe44f8621cd7" title="Pointer to a sf::Event that contributed to this action&#39;s activation.">event</a>, <span class="keyword">const</span> ActionId&amp; <a class="code" href="structthor_1_1_action_context.html#a90b6f4839cdd7e65e08890579c27f2f3" title="Identifier of the action.">actionId</a>)</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    : <a class="code" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3" title="Pointer to sf::Window passed to the action map.">window</a>(&amp;window)</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">ActionContext</a>(sf::Window* <a class="code" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3" title="Pointer to sf::Window passed to the ActionMap::invokeCallbacks().">window</a>, <span class="keyword">const</span> sf::Event* <a class="code" href="structthor_1_1_action_context.html#a7a03fa6d9d7f5bf5103ffe44f8621cd7" title="Pointer to a sf::Event that contributed to this action&#39;s activation.">event</a>, <span class="keyword">const</span> ActionId&amp; <a class="code" href="structthor_1_1_action_context.html#a90b6f4839cdd7e65e08890579c27f2f3" title="Identifier of the action.">actionId</a>)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    : <a class="code" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3" title="Pointer to sf::Window passed to the ActionMap::invokeCallbacks().">window</a>(window)</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    , <a class="code" href="structthor_1_1_action_context.html#a7a03fa6d9d7f5bf5103ffe44f8621cd7" title="Pointer to a sf::Event that contributed to this action&#39;s activation.">event</a>(event)</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    , <a class="code" href="structthor_1_1_action_context.html#a90b6f4839cdd7e65e08890579c27f2f3" title="Identifier of the action.">actionId</a>(actionId)</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3">   66</a></span>&#160;    sf::Window*                 <a class="code" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3" title="Pointer to sf::Window passed to the action map.">window</a>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="structthor_1_1_action_context.html#a7a03fa6d9d7f5bf5103ffe44f8621cd7">   79</a></span>&#160;    <span class="keyword">const</span> sf::Event*            <a class="code" href="structthor_1_1_action_context.html#a7a03fa6d9d7f5bf5103ffe44f8621cd7" title="Pointer to a sf::Event that contributed to this action&#39;s activation.">event</a>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="code" href="structthor_1_1_action_context.html#a90b6f4839cdd7e65e08890579c27f2f3">   83</a></span>&#160;    ActionId                    <a class="code" href="structthor_1_1_action_context.html#a90b6f4839cdd7e65e08890579c27f2f3" title="Identifier of the action.">actionId</a>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3">   67</a></span>&#160;    sf::Window*                 <a class="code" href="structthor_1_1_action_context.html#a801942af8047b39a69ecbc0233ba06c3" title="Pointer to sf::Window passed to the ActionMap::invokeCallbacks().">window</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="structthor_1_1_action_context.html#a7a03fa6d9d7f5bf5103ffe44f8621cd7">   80</a></span>&#160;    <span class="keyword">const</span> sf::Event*            <a class="code" href="structthor_1_1_action_context.html#a7a03fa6d9d7f5bf5103ffe44f8621cd7" title="Pointer to a sf::Event that contributed to this action&#39;s activation.">event</a>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="code" href="structthor_1_1_action_context.html#a90b6f4839cdd7e65e08890579c27f2f3">   84</a></span>&#160;    ActionId                    <a class="code" href="structthor_1_1_action_context.html#a90b6f4839cdd7e65e08890579c27f2f3" title="Identifier of the action.">actionId</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">// Extracts the ID of an ActionContext object (needed by EventSystem)</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ActionId&gt;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;ActionId getEventId(<span class="keyword">const</span> <a class="code" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">ActionContext&lt;ActionId&gt;</a>&amp; event)</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;{</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">event</span>.actionId;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;} <span class="comment">// namespace thor</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif // THOR_ACTIONCONTEXT_HPP</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">// Extracts the ID of an ActionContext object (needed by EventSystem)</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ActionId&gt;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;ActionId getEventId(<span class="keyword">const</span> <a class="code" href="structthor_1_1_action_context.html" title="Structure containing information about the context in which an action has occurred.">ActionContext&lt;ActionId&gt;</a>&amp; event)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">event</span>.actionId;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;} <span class="comment">// namespace thor</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#endif // THOR_ACTIONCONTEXT_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 16:00:30 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 12 2013 00:22:56 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
