@@ -150,6 +150,9 @@
     <ClCompile Include="src\Endmenu.cpp">
       <Filter>Source Files\System\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameStateLoader.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Randomizer.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="src\Endmenu.h">
       <Filter>Header Files\System\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStateLoader.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

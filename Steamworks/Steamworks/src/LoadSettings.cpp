@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "dirent.h"
+#include "Globals.h"
 
 
 LoadSettings::LoadSettings(void)
@@ -48,6 +49,11 @@ void LoadSettings::loadCampaigns()
 		closedir(dir);
 	}
 
+	for (unsigned int i = 0; i < _campaignVector.size(); i++){
+		if (!ns::gameStateLoader->campaignSaved(_campaignVector[i]))
+			ns::gameStateLoader->saveCampaignData(_campaignVector[i]);
+	}
+
 	if (_campaignVector.size() == 0){
 		_campaignVector.emplace_back(std::string());
 		_campaignVector.back() = "No campaigns :(";
@@ -75,6 +81,15 @@ void LoadSettings::loadLevels()
 			}
 		}
 		closedir(dir);
+	}
+
+	for (unsigned int i = 0; i < _levelVector.size(); i++){
+		if (!ns::gameStateLoader->levelSaved(_campaignVector[_campaign], _levelVector[i]) && _campaignVector[0] != "No levels :("){
+			if (i == 0)
+				ns::gameStateLoader->saveLevelData(_campaignVector[_campaign], _levelVector[i], true);
+			else
+				ns::gameStateLoader->saveLevelData(_campaignVector[_campaign], _levelVector[i], false);
+		}
 	}
 
 	if (_levelVector.size() == 0){

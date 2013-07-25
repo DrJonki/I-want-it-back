@@ -7,6 +7,7 @@
 #include <SFML\Window\Event.hpp>
 
 #include "LoadSettings.h"
+#include "GameButton.h"
 
 class Endmenu
 {
@@ -18,6 +19,8 @@ public:
 	void draw();
 
 private:
+	void init();
+
 	sf::RectangleShape _backgroundShape;
 
 	sf::RenderWindow* _window;
@@ -26,7 +29,15 @@ private:
 	LoadSettings* _lSettings;
 
 	sf::Font _font;
-	sf::Text _text;
 	sf::Text _timeText;
+
+	static const enum
+	{
+		BUT_CONTINUE,
+		BUT_RESTART,
+		BUT_EXIT,
+		BUT_LAST
+	};
+	std::vector<GameButton> _button;
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DebugConsole.h"
+#include "GameStateLoader.h"
 
 namespace ns
 {
@@ -19,6 +20,7 @@ namespace ns
 	extern bool runningState;
 	extern bool exitState;
 	extern bool restartState;
+	extern bool reloadState;
 	extern bool deathState;
 	extern bool endOfLevelState;
 	extern float spawnPoint;
@@ -28,6 +30,8 @@ namespace ns
 	extern float cameraSpeed;
 
 	extern DebugConsole* debug;
+
+	extern GameStateLoader* gameStateLoader;
 }
 
 static const enum

@@ -51,8 +51,8 @@ bool Mainmenu::showMenu()
 	titleMusic.play();
 	titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
 	
-	while (!ns::exitState && !ns::deathState){
-		if (mainButton[BUT_START].isPressed() && !ns::endOfLevelState){
+	while (!ns::exitState){
+		if (mainButton[BUT_START].isPressed() && !ns::endOfLevelState && !ns::deathState){
 			titleMusic.stop();
 			menuState = BUT_START;
 			return true;
@@ -107,9 +107,9 @@ void Mainmenu::init()
 
 	if (!_window->isOpen()){
 		if (_engineSettings.fullScreen)
-			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Fullscreen, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
+			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "I Want It Back", sf::Style::Fullscreen, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
 		else
-			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
+			_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "I Want It Back", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
 	}
 	_window->setVerticalSyncEnabled(_engineSettings.vSync);
 
@@ -128,37 +128,37 @@ void Mainmenu::init()
 	mainButton[BUT_START]._text.setFont(_font);
 	mainButton[BUT_START]._text.setCharacterSize(40);
 	mainButton[BUT_START]._text.setString("Start");
-	mainButton[BUT_START]._text.setColor(sf::Color::Color(205,197,191, 255));
+	mainButton[BUT_START]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Campaign
 	mainButton[BUT_LEVEL].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 200, image);
 	mainButton[BUT_LEVEL]._text.setFont(_font);
 	mainButton[BUT_LEVEL]._text.setCharacterSize(30);
 	mainButton[BUT_LEVEL]._text.setString("Select\ncampaign");
-	mainButton[BUT_LEVEL]._text.setColor(sf::Color::Color(205,197,191, 255));
-	//Level
+	mainButton[BUT_LEVEL]._text.setColor(sf::Color::Color(205, 197, 191, 255));
+	//Info
 	mainButton[BUT_INFO].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_LEVEL].getPosition().y + 125, image);
 	mainButton[BUT_INFO]._text.setFont(_font);
 	mainButton[BUT_INFO]._text.setCharacterSize(30);
 	mainButton[BUT_INFO]._text.setString("Instructions");
-	mainButton[BUT_INFO]._text.setColor(sf::Color::Color(205,197,191, 255));
+	mainButton[BUT_INFO]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Settings
 	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_INFO].getPosition().y + 125, image);
 	mainButton[BUT_SETTINGS]._text.setFont(_font);
 	mainButton[BUT_SETTINGS]._text.setCharacterSize(30);
 	mainButton[BUT_SETTINGS]._text.setString("Settings");
-	mainButton[BUT_SETTINGS]._text.setColor(sf::Color::Color(205,197,191, 255));
+	mainButton[BUT_SETTINGS]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Credits
 	mainButton[BUT_CREDITS].load(150, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_SETTINGS].getPosition().y + 150, image);
 	mainButton[BUT_CREDITS]._text.setFont(_font);
 	mainButton[BUT_CREDITS]._text.setCharacterSize(26);
 	mainButton[BUT_CREDITS]._text.setString("Credits");
-	mainButton[BUT_CREDITS]._text.setColor(sf::Color::Color(205,197,191, 255));
+	mainButton[BUT_CREDITS]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Exit
 	mainButton[BUT_EXIT].load(150, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_CREDITS].getPosition().y + 100, image);
 	mainButton[BUT_EXIT]._text.setFont(_font);
 	mainButton[BUT_EXIT]._text.setCharacterSize(26);
 	mainButton[BUT_EXIT]._text.setString("Exit");
-	mainButton[BUT_EXIT]._text.setColor(sf::Color::Color(205,197,191, 255));
+	mainButton[BUT_EXIT]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	//Confirmation buttons
 	confirmButton.emplace_back(GameButton(_window));
@@ -424,6 +424,9 @@ void Mainmenu::update()
 						if (i < levelSelection - 2) levelText[i].setColor(sf::Color::Color(255, 255, 255, 0));
 						else if (i == levelSelection) levelText[i].setColor(sf::Color::White);
 						else levelText[i].setColor(sf::Color::Color(255, 255, 255, 128));
+
+						if (!ns::gameStateLoader->levelUnlocked(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[i]))
+							levelText[i].setColor(sf::Color::Color(255, 0, 0, levelText[i].getColor().a));
 					}
 				}
 				if (levelSelection > 2) levelText[0].setColor(sf::Color::Color(255, 255, 255, 0));
@@ -583,8 +586,11 @@ void Mainmenu::update()
 
 		//In sub menu
 		if (arrowButton[ARR_UP].isPressed()){
-			if (levelMenuSelected && levelSelection > 0)
+			if (levelMenuSelected && levelSelection > 0){
 				levelSelection--;
+				if (!ns::gameStateLoader->levelUnlocked(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[levelSelection]))
+					levelSelection++;
+			}
 			else if (!levelMenuSelected && subSelectionState > 0){
 				subSelectionState--;
 				
@@ -596,9 +602,12 @@ void Mainmenu::update()
 				}
 			}
 		}
-		else if (arrowButton[ARR_DOWN].isPressed() && subSelectionState < subSelectionMax){
-			if (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1)
+		else if (_e->key.code == sf::Keyboard::Down && (subSelectionState < subSelectionMax || (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1))){
+			if (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1){
 				levelSelection++;
+				if (!ns::gameStateLoader->levelUnlocked(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[levelSelection]))
+					levelSelection--;
+			}
 			else if (!levelMenuSelected && subSelectionState < subSelectionMax){
 				subSelectionState++;
 
@@ -724,14 +733,20 @@ void Mainmenu::update()
 		}
 
 		else if (_e->type == sf::Event::KeyReleased){
-			if (_e->key.code == sf::Keyboard::Return) ns::endOfLevelState = false;
+			if (_e->key.code == sf::Keyboard::Return){
+				ns::endOfLevelState = false;
+				ns::deathState = false;
+			}
 		}
 
 		//In sub menu
 		else if (_e->type == sf::Event::KeyPressed && menuState > 0){
 			if (_e->key.code == sf::Keyboard::Up){
-				if (levelMenuSelected && levelSelection > 0)
+				if (levelMenuSelected && levelSelection > 0){
 					levelSelection--;
+					if (!ns::gameStateLoader->levelUnlocked(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[levelSelection]))
+						levelSelection++;
+				}
 				else if (!levelMenuSelected && subSelectionState > 0){
 					subSelectionState--;
 
@@ -744,9 +759,12 @@ void Mainmenu::update()
 				}
 				lockMouse = true;
 			}
-			else if (_e->key.code == sf::Keyboard::Down && subSelectionState < subSelectionMax){
-				if (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1)
+			else if (_e->key.code == sf::Keyboard::Down && (subSelectionState < subSelectionMax || (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1))){
+				if (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1){
 					levelSelection++;
+					if (!ns::gameStateLoader->levelUnlocked(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[levelSelection]))
+						levelSelection--;
+				}
 				else if (!levelMenuSelected && subSelectionState < subSelectionMax){
 					subSelectionState++;
 
@@ -947,6 +965,9 @@ void Mainmenu::initLevels()
 
 		if (i == levelSelection) levelText[i].setColor(sf::Color::White);
 		else levelText[i].setColor(sf::Color::Color(255, 255, 255, 128));
+
+		if (!ns::gameStateLoader->levelUnlocked(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[i]))
+			levelText[i].setColor(sf::Color::Color(255, 0, 0, levelText[i].getColor().a));
 	}
 	if (levelSelection != 0) levelText[0].setColor(sf::Color::Color(255, 255, 255, 128));
 	else levelText[0].setColor(sf::Color::White);

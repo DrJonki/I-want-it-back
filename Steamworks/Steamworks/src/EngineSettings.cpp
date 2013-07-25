@@ -56,6 +56,8 @@ void EngineSettings::loadFromFile()
 	_mkdir(path.c_str());
 	path += "\\I want it back";
 	_mkdir(path.c_str());
+	path += "\\Saves";
+	_mkdir(path.c_str());
 
 	//Load values
 	path = (std::getenv("USERPROFILE"));

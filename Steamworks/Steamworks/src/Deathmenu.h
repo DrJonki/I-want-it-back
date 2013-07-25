@@ -7,6 +7,7 @@
 #include <SFML\Window\Event.hpp>
 
 #include "LoadSettings.h"
+#include "GameButton.h"
 
 class Deathmenu
 {
@@ -18,11 +19,21 @@ public:
 	void draw();
 
 private:
+	void init();
+
 	sf::RectangleShape _backgroundShape;
 
 	sf::RenderWindow* _window;
 	sf::Event* _e;
 
 	sf::Font _font;
-	sf::Text _text;
+
+	std::vector<GameButton> _button;
+
+	static const enum
+	{
+		BUT_RESTART,
+		BUT_EXIT,
+		BUT_LAST
+	};
 };

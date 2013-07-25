@@ -127,19 +127,35 @@ void Map::update()
 void Map::draw()
 {
 	for (unsigned int i = 0; i < _backGroundObject.size(); i++){
-		_window->draw(_backGroundObject[i]);
+		if (_backGroundObject[i].getPosition().x <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
+			_backGroundObject[i].getPosition().x + _backGroundObject[i].getSize().x >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2))
+		{
+			_window->draw(_backGroundObject[i]);
+		}
 	}
 
 	for (unsigned int i = 0; i < _mapObject.size(); i++){
-		_window->draw(_mapObject[i]);
+		if (_mapObject[i].getPosition().x - (_mapObject[i].getSize().x / 2) <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
+			_mapObject[i].getPosition().x + (_mapObject[i].getSize().x / 2) >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2))
+		{
+			_window->draw(_mapObject[i]);
+		}
 	}
 
 	if (_debug){
 		for (unsigned int i = 0; i < _mapObject.size(); i++){
-			_window->draw(_mapObject[i].hbShape);
+			if (_mapObject[i].hbShape.getPosition().x - (_mapObject[i].hbShape.getSize().x / 2) <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
+				_mapObject[i].hbShape.getPosition().x + (_mapObject[i].hbShape.getSize().x / 2) >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2))
+			{
+				_window->draw(_mapObject[i].hbShape);
+			}
 		}
 		for (unsigned int i = 0; i < _triggerObject.size(); i++){
-			_window->draw(_triggerObject[i]);
+			if (_triggerObject[i].getPosition().x - (_triggerObject[i].getSize().x / 2) <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
+				_triggerObject[i].getPosition().x + (_triggerObject[i].getSize().x / 2) >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2))
+			{
+				_window->draw(_triggerObject[i]);
+			}
 		}
 	}
 }
@@ -147,7 +163,11 @@ void Map::draw()
 void Map::drawForeground()
 {
 	for (unsigned int i = 0; i < _foregroundObject.size(); i++){
-		_window->draw(_foregroundObject[i]);
+		if (_foregroundObject[i].getPosition().x - (_foregroundObject[i].getSize().x / 2) <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
+			_foregroundObject[i].getPosition().x + (_foregroundObject[i].getSize().x / 2) >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2))
+		{
+			_window->draw(_foregroundObject[i]);
+		}
 	}
 }
 
@@ -210,7 +230,7 @@ void Map::createStatics()
 				t_aSizeY = 0,
 				t_startX = 0,
 				t_startY = 0,
-				t_interval = 1,
+				t_interval = 60,
 				t_frames = 1;
 			unsigned int t_data = 0;
 
@@ -268,7 +288,7 @@ void Map::createForeground()
 				t_aSizeY = 0,
 				t_startX = 0,
 				t_startY = 0,
-				t_interval = 1,
+				t_interval = 60,
 				t_frames = 1;
 			unsigned int t_data = 0;
 

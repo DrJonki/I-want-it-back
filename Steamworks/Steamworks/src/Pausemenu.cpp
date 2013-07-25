@@ -49,6 +49,9 @@ bool Pausemenu::showMenu(bool paused)
 			ns::restartState = true;
 			return false;
 		}
+		else if (mainButton[BUT_INFO].isPressed()){
+			menuState = BUT_INFO;
+		}
 		else if (mainButton[BUT_SETTINGS].isPressed() && menuState == 0){
 			menuState = BUT_SETTINGS;
 		}
@@ -124,6 +127,16 @@ void Pausemenu::update()
 
 			break;
 			}
+		case BUT_INFO:
+			{
+			subSelectionMax = 2;
+
+			confirmButton[CON_BACK].setPosition(600, 568);
+
+			infoShape.setTexture(&infoTexture[subSelectionState]);
+
+			break;
+			}
 		default:
 			{
 			//Main button state updates
@@ -139,12 +152,24 @@ void Pausemenu::update()
 			}
 	}
 
-	//Selection shape repositioning
 	switch (menuState)
 	{
-		case BUT_SETTINGS: //Settings
-			selectionShape.setPosition(settingButton[subSelectionState].getPosition().x - 25, settingButton[subSelectionState].getPosition().y + (settingButton[subSelectionState].getGlobalBounds().height / 2));
+		case BUT_INFO:
+			{
+			arrowButton[ARR_UP].setPosition(800, 580);
+			arrowButton[ARR_DOWN].setPosition(800, 620);
 			break;
+			}
+		case BUT_SETTINGS: //Settings
+			{
+			selectionShape.setPosition(settingButton[subSelectionState].getPosition().x - 90, settingButton[subSelectionState].getPosition().y + (settingButton[subSelectionState].getGlobalBounds().height / 2));
+
+			arrowButton[ARR_LEFT].setPosition(selectionShape.getPosition().x - 50, selectionShape.getPosition().y);
+			arrowButton[ARR_RIGHT].setPosition(selectionShape.getPosition().x + 50, selectionShape.getPosition().y);
+			
+			break;
+
+			}
 		default: //Main menu
 			selectionShape.setPosition(mainButton[selectionState].getPosition().x - 25, mainButton[selectionState].getPosition().y + (mainButton[selectionState].getGlobalBounds().height / 2));
 	}
@@ -153,6 +178,96 @@ void Pausemenu::update()
 	if (menuState > 0){
 		confirmButton[CON_APPLY].update(confirmButton[CON_APPLY].isOver());
 		confirmButton[CON_BACK].update(confirmButton[CON_BACK].isOver());
+		for (int i = 0; i < 4; i++)
+			arrowButton[i].update(arrowButton[i].isOver());
+
+
+		if (arrowButton[ARR_UP].isPressed() && subSelectionState > 0){
+			subSelectionState--;
+		}
+		else if (arrowButton[ARR_DOWN].isPressed() && subSelectionState < subSelectionMax){
+			subSelectionState++;
+		}
+
+		if (menuState == BUT_SETTINGS){
+			if (subSelectionState == SET_RESOLUTION){
+				if (arrowButton[ARR_LEFT].isPressed() && (sf::VideoMode::getFullscreenModes().size() / 3) - 1 > _engineSettings.resVectorNumber){
+					if (_engineSettings.usingCustomRes()){
+						_engineSettings.resVectorNumber = sf::VideoMode::getFullscreenModes().size() / 3 - 1;
+						_engineSettings.updateResolution();
+					}
+					else{
+						_engineSettings.resVectorNumber++;
+						_engineSettings.updateResolution();
+					}
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.resVectorNumber > 0){
+					if (_engineSettings.usingCustomRes()){
+						_engineSettings.resVectorNumber = sf::VideoMode::getFullscreenModes().size() / 3 - 1;
+						_engineSettings.updateResolution();
+					}
+					else{
+					_engineSettings.resVectorNumber--;
+					_engineSettings.updateResolution();
+					}
+				}
+			}
+			else if (subSelectionState == SET_VSYNC){
+				if (arrowButton[ARR_LEFT].isPressed() || arrowButton[ARR_RIGHT].isPressed()){
+					_engineSettings.vSync = !_engineSettings.vSync;
+				}
+			}
+			else if (subSelectionState == SET_FULLSCREEN){
+				if (arrowButton[ARR_LEFT].isPressed() || arrowButton[ARR_RIGHT].isPressed()){
+					_engineSettings.fullScreen = !_engineSettings.fullScreen;
+				}
+			}
+			else if (subSelectionState == SET_AA){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.antiAliasing > 0){
+					_engineSettings.antiAliasing -= 2;
+			}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.antiAliasing < 8){
+					_engineSettings.antiAliasing += 2;
+				}
+			}
+			else if (subSelectionState == SET_SMOOTH){
+				if (arrowButton[ARR_LEFT].isPressed() || arrowButton[ARR_RIGHT].isPressed()){
+					_engineSettings.smoothTextures = !_engineSettings.smoothTextures;
+				}
+			}
+			else if (subSelectionState == SET_GVOLUME){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.globalVolume > 0){
+					_engineSettings.globalVolume--;
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.globalVolume < 100){
+					_engineSettings.globalVolume++;
+				}
+			}
+			else if (subSelectionState == SET_MVOLUME){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.musicVolume > 0){
+					_engineSettings.musicVolume--;
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.musicVolume < 100){
+					_engineSettings.musicVolume++;
+				}
+			}
+			else if (subSelectionState == SET_SVOLUME){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.soundVolume > 0){
+					_engineSettings.soundVolume--;
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.soundVolume < 100){
+					_engineSettings.soundVolume++;
+				}
+			}
+			else if (subSelectionState == SET_AVOLUME){
+				if (arrowButton[ARR_LEFT].isPressed() && _engineSettings.anbientVolume > 0){
+					_engineSettings.anbientVolume--;
+				}
+				else if (arrowButton[ARR_RIGHT].isPressed() && _engineSettings.anbientVolume < 100){
+					_engineSettings.anbientVolume++;
+				}
+			}
+		}
 
 		if (confirmButton[CON_BACK].isPressed()){
 			menuState = 0;
@@ -307,6 +422,17 @@ void Pausemenu::draw()
 				_window->draw(confirmButton[CON_APPLY]._text);
 				_window->draw(confirmButton[CON_BACK]);
 				_window->draw(confirmButton[CON_BACK]._text);
+				_window->draw(arrowButton[ARR_LEFT]);
+				_window->draw(arrowButton[ARR_RIGHT]);
+				break;
+				}
+			case BUT_INFO:
+				{
+				_window->draw(infoShape);
+				_window->draw(confirmButton[CON_BACK]);
+				_window->draw(confirmButton[CON_BACK]._text);
+				_window->draw(arrowButton[ARR_UP]);
+				_window->draw(arrowButton[ARR_DOWN]);
 				break;
 				}
 		}
@@ -316,7 +442,9 @@ void Pausemenu::draw()
 			_window->draw(mainButton[i]._text);
 		}
 
-		_window->draw(selectionShape);
+		if (menuState > 0){
+			_window->draw(selectionShape);
+		}
 	}
 }
 
@@ -338,31 +466,37 @@ void Pausemenu::init()
 	mainButton[BUT_START]._text.setFont(_font);
 	mainButton[BUT_START]._text.setCharacterSize(40);
 	mainButton[BUT_START]._text.setString("Continue");
-	mainButton[BUT_START]._text.setColor(sf::Color::Black);
+	mainButton[BUT_START]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Restart
 	mainButton[BUT_RESTART].load(225, 125, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 175, image);
 	mainButton[BUT_RESTART]._text.setFont(_font);
 	mainButton[BUT_RESTART]._text.setCharacterSize(32);
 	mainButton[BUT_RESTART]._text.setString("Restart from\ncheckpoint");
-	mainButton[BUT_RESTART]._text.setColor(sf::Color::Black);
+	mainButton[BUT_RESTART]._text.setColor(sf::Color::Color(205, 197, 191, 255));
+	//Info
+	mainButton[BUT_INFO].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_RESTART].getPosition().y + 150, image);
+	mainButton[BUT_INFO]._text.setFont(_font);
+	mainButton[BUT_INFO]._text.setCharacterSize(30);
+	mainButton[BUT_INFO]._text.setString("Instructions");
+	mainButton[BUT_INFO]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Settings
-	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_RESTART].getPosition().x, mainButton[BUT_RESTART].getPosition().y + 150, image);
+	mainButton[BUT_SETTINGS].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_INFO].getPosition().y + 125, image);
 	mainButton[BUT_SETTINGS]._text.setFont(_font);
 	mainButton[BUT_SETTINGS]._text.setCharacterSize(30);
 	mainButton[BUT_SETTINGS]._text.setString("Settings");
-	mainButton[BUT_SETTINGS]._text.setColor(sf::Color::Black);
+	mainButton[BUT_SETTINGS]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Exit
 	mainButton[BUT_EXIT].load(250, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_SETTINGS].getPosition().y + 200, image);
 	mainButton[BUT_EXIT]._text.setFont(_font);
 	mainButton[BUT_EXIT]._text.setCharacterSize(26);
 	mainButton[BUT_EXIT]._text.setString("Exit to menu");
-	mainButton[BUT_EXIT]._text.setColor(sf::Color::Black);
+	mainButton[BUT_EXIT]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Exit to Windows
 	mainButton[BUT_EXITTOWIN].load(250, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_EXIT].getPosition().y + 100, image);
 	mainButton[BUT_EXITTOWIN]._text.setFont(_font);
 	mainButton[BUT_EXITTOWIN]._text.setCharacterSize(26);
 	mainButton[BUT_EXITTOWIN]._text.setString("Exit game");
-	mainButton[BUT_EXITTOWIN]._text.setColor(sf::Color::Black);
+	mainButton[BUT_EXITTOWIN]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 
 	//Confirmation buttons
@@ -381,8 +515,31 @@ void Pausemenu::init()
 	confirmButton[CON_BACK]._text.setString("<< Back");
 	confirmButton[CON_BACK]._text.setColor(sf::Color::Black);
 
-	//Sub menu buttons
-	/////////////////////////////////////////////////////////
+	//Arrow buttons
+	for (int i = 0; i < 4; i++)
+		arrowButton.emplace_back(GameButton(_window));
+
+	image.loadFromFile("Resources/Common/Graphics/UI/arrow.png");
+
+	arrowButton[ARR_UP].load(32, 32, 0, 0, image);
+	arrowButton[ARR_DOWN].load(32, 32, 0, 0, image);
+	arrowButton[ARR_LEFT].load(32, 32, 0, 0, image);
+	arrowButton[ARR_RIGHT].load(32, 32, 0, 0, image);
+	for (int i = 0; i < 4; i++)
+		arrowButton[i].setOrigin(arrowButton[i].getSize().x / 2, arrowButton[i].getSize().y / 2);
+	arrowButton[ARR_UP].setRotation(180);
+	arrowButton[ARR_LEFT].setRotation(90);
+	arrowButton[ARR_RIGHT].setRotation(270);
+
+	//Instructions
+	infoTexture[0].loadFromFile("Resources/Common/Graphics/UI/info1.png");
+	infoTexture[1].loadFromFile("Resources/Common/Graphics/UI/info2.png");
+	infoTexture[2].loadFromFile("Resources/Common/Graphics/UI/info3.png");
+
+	infoShape.setSize(sf::Vector2f(960, 1200));
+	infoShape.setTexture(&infoTexture[0]);
+	infoShape.setPosition(960, 0);
+
 	//Settings
 	settingButton.reserve(SET_LAST);
 	settingText.reserve(SET_LAST);
@@ -390,6 +547,12 @@ void Pausemenu::init()
 		settingButton.emplace_back(GameButton(_window));
 		settingText.emplace_back(sf::Text());
 	}
+
+
+	//Sub menu buttons
+	/////////////////////////////////////////////////////////
+
+	image.loadFromFile("Resources/Common/Graphics/UI/button_start.png");
 
 	//Resolution
 	settingButton[SET_RESOLUTION].load(250, 50, 1000, 200, image);

@@ -56,11 +56,24 @@ private:
 	{
 		BUT_START,
 		BUT_RESTART,
+		BUT_INFO,
 		BUT_SETTINGS,
 		BUT_EXIT,
 		BUT_EXITTOWIN,
 		BUT_LAST
 	};
+
+	std::vector<GameButton> arrowButton;
+	static const enum
+	{
+		ARR_UP,
+		ARR_DOWN,
+		ARR_LEFT,
+		ARR_RIGHT,
+	};
+
+	sf::Texture infoTexture[3];
+	sf::RectangleShape infoShape;
 
 	static const enum
 	{

@@ -39,7 +39,7 @@ void MapObject::load(b2World* world,
 
 	sf::Image image;
 	if (image.loadFromFile(textureDir)){
-		if (aSizeX <= 0 || aSizeY <= 0) loadSheet(image, startX, startY, sizeX, sizeY, frames, smooth);
+		if (aSizeX <= 0 || aSizeY <= 0) loadSheet(image, startX, startY, image.getSize().x, image.getSize().y, frames, smooth);
 		else loadSheet(image, startX, startY, aSizeX, aSizeY, frames, smooth);
 		setStepInterval(interval);
 		setTexture(&getCurrentTexture());

@@ -75,7 +75,7 @@ bool Game::runAndDontCrashPls()
 		ShowWindow(hwnd, SW_HIDE);
 	}
 	
-	while (ns::restartState || (mainMenu.showMenu() && !ns::exitState)){
+	while (ns::reloadState || ns::restartState || (mainMenu.showMenu() && !ns::exitState)){
 		if (!ns::restartState)
 			init();
 		else
@@ -265,6 +265,11 @@ void Game::pollEvents()
 					if (ns::soundState < 0)
 						ns::soundState = 2;
 				}
+				if (ns::debug){
+					if (e.key.code == sf::Keyboard::E){
+						ns::endOfLevelState = true;
+					}
+				}
 			}
 			if (e.type == sf::Event::LostFocus){
 				paused = true;
@@ -278,6 +283,7 @@ void Game::init()
 	paused = false;
 	ns::deathState = false;
 	ns::restartState = false;
+	ns::reloadState = false;
 
 	gameWindow.setMouseCursorVisible(false);
 	
@@ -402,4 +408,6 @@ void Game::resetStates()
 	viewCenterBottom = pauseMenu->getView(VIEW_BOTTOM).getCenter().x;
 
 	gameTime.restart();
+	updateClock.restart();
+	renderClock.restart();
 }
