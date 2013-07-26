@@ -128,6 +128,6 @@ void Deathmenu::init()
 	_button[BUT_EXIT].load(250, 150, _button[BUT_RESTART].getPosition().x, _button[BUT_RESTART].getPosition().y + 175, image);
 	_button[BUT_EXIT]._text.setFont(_font);
 	_button[BUT_EXIT]._text.setCharacterSize(40);
-	_button[BUT_EXIT]._text.setString("Exit to menu");
+	_button[BUT_EXIT]._text.setString("Exit To Menu");
 	_button[BUT_EXIT]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 }

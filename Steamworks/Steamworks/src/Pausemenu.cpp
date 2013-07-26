@@ -471,7 +471,7 @@ void Pausemenu::init()
 	mainButton[BUT_RESTART].load(225, 125, mainButton[BUT_START].getPosition().x, mainButton[BUT_START].getPosition().y + 175, image);
 	mainButton[BUT_RESTART]._text.setFont(_font);
 	mainButton[BUT_RESTART]._text.setCharacterSize(32);
-	mainButton[BUT_RESTART]._text.setString("Restart from\ncheckpoint");
+	mainButton[BUT_RESTART]._text.setString("Restart From\nCheckpoint");
 	mainButton[BUT_RESTART]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Info
 	mainButton[BUT_INFO].load(200, 100, mainButton[BUT_START].getPosition().x, mainButton[BUT_RESTART].getPosition().y + 150, image);
@@ -489,13 +489,13 @@ void Pausemenu::init()
 	mainButton[BUT_EXIT].load(250, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_SETTINGS].getPosition().y + 200, image);
 	mainButton[BUT_EXIT]._text.setFont(_font);
 	mainButton[BUT_EXIT]._text.setCharacterSize(26);
-	mainButton[BUT_EXIT]._text.setString("Exit to menu");
+	mainButton[BUT_EXIT]._text.setString("Exit To Menu");
 	mainButton[BUT_EXIT]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Exit to Windows
 	mainButton[BUT_EXITTOWIN].load(250, 75, mainButton[BUT_START].getPosition().x, mainButton[BUT_EXIT].getPosition().y + 100, image);
 	mainButton[BUT_EXITTOWIN]._text.setFont(_font);
 	mainButton[BUT_EXITTOWIN]._text.setCharacterSize(26);
-	mainButton[BUT_EXITTOWIN]._text.setString("Exit game");
+	mainButton[BUT_EXITTOWIN]._text.setString("Exit Game");
 	mainButton[BUT_EXITTOWIN]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 
@@ -505,15 +505,15 @@ void Pausemenu::init()
 
 	confirmButton[CON_APPLY].load(100, 65, 600, 500, image);
 	confirmButton[CON_APPLY]._text.setFont(_font);
-	confirmButton[CON_APPLY]._text.setCharacterSize(22);
+	confirmButton[CON_APPLY]._text.setCharacterSize(25);
 	confirmButton[CON_APPLY]._text.setString("Apply >>");
-	confirmButton[CON_APPLY]._text.setColor(sf::Color::Black);
+	confirmButton[CON_APPLY]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	confirmButton[CON_BACK].load(100, 65, confirmButton[CON_APPLY].getPosition().x, confirmButton[CON_APPLY].getPosition().y + 100, image);
 	confirmButton[CON_BACK]._text.setFont(_font);
-	confirmButton[CON_BACK]._text.setCharacterSize(24);
+	confirmButton[CON_BACK]._text.setCharacterSize(25);
 	confirmButton[CON_BACK]._text.setString("<< Back");
-	confirmButton[CON_BACK]._text.setColor(sf::Color::Black);
+	confirmButton[CON_BACK]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	//Arrow buttons
 	for (int i = 0; i < 4; i++)
@@ -559,7 +559,7 @@ void Pausemenu::init()
 	settingButton[SET_RESOLUTION]._text.setFont(_font);
 	settingButton[SET_RESOLUTION]._text.setCharacterSize(28);
 	settingButton[SET_RESOLUTION]._text.setString("Resolution");
-	settingButton[SET_RESOLUTION]._text.setColor(sf::Color::Black);
+	settingButton[SET_RESOLUTION]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_RESOLUTION].setFont(_font);
 	settingText[SET_RESOLUTION].setCharacterSize(30);
@@ -572,7 +572,7 @@ void Pausemenu::init()
 	settingButton[SET_VSYNC]._text.setFont(_font);
 	settingButton[SET_VSYNC]._text.setCharacterSize(28);
 	settingButton[SET_VSYNC]._text.setString("V-Sync");
-	settingButton[SET_VSYNC]._text.setColor(sf::Color::Black);
+	settingButton[SET_VSYNC]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_VSYNC].setFont(_font);
 	settingText[SET_VSYNC].setCharacterSize(30);
@@ -587,7 +587,7 @@ void Pausemenu::init()
 	settingButton[SET_FULLSCREEN]._text.setFont(_font);
 	settingButton[SET_FULLSCREEN]._text.setCharacterSize(28);
 	settingButton[SET_FULLSCREEN]._text.setString("Fullscreen");
-	settingButton[SET_FULLSCREEN]._text.setColor(sf::Color::Black);
+	settingButton[SET_FULLSCREEN]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_FULLSCREEN].setFont(_font);
 	settingText[SET_FULLSCREEN].setCharacterSize(30);
@@ -601,8 +601,8 @@ void Pausemenu::init()
 	settingButton[SET_AA].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_FULLSCREEN].getPosition().y + 75, image);
 	settingButton[SET_AA]._text.setFont(_font);
 	settingButton[SET_AA]._text.setCharacterSize(28);
-	settingButton[SET_AA]._text.setString("Anti-aliasing");
-	settingButton[SET_AA]._text.setColor(sf::Color::Black);
+	settingButton[SET_AA]._text.setString("Anti-Aliasing");
+	settingButton[SET_AA]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_AA].setFont(_font);
 	settingText[SET_AA].setCharacterSize(30);
@@ -615,8 +615,8 @@ void Pausemenu::init()
 	settingButton[SET_SMOOTH].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_AA].getPosition().y + 75, image);
 	settingButton[SET_SMOOTH]._text.setFont(_font);
 	settingButton[SET_SMOOTH]._text.setCharacterSize(24);
-	settingButton[SET_SMOOTH]._text.setString("Smooth textures");
-	settingButton[SET_SMOOTH]._text.setColor(sf::Color::Black);
+	settingButton[SET_SMOOTH]._text.setString("Smooth Textures");
+	settingButton[SET_SMOOTH]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_SMOOTH].setFont(_font);
 	settingText[SET_SMOOTH].setCharacterSize(30);
@@ -631,8 +631,8 @@ void Pausemenu::init()
 	settingButton[SET_GVOLUME].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_SMOOTH].getPosition().y + 100, image);
 	settingButton[SET_GVOLUME]._text.setFont(_font);
 	settingButton[SET_GVOLUME]._text.setCharacterSize(24);
-	settingButton[SET_GVOLUME]._text.setString("Global volume");
-	settingButton[SET_GVOLUME]._text.setColor(sf::Color::Black);
+	settingButton[SET_GVOLUME]._text.setString("General Volume");
+	settingButton[SET_GVOLUME]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_GVOLUME].setFont(_font);
 	settingText[SET_GVOLUME].setCharacterSize(30);
@@ -645,8 +645,8 @@ void Pausemenu::init()
 	settingButton[SET_MVOLUME].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_GVOLUME].getPosition().y + 75, image);
 	settingButton[SET_MVOLUME]._text.setFont(_font);
 	settingButton[SET_MVOLUME]._text.setCharacterSize(24);
-	settingButton[SET_MVOLUME]._text.setString("Music volume");
-	settingButton[SET_MVOLUME]._text.setColor(sf::Color::Black);
+	settingButton[SET_MVOLUME]._text.setString("Music Volume");
+	settingButton[SET_MVOLUME]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_MVOLUME].setFont(_font);
 	settingText[SET_MVOLUME].setCharacterSize(30);
@@ -659,8 +659,8 @@ void Pausemenu::init()
 	settingButton[SET_SVOLUME].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_MVOLUME].getPosition().y + 75, image);
 	settingButton[SET_SVOLUME]._text.setFont(_font);
 	settingButton[SET_SVOLUME]._text.setCharacterSize(24);
-	settingButton[SET_SVOLUME]._text.setString("Sound volume");
-	settingButton[SET_SVOLUME]._text.setColor(sf::Color::Black);
+	settingButton[SET_SVOLUME]._text.setString("Sound Volume");
+	settingButton[SET_SVOLUME]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_SVOLUME].setFont(_font);
 	settingText[SET_SVOLUME].setCharacterSize(30);
@@ -673,8 +673,8 @@ void Pausemenu::init()
 	settingButton[SET_AVOLUME].load(200, 50, settingButton[SET_RESOLUTION].getPosition().x, settingButton[SET_SVOLUME].getPosition().y + 75, image);
 	settingButton[SET_AVOLUME]._text.setFont(_font);
 	settingButton[SET_AVOLUME]._text.setCharacterSize(24);
-	settingButton[SET_AVOLUME]._text.setString("Anbient volume");
-	settingButton[SET_AVOLUME]._text.setColor(sf::Color::Black);
+	settingButton[SET_AVOLUME]._text.setString("Ambient Volume");
+	settingButton[SET_AVOLUME]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	settingText[SET_AVOLUME].setFont(_font);
 	settingText[SET_AVOLUME].setCharacterSize(30);
@@ -705,9 +705,9 @@ void Pausemenu::restartVideo()
 	_window->close();
 	
 	if (_engineSettings.fullScreen)
-		_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Fullscreen, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
+		_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "I Want It Back", sf::Style::Fullscreen, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
 	else
-		_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "Template title :(", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
+		_window->create(sf::VideoMode(_engineSettings.resolution.x, _engineSettings.resolution.y), "I Want It Back", sf::Style::Default, sf::ContextSettings(0, 0, _engineSettings.antiAliasing, 2, 0));
 						
 	_window->setVerticalSyncEnabled(_engineSettings.vSync);
 
