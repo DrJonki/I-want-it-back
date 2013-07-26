@@ -148,7 +148,7 @@ void Player::update()
 	}
 
 	//Jumping
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && animState != ANIM_LEDGEGRAB){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && animState != ANIM_LEDGEGRAB && animState != ANIM_SOMERSAULT){
 		if (_cListener->inContact(_sensorData[SEN_BOTTOM])){
 			b2Vec2 impulse(0, -_playerProps.jumpForce);
 			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
@@ -166,7 +166,7 @@ void Player::update()
 
 
 	//Ledge grabbing
-	if (_cListener->inContact(_sensorData[SEN_TOPRIGHT]) && _cListener->inContact(_sensorData[SEN_BOTTOM]) && _cListener->inContact(_sensorData[SEN_BOTTOMRIGHT]) && animations[ANIM_LEDGEGRAB].getCurrentFrame() <= 2){
+	if (_cListener->inContact(_sensorData[SEN_TOPRIGHT]) && _cListener->inContact(_sensorData[SEN_BOTTOM]) && _cListener->inContact(_sensorData[SEN_TOPRIGHT_CORNER]) && _cListener->inContact(_sensorData[SEN_BOTTOMRIGHT]) && animations[ANIM_LEDGEGRAB].getCurrentFrame() <= 2){
 		animState = ANIM_LEDGEGRAB;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || animations[ANIM_LEDGEGRAB].getCurrentFrame() > 1 || animations[ANIM_LEDGEGRAB].getTempSteps() > 1){
@@ -201,7 +201,7 @@ void Player::update()
 			_body->SetLinearVelocity(impulse);
 		}
 		else if (_cListener->inContact(_sensorData[SEN_BOTTOMRIGHT_CORNER])){
-			b2Vec2 impulse(6, std::fabs(_body->GetLinearVelocity().y * 0.6));
+			b2Vec2 impulse(8, std::fabs(_body->GetLinearVelocity().y * 0.7));
 			_body->ApplyLinearImpulse(impulse, b2Vec2(0, 0));
 			//b2Vec2 impulse(_body->GetLinearVelocity().x, 0);
 			//_body->SetLinearVelocity(impulse);

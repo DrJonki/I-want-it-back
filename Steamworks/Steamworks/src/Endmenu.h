@@ -30,6 +30,7 @@ private:
 
 	sf::Font _font;
 	sf::Text _timeText;
+	sf::Text _nextLevelText;
 
 	static const enum
 	{

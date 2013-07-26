@@ -464,7 +464,7 @@ void Pausemenu::init()
 	//Start
 	mainButton[BUT_START].load(250, 150, 100, 200, image);
 	mainButton[BUT_START]._text.setFont(_font);
-	mainButton[BUT_START]._text.setCharacterSize(40);
+	mainButton[BUT_START]._text.setCharacterSize(70);
 	mainButton[BUT_START]._text.setString("Continue");
 	mainButton[BUT_START]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Restart

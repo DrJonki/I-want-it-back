@@ -52,7 +52,7 @@ bool Mainmenu::showMenu()
 	titleBackground.setFillColor(sf::Color::Color(titleBackground.getFillColor().r, titleBackground.getFillColor().g, titleBackground.getFillColor().b, 0));
 	
 	while (!ns::exitState){
-		if (mainButton[BUT_START].isPressed() && !ns::endOfLevelState && !ns::deathState){
+		if (mainButton[BUT_START].isPressed() && !ns::endOfLevelState && !ns::deathState && _loadSettings._levelVector[_loadSettings._level] != "No Levels :("){
 			titleMusic.stop();
 			menuState = BUT_START;
 			return true;
@@ -63,8 +63,8 @@ bool Mainmenu::showMenu()
 			levelMenuSelected = false;
 
 			_loadSettings.loadLevels();
-			initLevels();
 			levelSelection = _loadSettings._level;
+			initLevels();
 		}
 		else if (mainButton[BUT_INFO].isPressed() && menuState == 0){
 			subSelectionState = 0;
@@ -78,7 +78,7 @@ bool Mainmenu::showMenu()
 			creditsText[0].setPosition(1000, 1200);
 			creditsText[1].setPosition(creditsText[0].getPosition().x, creditsText[0].getPosition().y + 150);
 		}
-		else if ((mainButton[BUT_EXIT].isPressed() && menuState == 0) || exitState){
+		else if (mainButton[BUT_EXIT].isPressed() && menuState == 0){
 			return false;
 		}
 
@@ -121,12 +121,21 @@ void Mainmenu::init()
 	image.loadFromFile("Resources/Common/Graphics/UI/button_start.png");
 	_font.loadFromFile("Resources/Common/Fonts/galvanize.ttf");
 
+	titleText.setFont(_font);
+	titleText.setCharacterSize(100);
+	titleText.setString("I Want It Back");
+	titleText.setPosition(100, 25);
+	titleText.setColor(sf::Color::Color(240, 240, 240, 255));
+
+	levelTimeText.setFont(_font);
+	levelTimeText.setCharacterSize(55);
+
 	//Main buttons
 	/////////////////////////////////////////////////////////
 	//Start
 	mainButton[BUT_START].load(250, 150, 100, 200, image);
 	mainButton[BUT_START]._text.setFont(_font);
-	mainButton[BUT_START]._text.setCharacterSize(40);
+	mainButton[BUT_START]._text.setCharacterSize(70);
 	mainButton[BUT_START]._text.setString("Start");
 	mainButton[BUT_START]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 	//Campaign
@@ -432,6 +441,20 @@ void Mainmenu::update()
 				if (levelSelection > 2) levelText[0].setColor(sf::Color::Color(255, 255, 255, 0));
 				else if (levelSelection != 0) levelText[0].setColor(sf::Color::Color(255, 255, 255, 128));
 				else levelText[0].setColor(sf::Color::White);
+
+				if (ns::gameStateLoader->getLevelTime(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[_loadSettings._level]) > 0.f){
+					std::stringstream ss;
+					ss.precision(1);
+					ss << "Time: ";
+					ss << std::fixed << ns::gameStateLoader->getLevelTime(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[_loadSettings._level]);
+					ss << "s";
+
+					levelTimeText.setString(ss.str());
+				}
+				else{
+					levelTimeText.setString("Time: Not set");
+				}
+				levelTimeText.setPosition(levelText[levelSelection].getPosition().x + 300, levelText[levelSelection].getPosition().y);
 			}
 
 			else{
@@ -521,6 +544,13 @@ void Mainmenu::update()
 					mainButton[i].update();
 				}
 			}
+
+			if (_loadSettings._level > 0){
+				mainButton[BUT_START]._text.setString("Continue");
+			}
+			else{
+				mainButton[BUT_START]._text.setString("Start");
+			}
 			}
 	}
 
@@ -571,6 +601,8 @@ void Mainmenu::update()
 		mainButton[i].setFillColor(sf::Color::Color(mainButton[i].getFillColor().r, mainButton[i].getFillColor().g, mainButton[i].getFillColor().b, titleBackground.getFillColor().a));
 	}
 
+	titleText.setColor(sf::Color::Color(titleText.getColor().r, titleText.getColor().g, titleText.getColor().b, titleBackground.getFillColor().a));
+
 	//Volume updates
 	if ((titleMusic.getPlayingOffset().asMilliseconds() > titleMusic.getDuration().asMilliseconds() - 5000 && titleMusic.getVolume() > 1) || titleMusic.getVolume() > _engineSettings.musicVolume)
 		titleMusic.setVolume(titleMusic.getVolume() - 0.5f);
@@ -596,13 +628,13 @@ void Mainmenu::update()
 				
 			if (menuState == BUT_LEVEL){
 				levelSelection = 0;
-					_loadSettings._campaign = subSelectionState;
-					_loadSettings.loadLevels();
-					initLevels();
+				_loadSettings._campaign = subSelectionState;
+				_loadSettings.loadLevels();
+				initLevels();
 				}
 			}
 		}
-		else if (_e->key.code == sf::Keyboard::Down && (subSelectionState < subSelectionMax || (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1))){
+		else if (arrowButton[ARR_DOWN].isPressed() && (subSelectionState < subSelectionMax || (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1))){
 			if (levelMenuSelected && levelSelection < _loadSettings._levelVector.size() - 1){
 				levelSelection++;
 				if (!ns::gameStateLoader->levelUnlocked(_loadSettings._campaignVector[_loadSettings._campaign], _loadSettings._levelVector[levelSelection]))
@@ -881,6 +913,7 @@ void Mainmenu::draw()
 	_window->clear();
 
 	_window->draw(titleBackground);
+	_window->draw(titleText);
 
 	switch (menuState)
 	{
@@ -897,6 +930,9 @@ void Mainmenu::draw()
 			_window->draw(levelMenuText);
 			_window->draw(arrowButton[ARR_UP]);
 			_window->draw(arrowButton[ARR_DOWN]);
+
+			if (levelMenuSelected)
+				_window->draw(levelTimeText);
 			break;
 			}
 		case BUT_INFO:
@@ -971,6 +1007,11 @@ void Mainmenu::initLevels()
 	}
 	if (levelSelection != 0) levelText[0].setColor(sf::Color::Color(255, 255, 255, 128));
 	else levelText[0].setColor(sf::Color::White);
+
+	levelText[0].getPosition().y < 500 - (levelSelection * 60);
+	for (int i = 1; i < (signed int)levelText.size(); i++){
+		levelText[i].setPosition(levelText[0].getPosition().x, levelText[0].getPosition().y + (60 * i));
+	}
 }
 
 void Mainmenu::restartVideo()

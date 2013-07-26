@@ -11,6 +11,8 @@ namespace
 	int selectionState = 0;
 
 	bool lockMouse = true;
+
+	bool newRecord = false;
 }
 
 
@@ -33,6 +35,11 @@ void Endmenu::showMenu(float time)
 			_backgroundShape.setFillColor(sf::Color::Color(0, 0, 0, _backgroundShape.getFillColor().a + 5));
 		}
 
+		if (lockMouse)
+			_window->setMouseCursorVisible(false);
+		else
+			_window->setMouseCursorVisible(true);
+
 		std::stringstream ss;
 		ss.precision(1);
 		ss << "Time: ";
@@ -40,7 +47,6 @@ void Endmenu::showMenu(float time)
 		ss << "s" << std::endl;
 		ss << "Best: ";
 
-		bool newRecord = false;
 		if (time < ns::gameStateLoader->getLevelTime(_lSettings->_campaignVector[_lSettings->_campaign], _lSettings->_levelVector[_lSettings->_level]) ||
 			ns::gameStateLoader->getLevelTime(_lSettings->_campaignVector[_lSettings->_campaign], _lSettings->_levelVector[_lSettings->_level]) == 0.f)
 		{
@@ -49,10 +55,22 @@ void Endmenu::showMenu(float time)
 		}
 
 		ss << ns::gameStateLoader->getLevelTime(_lSettings->_campaignVector[_lSettings->_campaign], _lSettings->_levelVector[_lSettings->_level]) << "s";
-		if (newRecord)
-			ss << "New Record!";
+		if (newRecord){
+			ss << "   New Record!";
+		}
+
+		std::string s(ss.str());
 
 		_timeText.setString(ss.str());
+
+		ss.str("");
+		ss << "Next Level: ";
+		if (_lSettings->_level < _lSettings->_levelVector.size() - 1){
+			ss << _lSettings->_levelVector[_lSettings->_level + 1];
+		}
+		else ss << "None";
+
+		_nextLevelText.setString(ss.str());
 
 		for (unsigned int i = 0; i < _button.size(); i++){
 			if (_button[i].isOver() && !lockMouse){
@@ -111,7 +129,6 @@ void Endmenu::showMenu(float time)
 				ns::gameStateLoader->saveLevelData(_lSettings->_campaignVector[_lSettings->_campaign], _lSettings->_levelVector[_lSettings->_level + 1], true);
 			}
 			ns::runningState = false;
-			ns::endOfLevelState = false;
 			selectionState = 0;
 		}
 	}
@@ -120,6 +137,8 @@ void Endmenu::showMenu(float time)
 		if (_backgroundShape.getFillColor().a >= 5){
 			_backgroundShape.setFillColor(sf::Color::Color(0, 0, 0, _backgroundShape.getFillColor().a - 5));
 		}
+
+		newRecord = false;
 	}
 }
 
@@ -149,6 +168,7 @@ void Endmenu::draw()
 
 		_window->draw(_backgroundShape);
 		_window->draw(_timeText);
+		_window->draw(_nextLevelText);
 
 		for (unsigned int i = 0; i < _button.size(); i++){
 			_window->draw(_button[i]);
@@ -167,6 +187,10 @@ void Endmenu::init()
 	_timeText.setFont(_font);
 	_timeText.setCharacterSize(60);
 	_timeText.setPosition(1000, 300);
+
+	_nextLevelText.setFont(_font);
+	_nextLevelText.setCharacterSize(60);
+	_nextLevelText.setPosition(1000, 500);
 
 	sf::Image image;
 	image.loadFromFile("Resources/Common/Graphics/UI/button_start.png");

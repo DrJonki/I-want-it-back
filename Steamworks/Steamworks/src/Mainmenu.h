@@ -39,12 +39,12 @@ private:
 	sf::Font _font;
 	//Main buttons
 	std::vector<GameButton> mainButton;
+	sf::Text titleText;
 
 	//Campaign
 	std::vector<sf::Text> campaignText;
-
-	//Level
 	std::vector<sf::Text> levelText;
+	sf::Text levelTimeText;
 
 	//Settings
 	std::vector<GameButton> settingButton;

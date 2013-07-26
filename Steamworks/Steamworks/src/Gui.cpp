@@ -18,9 +18,9 @@ Gui::Gui(sf::RenderWindow* window)
 	_soundShape[0].setFillColor(sf::Color::Color(_soundShape[0].getFillColor().r, _soundShape[0].getFillColor().g, _soundShape[0].getFillColor().b, minAlpha));
 	_soundShape[1].setFillColor(sf::Color::Color(_soundShape[1].getFillColor().r, _soundShape[1].getFillColor().g, _soundShape[1].getFillColor().b, minAlpha));
 
-	_soundShape[0].setSize(sf::Vector2f(150, 150));
+	_soundShape[0].setSize(sf::Vector2f(100, 100));
 	_soundShape[0].setOrigin(_soundShape[0].getSize().x / 2, _soundShape[0].getSize().y / 2);
-	_soundShape[1].setSize(sf::Vector2f(150, 150));
+	_soundShape[1].setSize(sf::Vector2f(100, 100));
 	_soundShape[1].setOrigin(_soundShape[1].getSize().x / 2, _soundShape[1].getSize().y / 2);
 }
 
@@ -53,8 +53,8 @@ void Gui::update()
 
 void Gui::draw()
 {
-	_soundShape[0].setPosition(90, _window->getView().getCenter().y - 95);
-	_soundShape[1].setPosition(90, _window->getView().getCenter().y + 95);
+	_soundShape[0].setPosition(80, _window->getView().getCenter().y - 95);
+	_soundShape[1].setPosition(80, _window->getView().getCenter().y + 95);
 	_window->draw(_soundShape[0]);
 	_window->draw(_soundShape[1]);
 }

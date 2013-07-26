@@ -6,6 +6,11 @@
 #include "Globals.h"
 
 
+namespace
+{
+	bool firstLoad = true;
+}
+
 LoadSettings::LoadSettings(void)
 {
 	resetValues();
@@ -56,7 +61,7 @@ void LoadSettings::loadCampaigns()
 
 	if (_campaignVector.size() == 0){
 		_campaignVector.emplace_back(std::string());
-		_campaignVector.back() = "No campaigns :(";
+		_campaignVector.back() = "No Campaigns :(";
 	}
 }
 
@@ -83,18 +88,24 @@ void LoadSettings::loadLevels()
 		closedir(dir);
 	}
 
-	for (unsigned int i = 0; i < _levelVector.size(); i++){
-		if (!ns::gameStateLoader->levelSaved(_campaignVector[_campaign], _levelVector[i]) && _campaignVector[0] != "No levels :("){
-			if (i == 0)
-				ns::gameStateLoader->saveLevelData(_campaignVector[_campaign], _levelVector[i], true);
-			else
-				ns::gameStateLoader->saveLevelData(_campaignVector[_campaign], _levelVector[i], false);
-		}
-	}
-
 	if (_levelVector.size() == 0){
 		_levelVector.emplace_back(std::string());
-		_levelVector.back() = "No levels :(";
+		_levelVector.back() = "No Levels :(";
+	}
+
+	for (unsigned int i = 0; i < _levelVector.size(); i++){
+		if (!ns::gameStateLoader->levelSaved(_campaignVector[_campaign], _levelVector[i]) && _campaignVector[0] != "No Campaigns :(" && _levelVector[0] != "No Levels :("){
+			ns::gameStateLoader->saveLevelData(_campaignVector[_campaign], _levelVector[i], i == 0);
+		}
+	}
+	if (firstLoad){
+		for (unsigned int i = 1; i < _levelVector.size(); i++){
+			if (!ns::gameStateLoader->levelUnlocked(_campaignVector[_campaign], _levelVector[i])){
+				_level = i - 1;
+				break;
+			}
+		}
+		firstLoad = false;
 	}
 }
 

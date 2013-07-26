@@ -121,6 +121,8 @@ bool Game::runAndDontCrashPls()
 		}
 		if (!ns::restartState)
 			deInit();
+		if (ns::exitState)
+			return true;
 	}
 
 	if (ns::debug != nullptr) delete ns::debug;
@@ -327,8 +329,8 @@ void Game::init()
 	}
 
 	sShape.setFillColor(sf::Color::Black);
-	sShape.setOutlineThickness(2);
-	sShape.setOutlineColor(sf::Color::Yellow);
+	//sShape.setOutlineThickness(2);
+	//sShape.setOutlineColor(sf::Color::Yellow);
 	sShape.setSize(sf::Vector2f((float)mainMenu.getEngineSettings().resolution.x, 11));
 	sShape.setOrigin(0, 6);
 	sShape.setPosition(0.f, (float)(mainMenu.getEngineSettings().resolution.y / 2));

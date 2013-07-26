@@ -36,6 +36,11 @@ void Deathmenu::showMenu()
 			_button[i].update(i == selectionState);
 		}
 
+		if (lockMouse)
+			_window->setMouseCursorVisible(false);
+		else
+			_window->setMouseCursorVisible(true);
+
 
 		while (_window->pollEvent(*_e)){
 			if (_e->type == sf::Event::KeyPressed){
