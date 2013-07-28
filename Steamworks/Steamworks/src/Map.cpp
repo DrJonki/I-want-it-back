@@ -140,7 +140,6 @@ void Map::draw()
 	for (unsigned int i = 0; i < _mapObject.size(); i++){
 		if (_mapObject[i].getPosition().x - (_mapObject[i].getSize().x / 2) <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
 			_mapObject[i].getPosition().x + (_mapObject[i].getSize().x / 2) >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2) &&
-			_mapObject[i].getPosition().y <= _window->getView().getCenter().y + (_window->getView().getSize().y / 2) &&
 			_mapObject[i].getPosition().y >= _window->getView().getCenter().y - (_window->getView().getSize().y / 2))
 		{
 			_window->draw(_mapObject[i]);
@@ -151,7 +150,6 @@ void Map::draw()
 		for (unsigned int i = 0; i < _mapObject.size(); i++){
 			if (_mapObject[i].hbShape.getPosition().x - (_mapObject[i].hbShape.getSize().x / 2) <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
 				_mapObject[i].hbShape.getPosition().x + (_mapObject[i].hbShape.getSize().x / 2) >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2) &&
-				_mapObject[i].hbShape.getPosition().y <= _window->getView().getCenter().y + (_window->getView().getSize().y / 2) &&
 				_mapObject[i].hbShape.getPosition().y >= _window->getView().getCenter().y - (_window->getView().getSize().y / 2))
 			{
 				_window->draw(_mapObject[i].hbShape);
@@ -160,7 +158,6 @@ void Map::draw()
 		for (unsigned int i = 0; i < _triggerObject.size(); i++){
 			if (_triggerObject[i].getPosition().x - (_triggerObject[i].getSize().x / 2) <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
 				_triggerObject[i].getPosition().x + (_triggerObject[i].getSize().x / 2) >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2) &&
-				_triggerObject[i].getPosition().y <= _window->getView().getCenter().y + (_window->getView().getSize().y / 2) &&
 				_triggerObject[i].getPosition().y >= _window->getView().getCenter().y - (_window->getView().getSize().y / 2))
 			{
 				_window->draw(_triggerObject[i]);
@@ -174,7 +171,6 @@ void Map::drawForeground()
 	for (unsigned int i = 0; i < _foregroundObject.size(); i++){
 		if (_foregroundObject[i].getPosition().x - (_foregroundObject[i].getSize().x / 2) <= _window->getView().getCenter().x + (_window->getView().getSize().x / 2) &&
 			_foregroundObject[i].getPosition().x + (_foregroundObject[i].getSize().x / 2) >= _window->getView().getCenter().x - (_window->getView().getSize().x / 2) &&
-			_foregroundObject[i].getPosition().y <= _window->getView().getCenter().y + (_window->getView().getSize().y / 2) &&
 			_foregroundObject[i].getPosition().y >= _window->getView().getCenter().y - (_window->getView().getSize().y / 2))
 		{
 			_window->draw(_foregroundObject[i]);
