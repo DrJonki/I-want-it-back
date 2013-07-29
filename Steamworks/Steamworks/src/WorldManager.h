@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Thor\Time\StopWatch.hpp>
+
 #include "Map.h"
 
 class WorldManager
@@ -8,7 +10,7 @@ public:
 	WorldManager(sf::RenderWindow* window);
 	~WorldManager(void);
 
-	void loadWorld(ContactListener* listener, LoadSettings&, EngineSettings&);
+	void loadWorld(ContactListener* listener, LoadSettings&, EngineSettings&, thor::StopWatch& gameTime);
 	void resetWorldStates();
 	void deleteWorld();
 

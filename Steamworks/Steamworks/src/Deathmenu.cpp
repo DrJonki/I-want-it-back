@@ -57,6 +57,7 @@ void Deathmenu::showMenu()
 		}
 		if (_button[BUT_RESTART].isPressed()){
 			_backgroundShape.setFillColor(sf::Color::Color(255, 0, 0, 0));
+			ns::dirtyRun = true;
 			ns::runningState = false;
 			ns::deathState = false;
 			ns::restartState = true;
@@ -64,7 +65,9 @@ void Deathmenu::showMenu()
 		}
 		else if (_button[BUT_EXIT].isPressed()){
 			_backgroundShape.setFillColor(sf::Color::Color(255, 0, 0, 0));
+			ns::dirtyRun = false;
 			ns::spawnPoint = 1000.f;
+			ns::checkPointTime = sf::Time::Zero;
 			ns::runningState = false;
 			ns::restartState = false;
 			selectionState = 0;
@@ -122,7 +125,7 @@ void Deathmenu::init()
 	_button[BUT_RESTART].load(250, 150, 300, 300, image);
 	_button[BUT_RESTART]._text.setFont(_font);
 	_button[BUT_RESTART]._text.setCharacterSize(40);
-	_button[BUT_RESTART]._text.setString("Restart");
+	_button[BUT_RESTART]._text.setString("Restart From\nCheckpoint");
 	_button[BUT_RESTART]._text.setColor(sf::Color::Color(205, 197, 191, 255));
 
 	_button[BUT_EXIT].load(250, 150, _button[BUT_RESTART].getPosition().x, _button[BUT_RESTART].getPosition().y + 175, image);

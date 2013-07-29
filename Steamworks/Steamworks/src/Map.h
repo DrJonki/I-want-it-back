@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Thor\Time\StopWatch.hpp>
+
 #include "ContactListener.h"
 #include "LoadSettings.h"
 #include "EngineSettings.h"
@@ -12,7 +14,7 @@
 class Map
 {
 public:
-	Map(void);
+	Map(thor::StopWatch& gameTime);
 	~Map(void);
 
 
@@ -37,6 +39,8 @@ public:
 	void drawForeground();
 
 private:
+
+	thor::StopWatch* _gameTime;
 
 	/// A local variable for debug mode
 	bool _debug;

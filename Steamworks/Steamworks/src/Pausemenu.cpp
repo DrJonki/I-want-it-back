@@ -47,6 +47,7 @@ bool Pausemenu::showMenu(bool paused)
 		else if (mainButton[BUT_RESTART].isPressed()){
 			ns::runningState = false;
 			ns::restartState = true;
+			ns::dirtyRun = true;
 			return false;
 		}
 		else if (mainButton[BUT_INFO].isPressed()){

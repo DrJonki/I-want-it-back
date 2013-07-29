@@ -5,6 +5,7 @@
 #include <SFML\Graphics\Text.hpp>
 #include <SFML\Graphics\Font.hpp>
 #include <SFML\Window\Event.hpp>
+#include <SFML\System\Time.hpp>
 
 #include "LoadSettings.h"
 #include "GameButton.h"

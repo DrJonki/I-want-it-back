@@ -9,6 +9,8 @@ namespace ns
 	bool deathState = false;
 	bool endOfLevelState = false;
 	float spawnPoint = 1000.f;
+	sf::Time checkPointTime = sf::Time::Zero;
+	bool dirtyRun = false;
 
 	int soundState = 0;
 

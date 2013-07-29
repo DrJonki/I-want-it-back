@@ -96,7 +96,7 @@ bool Game::runAndDontCrashPls()
 					if (pauseMenu->showMenu(paused))
 						paused = false;
 					deathMenu.showMenu();
-					endMenu.showMenu(gameTime.getElapsedTime().asSeconds());
+					endMenu.showMenu(gameTime.getElapsedTime().asSeconds() + (ns::dirtyRun * ns::checkPointTime.asSeconds()));
 				}
 			}
 			else {
@@ -112,7 +112,7 @@ bool Game::runAndDontCrashPls()
 				if (pauseMenu->showMenu(paused))
 					paused = false;
 				deathMenu.showMenu();
-				endMenu.showMenu(gameTime.getElapsedTime().asSeconds());
+				endMenu.showMenu(gameTime.getElapsedTime().asSeconds() + (ns::dirtyRun * ns::checkPointTime.asSeconds()));
 			}
 			if (!paused && !ns::endOfLevelState && !ns::deathState)
 				gameTime.start();
@@ -153,7 +153,9 @@ void Game::update()
 	//Border checks
 	if ((player[1]->getPosition().y > 1200 + player[1]->getLocalBounds().height || player[1]->getPosition().x + (player[1]->getLocalBounds().width / 2) < (pauseMenu->getView(VIEW_BOTTOM).getCenter().x - (pauseMenu->getView(VIEW_BOTTOM).getSize().x / 2))) ||
 		(player[0]->getPosition().y > 600 + player[0]->getLocalBounds().height || player[0]->getPosition().x + (player[0]->getLocalBounds().width / 2) < (pauseMenu->getView(VIEW_TOP).getCenter().x - (pauseMenu->getView(VIEW_TOP).getSize().x / 2))))
+	{
 		ns::deathState = true;
+	}
 	
 	worldManager.stepWorldPhysics();
 	
@@ -286,6 +288,7 @@ void Game::init()
 	ns::deathState = false;
 	ns::restartState = false;
 	ns::reloadState = false;
+	ns::dirtyRun = false;
 
 	gameWindow.setMouseCursorVisible(false);
 	
@@ -312,7 +315,7 @@ void Game::init()
 	loadClock.restart();
 
 	std::cout << "Loading world..." << std::endl;
-	worldManager.loadWorld(cListener, mainMenu.getLoadSettings(), mainMenu.getEngineSettings());
+	worldManager.loadWorld(cListener, mainMenu.getLoadSettings(), mainMenu.getEngineSettings(), gameTime);
 	std::cout << "Loading world complete! Time: " << loadClock.getElapsedTime().asSeconds() << std::endl;
 	loadClock.restart();
 

@@ -1,9 +1,10 @@
 #include "WorldManager.h"
 
 
-WorldManager::WorldManager(sf::RenderWindow* window) : _window(window),
-													   _gameWorld(nullptr),
-													   _gameMap(nullptr)
+WorldManager::WorldManager(sf::RenderWindow* window)
+	: _window(window),
+	  _gameWorld(nullptr),
+	  _gameMap(nullptr)
 {}
 
 
@@ -11,7 +12,7 @@ WorldManager::~WorldManager(void)
 {}
 
 
-void WorldManager::loadWorld(ContactListener* listener, LoadSettings& lsettings, EngineSettings& esettings)
+void WorldManager::loadWorld(ContactListener* listener, LoadSettings& lsettings, EngineSettings& esettings, thor::StopWatch& gameTime)
 {
 	_cListener = listener;
 
@@ -19,7 +20,7 @@ void WorldManager::loadWorld(ContactListener* listener, LoadSettings& lsettings,
 	_gameWorld = new b2World(gravity);
 	_gameWorld->SetAllowSleeping(false);
 
-	_gameMap = new Map;
+	_gameMap = new Map(gameTime);
 	_gameMap->load(_gameWorld, listener, _window, lsettings, esettings);
 }
 

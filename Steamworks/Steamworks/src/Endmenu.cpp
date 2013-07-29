@@ -96,6 +96,8 @@ void Endmenu::showMenu(float time)
 		if (_button[BUT_CONTINUE].isPressed()){
 			_backgroundShape.setFillColor(sf::Color::Color(0, 0, 0, 0));
 			ns::spawnPoint = 1000.f;
+			ns::dirtyRun = false;
+			ns::checkPointTime = sf::Time::Zero;
 			if (_lSettings->_level < _lSettings->_levelVector.size() - 1){
 				ns::gameStateLoader->saveLevelData(_lSettings->_campaignVector[_lSettings->_campaign], _lSettings->_levelVector[_lSettings->_level + 1], true);
 				_lSettings->_level++;
@@ -113,6 +115,8 @@ void Endmenu::showMenu(float time)
 		else if (_button[BUT_RESTART].isPressed()){
 			_backgroundShape.setFillColor(sf::Color::Color(0, 0, 0, 0));
 			ns::spawnPoint = 1000.f;
+			ns::dirtyRun = false;
+			ns::checkPointTime = sf::Time::Zero;
 			if (_lSettings->_level < _lSettings->_levelVector.size() - 1){
 				ns::gameStateLoader->saveLevelData(_lSettings->_campaignVector[_lSettings->_campaign], _lSettings->_levelVector[_lSettings->_level + 1], true);
 			}
@@ -125,6 +129,8 @@ void Endmenu::showMenu(float time)
 		else if (_button[BUT_EXIT].isPressed()){
 			_backgroundShape.setFillColor(sf::Color::Color(0, 0, 0, 0));
 			ns::spawnPoint = 1000.f;
+			ns::dirtyRun = false;
+			ns::checkPointTime = sf::Time::Zero;
 			if (_lSettings->_level < _lSettings->_levelVector.size() - 1){
 				ns::gameStateLoader->saveLevelData(_lSettings->_campaignVector[_lSettings->_campaign], _lSettings->_levelVector[_lSettings->_level + 1], true);
 			}

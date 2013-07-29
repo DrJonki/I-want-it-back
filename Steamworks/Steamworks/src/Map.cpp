@@ -4,10 +4,12 @@
 
 //Map
 //Public
-Map::Map(void) : _window(nullptr),
-				 _world(nullptr),
-				 _esettings(nullptr),
-				 _debug(false)
+Map::Map(thor::StopWatch& gameTime)
+	: _window(nullptr),
+	  _world(nullptr),
+	  _esettings(nullptr),
+	  _debug(false),
+	  _gameTime(&gameTime)
 {}
 
 Map::~Map(void)
@@ -103,7 +105,12 @@ void Map::update()
 			}
 
 			if (_triggerObject[i]._body->GetFixtureList()[0].GetUserData() == (void*)TRIG_LETHAL) ns::deathState = true;
-			else if (_triggerObject[i]._body->GetFixtureList()[0].GetUserData() == (void*)TRIG_CHECKPOINT) ns::spawnPoint = _triggerObject[i].getPosition().x;
+			else if (_triggerObject[i]._body->GetFixtureList()[0].GetUserData() == (void*)TRIG_CHECKPOINT){
+				if (ns::checkPointTime.asSeconds() <= 0.f){
+					ns::checkPointTime = _gameTime->getElapsedTime();
+				}
+				ns::spawnPoint = _triggerObject[i].getPosition().x;
+			}
 			else if (_triggerObject[i]._body->GetFixtureList()[0].GetUserData() == (void*)TRIG_ENDOFLEVEL) ns::endOfLevelState = true;
 		}
 

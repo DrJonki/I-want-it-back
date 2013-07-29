@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML\System\Time.hpp>
+
 #include "DebugConsole.h"
 #include "GameStateLoader.h"
 
@@ -24,6 +26,8 @@ namespace ns
 	extern bool deathState;
 	extern bool endOfLevelState;
 	extern float spawnPoint;
+	extern sf::Time checkPointTime;
+	extern bool dirtyRun;
 
 	extern int soundState;
 
