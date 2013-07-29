@@ -1,6 +1,6 @@
 sizeX: 300.f
 sizeY: 300.f
-baseSpeed: 7.245f
+baseSpeed: 7.745f
 catchingSpeed: 8.5f
 jumpForce: 45.f
 airDrag: 0.01f

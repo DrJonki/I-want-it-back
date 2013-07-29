@@ -4,7 +4,6 @@ Project managing & design
 - Jaakko Nikkilä
 #
 #
-____________________________________
 #
 Programming
 #
@@ -12,7 +11,6 @@ Programming
 - Joona Tiinanen
 #
 #
-____________________________________
 #
 Environment art
 #
@@ -20,15 +18,13 @@ Environment art
 - Mira Kirjakainen
 #
 #
-____________________________________
 #
-Character & UI art
+Character art
 #
 #
 - Tommi Helin
 #
 #
-____________________________________
 #
 Sound design & original score
 #

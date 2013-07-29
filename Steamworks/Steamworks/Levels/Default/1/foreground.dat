@@ -1,8 +1,9 @@
-54 398 8842 401 Resources/Default/1/Graphics/Props/trafficlight.png 54 398 0 0 60 1
+54 398 8852 401 Resources/Default/1/Graphics/Props/trafficlight.png 54 398 0 0 60 1
 54 398 8852 1001 Resources/Default/1/Graphics/Props/trafficlight.png 54 398 0 0 60 1
-54 398 21255 401 Resources/Default/1/Graphics/Props/trafficlight.png 54 398 0 0 60 1
-54 398 21265 1001 Resources/Default/1/Graphics/Props/trafficlight.png 54 398 0 0 60 1
+54 398 21260 401 Resources/Default/1/Graphics/Props/trafficlight.png 54 398 0 0 60 1
+54 398 21270 1001 Resources/Default/1/Graphics/Props/trafficlight.png 54 398 0 0 60 1
 700 700 24779 230 Resources/Default/1/Graphics/Props/Prop_Construction_platform_past.png 1024 1024 0 0 60 1
 700 700 25379 230 Resources/Default/1/Graphics/Props/Prop_Construction_platform_past.png 1024 1024 0 0 60 1
-700 700 25379 230 Resources/Default/1/Graphics/Props/Prop_Construction_platform_past.png 1024 1024 0 0 60 1
-700 700 25379 230 Resources/Default/1/Graphics/Props/Prop_Construction_platform_past.png 1024 1024 0 0 60 1
+700 700 24779 -120 Resources/Default/1/Graphics/Props/Prop_Construction_platform_past.png 1024 1024 0 0 60 1
+700 700 25379 -120 Resources/Default/1/Graphics/Props/Prop_Construction_platform_past.png 1024 1024 0 0 60 1
+675 700 25404 830 Resources/Default/1/Graphics/Props/Prop_Construction_platform_now.png 1024 1024 0 0 60 1
