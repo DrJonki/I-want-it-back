@@ -8,7 +8,7 @@ namespace ns
 	bool reloadState = false;
 	bool deathState = false;
 	bool endOfLevelState = false;
-	float spawnPoint = 1000.f;
+	float spawnPoint = 1100.f;
 	sf::Time checkPointTime = sf::Time::Zero;
 	bool dirtyRun = false;
 
