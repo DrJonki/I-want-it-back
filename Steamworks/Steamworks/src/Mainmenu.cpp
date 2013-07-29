@@ -1,5 +1,7 @@
 #include "Mainmenu.h"
 
+#include <SFML\Audio\Listener.hpp>
+
 #include <sstream>
 #include <cmath>
 
@@ -906,6 +908,8 @@ void Mainmenu::update()
 		//Mouse events
 		if (_e->type == sf::Event::MouseMoved) lockMouse = false;
 	}
+
+	sf::Listener::setGlobalVolume(_engineSettings.globalVolume);
 }
 
 void Mainmenu::draw()

@@ -1,5 +1,7 @@
 #include "Pausemenu.h"
 
+#include <SFML\Audio\Listener.hpp>
+
 #include "Globals.h"
 #include "Misc.h"
 
@@ -399,6 +401,8 @@ void Pausemenu::update()
 		//Mouse events
 		if (_e->type == sf::Event::MouseMoved) lockMouse = false;
 	}
+
+	sf::Listener::setGlobalVolume(_engineSettings.globalVolume);
 }
 
 void Pausemenu::draw()
