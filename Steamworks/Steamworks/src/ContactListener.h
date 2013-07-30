@@ -17,6 +17,8 @@ public:
 	void addData(void* data, const int timeout = 0);
 
 	bool inContact(void* data);
+
+	void resetContacts();
 	
 private:
 	sf::Clock _timeoutClock;

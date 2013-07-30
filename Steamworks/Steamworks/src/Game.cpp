@@ -406,6 +406,8 @@ void Game::resetStates()
 	player[0]->resetState();
 	player[1]->resetState();
 
+	cListener->resetContacts();
+
 	pauseMenu->getView(VIEW_TOP).setCenter(ns::spawnPoint, 300);
 	pauseMenu->getView(VIEW_BOTTOM).setCenter(ns::spawnPoint, 900);
 
